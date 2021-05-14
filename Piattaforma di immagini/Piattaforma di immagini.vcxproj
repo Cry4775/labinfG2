@@ -149,6 +149,9 @@
     <ClInclude Include="Utenti.h" />
     <ClInclude Include="Utility.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="creatori.dat" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

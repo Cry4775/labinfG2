@@ -4,6 +4,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
@@ -25,5 +26,7 @@ void AssegnaStringa(char** destinazione, char buffer[]);
 
 // Ritorna true (1) se è corretta, false (0) se è scorretta
 unsigned short int DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno);
+
+
 
 #endif

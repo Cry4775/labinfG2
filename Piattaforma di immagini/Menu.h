@@ -5,6 +5,8 @@
 
 #include "Utenti.h"
 
+FILE* file;
+
 // Gestisce le funzionalità del Menu Iniziale, quali registrazione e accesso utente
 void MenuIniziale();
 
