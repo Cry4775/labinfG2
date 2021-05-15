@@ -41,4 +41,6 @@ typedef struct
     unsigned int numDownloadTot;
 } Utilizzatore_t;
 
+unsigned short int ControllaNomeUtente(FILE* file, char buffer[]);
+
 #endif

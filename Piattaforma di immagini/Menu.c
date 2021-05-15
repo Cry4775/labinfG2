@@ -17,20 +17,25 @@ void MenuIniziale()
 		{
 		case 1: // Registrazione utente
 		{
+			system("cls");
 			do
 			{
 				errore = false;
 				Creatore_t creatore = { 0 };
 				Utilizzatore_t utilizzatore = { 0 };
 
-				puts("\nChe tipologia di utente sei?\n1. Creatore\n2. Utilizzatore\n3. Indietro\n");
+				puts("Che tipologia di utente sei?\n1. Creatore\n2. Utilizzatore\n3. Indietro\n");
 				scanf("%1d", &sceltaMenu);
+
+				system("cls");
 
 				switch (sceltaMenu)
 				{
 					// Registrazione utente Creatore
 					case 1: 
 					{
+						puts("Registrazione utente creatore");
+						// Inserimento NOME UTENTE
 						do
 						{
 							errore = false;
@@ -50,51 +55,21 @@ void MenuIniziale()
 								file = fopen("creatori.dat", "r");
 							}
 							
-							char buf[BUFSIZ];
-							char* ptr = NULL;
-
-							// Controlla il file creatori.dat
-							while (fgets(buf, sizeof(buf), file) && giaEsistente == false) // Leggo la riga del file su buf
-							{
-								ptr = buf; // Assegno a ptr la stringa appena copiata dal file (buf)
-								while ((ptr = strtok(ptr, ":")) != NULL) // Quando trova un : (quindi user:) dividi la stringa
-								{
-									if (strcmp(ptr, "user") == 0)
-									{
-										ptr = strtok(NULL, " \n\0"); // Quando trova uno spazio o un delimitatore \r o \n o \0 dividi la stringa ptr
-										if (strcmp(ptr, buffer) == 0) // Controlla ogni riga nel file
-											giaEsistente = true;
-									}
-									ptr = NULL;
-								}
-							}
+							giaEsistente = ControllaNomeUtente(file, buffer);
 							fclose(file);
 
+							// Controlliamo anche il file utilizzatori.dat
 							if (giaEsistente == false)
 							{
 								file = fopen("utilizzatori.dat", "r");
-								// Se il file non esiste, creane uno
+								// Se è la prima esecuzione e/o il file non esiste, creane uno
 								if (file == NULL)
 								{
 									file = fopen("utilizzatori.dat", "w");
 									file = fopen("utilizzatori.dat", "r");
 								}
 
-								// Controlla il file utilizzatori.dat
-								while (fgets(buf, sizeof(buf), file) && giaEsistente == false) // Leggo la riga del file su buf
-								{
-									ptr = buf; // Assegno a ptr la stringa appena copiata dal file (buf)
-									while ((ptr = strtok(ptr, ":")) != NULL) // Quando trova un : (quindi user:) dividi la stringa
-									{
-										if (strcmp(ptr, "user") == 0)
-										{
-											ptr = strtok(NULL, " \r\n\0"); // Quando trova uno spazio o un delimitatore \r o \n o \0 dividi la stringa ptr
-											if (strcmp(ptr, buffer) == 0) // Controlla ogni riga nel file
-												giaEsistente = true;
-										}
-										ptr = NULL;
-									}
-								}
+								giaEsistente = ControllaNomeUtente(file, buffer);
 
 								fclose(file);
 							}
@@ -114,6 +89,7 @@ void MenuIniziale()
 								AssegnaStringa(&creatore.nomeUtente, buffer);
 						} while (errore == true);
 
+						// Inserimento PASSWORD
 						do
 						{
 							errore = false;
@@ -133,13 +109,20 @@ void MenuIniziale()
 								AssegnaStringa(&creatore.password, buffer);
 						} while (errore == true);
 
+						// Inserimento NOME
 						do
 						{
 							errore = false;
 							printf("Inserire il nome: ");
 							char buffer[MAX_BUFFER] = { 0 };
 							scanf("%100s", buffer);
-							// FAI TUTTO MINUSCOLO
+
+							// Conversione della stringa in minuscolo e della prima lettera in maiuscolo
+							for (size_t i = 0; i < strlen(buffer); i++)
+							{
+								buffer[i] = tolower(buffer[i]);
+							}
+
 							buffer[0] = toupper(buffer[0]);
 
 							// Controlla che non si inseriscano numeri
@@ -159,12 +142,20 @@ void MenuIniziale()
 								AssegnaStringa(&creatore.nome, buffer);
 						} while (errore == true);
 
+						// Inserimento COGNOME
 						do
 						{
 							errore = false;
 							printf("Inserire il cognome: ");
 							char buffer[MAX_BUFFER] = { 0 };
 							scanf("%100s", buffer);
+
+							// Conversione della stringa in minuscolo e della prima lettera in maiuscolo
+							for (size_t i = 0; i < strlen(buffer); i++)
+							{
+								buffer[i] = tolower(buffer[i]);
+							}
+
 							buffer[0] = toupper(buffer[0]);
 
 							// Controlla che non si inseriscano numeri
@@ -184,6 +175,7 @@ void MenuIniziale()
 								AssegnaStringa(&creatore.cognome, buffer);
 						} while (errore == true);
 
+						// Inserimento SESSO
 						do
 						{
 							errore = false;
@@ -200,6 +192,7 @@ void MenuIniziale()
 							}
 						} while (errore == true);
 
+						// Inserimento PROFESSIONE
 						errore = false;
 						printf("Inserire la professione: ");
 						char buffer[MAX_BUFFER] = { 0 };
@@ -207,6 +200,7 @@ void MenuIniziale()
 						buffer[0] = toupper(buffer[0]);
 						AssegnaStringa(&creatore.professione, buffer);
 
+						// Inserimento NAZIONALITA
 						do
 						{
 							errore = false;
@@ -232,6 +226,7 @@ void MenuIniziale()
 								AssegnaStringa(&creatore.nazionalita, buffer);
 						} while (errore == true);
 
+						// Inserimento DATA DI NASCITA
 						do
 						{
 							errore = false;
@@ -245,18 +240,19 @@ void MenuIniziale()
 							}
 						} while (errore == true);
 
-						// Assegna data di iscrizione
+						// Assegnazione data di iscrizione
 						time_t t = time(NULL);
 						struct tm tm = *localtime(&t);
 						creatore.dataIscrizione.giorno = tm.tm_mday;
 						creatore.dataIscrizione.mese = tm.tm_mon + 1;
 						creatore.dataIscrizione.anno = tm.tm_year + 1900;
 
+						// Fase di salvataggio dei dati su file
 						file = fopen("creatori.dat", "a");
 						if (file == NULL)
 						{
 							printf("\n\n\nERRORE FATALE! Non e' stato possibile aprire il file\n");
-							exit(0);
+							exit(1);
 						}
 						else
 						{
@@ -294,10 +290,13 @@ void MenuIniziale()
 
 							fclose(file);
 
-							
+							printf("Creatore correttamente registrato! Verrai ora reindirizzato al menu principale.\nPremere un tasto per continuare...");
+							SvuotaInput();
+							getc(stdin);
 						}
 						break;
 					}
+					
 
 
 
@@ -305,6 +304,8 @@ void MenuIniziale()
 					// Registrazione utente Utilizzatore
 					case 2:
 					{
+						puts("Registrazione utente creatore");
+						// Inserimento NOME UTENTE
 						do
 						{
 							errore = false;
@@ -323,24 +324,8 @@ void MenuIniziale()
 								file = fopen("creatori.dat", "r");
 							}
 
-							char buf[BUFSIZ];
-							char* ptr = NULL;
+							giaEsistente = ControllaNomeUtente(file, buffer);
 
-							// Controlla il file creatori.dat
-							while (fgets(buf, sizeof(buf), file) && giaEsistente == false) // Leggo la riga del file su buf
-							{
-								ptr = buf; // Assegno a ptr la stringa appena copiata dal file (buf)
-								while ((ptr = strtok(ptr, ":")) != NULL) // Quando trova un : (quindi user:) dividi la stringa
-								{
-									if (strcmp(ptr, "user") == 0)
-									{
-										ptr = strtok(NULL, " \r\n\0"); // Quando trova uno spazio o un delimitatore \r o \n o \0 dividi la stringa ptr
-										if (strcmp(ptr, buffer) == 0) // Controlla ogni riga nel file
-											giaEsistente = true;
-									}
-									ptr = NULL;
-								}
-							}
 							fclose(file);
 
 							if (giaEsistente == false)
@@ -353,21 +338,7 @@ void MenuIniziale()
 									file = fopen("utilizzatori.dat", "r");
 								}
 
-								// Controlla il file utilizzatori.dat
-								while (fgets(buf, sizeof(buf), file) && giaEsistente == false) // Leggo la riga del file su buf
-								{
-									ptr = buf; // Assegno a ptr la stringa appena copiata dal file (buf)
-									while ((ptr = strtok(ptr, ":")) != NULL) // Quando trova un : (quindi user:) dividi la stringa
-									{
-										if (strcmp(ptr, "user") == 0)
-										{
-											ptr = strtok(NULL, " \r\n\0"); // Quando trova uno spazio o un delimitatore \r o \n o \0 dividi la stringa ptr
-											if (strcmp(ptr, buffer) == 0) // Controlla ogni riga nel file
-												giaEsistente = true;
-										}
-										ptr = NULL;
-									}
-								}
+								giaEsistente = ControllaNomeUtente(file, buffer);
 
 								fclose(file);
 							}
@@ -387,6 +358,7 @@ void MenuIniziale()
 								AssegnaStringa(&utilizzatore.nomeUtente, buffer);
 						} while (errore == true);
 
+						// Inserimento PASSWORD
 						do
 						{
 							errore = false;
@@ -406,6 +378,7 @@ void MenuIniziale()
 								AssegnaStringa(&utilizzatore.password, buffer);
 						} while (errore == true);
 
+						// Inserimento NOME
 						do
 						{
 							errore = false;
@@ -431,6 +404,7 @@ void MenuIniziale()
 								AssegnaStringa(&utilizzatore.nome, buffer);
 						} while (errore == true);
 
+						// Inserimento COGNOME
 						do
 						{
 							errore = false;
@@ -456,6 +430,7 @@ void MenuIniziale()
 								AssegnaStringa(&utilizzatore.cognome, buffer);
 						} while (errore == true);
 
+						// Inserimento SESSO
 						do
 						{
 							errore = false;
@@ -472,6 +447,7 @@ void MenuIniziale()
 							}
 						} while (errore == true);
 
+						// Inserimento PROFESSIONE
 						errore = false;
 						printf("Inserire la professione: ");
 						char buffer[MAX_BUFFER] = { 0 };
@@ -479,6 +455,7 @@ void MenuIniziale()
 						buffer[0] = toupper(buffer[0]);
 						AssegnaStringa(&utilizzatore.professione, buffer);
 
+						// Inserimento NAZIONALITA
 						do
 						{
 							errore = false;
@@ -504,6 +481,7 @@ void MenuIniziale()
 								AssegnaStringa(&utilizzatore.nazionalita, buffer);
 						} while (errore == true);
 
+						// Inserimento DATA DI NASCITA
 						do
 						{
 							errore = false;
@@ -517,13 +495,14 @@ void MenuIniziale()
 							}
 						} while (errore == true);
 
-						// Assegna data di iscrizione
+						// Assegnazione data di iscrizione
 						time_t t = time(NULL);
 						struct tm tm = *localtime(&t);
 						utilizzatore.dataIscrizione.giorno = tm.tm_mday;
 						utilizzatore.dataIscrizione.mese = tm.tm_mon + 1;
 						utilizzatore.dataIscrizione.anno = tm.tm_year + 1900;
 
+						// Fase di salvataggio dei dati su file
 						file = fopen("utilizzatori.dat", "a");
 						if (file == NULL)
 						{
@@ -565,9 +544,14 @@ void MenuIniziale()
 							fprintf(file, "%u/%u/%u\n\n", utilizzatore.dataIscrizione.giorno, utilizzatore.dataIscrizione.mese, utilizzatore.dataIscrizione.anno);
 
 							fclose(file);
+
+							printf("\n\nUtilizzatore correttamente registrato! Verrai ora reindirizzato al menu principale.\nPremere un tasto per continuare...");
+							SvuotaInput();
+							getc(stdin);
 						}
 						break;
 					}
+					// Indietro
 					case 3:
 						errore = false;
 						break;
@@ -585,8 +569,13 @@ void MenuIniziale()
 			inEsecuzione = false;
 			break;
 		default:
-			puts("Errore! Selezionare un'opzione valida!");
+			puts("Errore! Selezionare un'opzione valida!\nPremere un tasto per continuare...");
+			SvuotaInput();
+			getc(stdin);
 			break;
 		}
+
+		system("cls");
+
 	} while (inEsecuzione == true);
 }
