@@ -117,25 +117,11 @@ void MenuIniziale()
 							char buffer[MAX_BUFFER] = { 0 };
 							scanf("%100s", buffer);
 
-							// Conversione della stringa in minuscolo e della prima lettera in maiuscolo
-							for (size_t i = 0; i < strlen(buffer); i++)
-							{
-								buffer[i] = tolower(buffer[i]);
-							}
+							// Conversione della stringa in minuscolo
+							ConversioneMinuscolo(buffer);
 
-							buffer[0] = toupper(buffer[0]);
-
-							// Controlla che non si inseriscano numeri
-							size_t i = 0;
-							while (i < strlen(buffer) && errore == false)
-							{
-								if (buffer[i] >= '0' && buffer[i] <= '9')
-								{
-									errore = true;
-									printf("Errore! I numeri non sono ammessi!\n");
-								}
-								i++;
-							}
+							// Controlla che non contenga simboli
+							errore = ContieneSimboli(buffer);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -150,25 +136,11 @@ void MenuIniziale()
 							char buffer[MAX_BUFFER] = { 0 };
 							scanf("%100s", buffer);
 
-							// Conversione della stringa in minuscolo e della prima lettera in maiuscolo
-							for (size_t i = 0; i < strlen(buffer); i++)
-							{
-								buffer[i] = tolower(buffer[i]);
-							}
+							// Conversione della stringa in minuscolo
+							ConversioneMinuscolo(buffer);
 
-							buffer[0] = toupper(buffer[0]);
-
-							// Controlla che non si inseriscano numeri
-							size_t i = 0;
-							while (i < strlen(buffer) && errore == false)
-							{
-								if (buffer[i] >= '0' && buffer[i] <= '9')
-								{
-									errore = true;
-									printf("Errore! I numeri non sono ammessi!\n");
-								}
-								i++;
-							}
+							// Controlla che non contenga simboli
+							errore = ContieneSimboli(buffer);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -193,12 +165,22 @@ void MenuIniziale()
 						} while (errore == true);
 
 						// Inserimento PROFESSIONE
-						errore = false;
-						printf("Inserire la professione: ");
-						char buffer[MAX_BUFFER] = { 0 };
-						scanf("%100s", buffer);
-						buffer[0] = toupper(buffer[0]);
-						AssegnaStringa(&creatore.professione, buffer);
+						do
+						{
+							errore = false;
+							printf("Inserire la professione: ");
+							char buffer[MAX_BUFFER] = { 0 };
+							scanf("%100s", buffer);
+
+							// Conversione della stringa in minuscolo
+							ConversioneMinuscolo(buffer);
+
+							// Controlla che non contenga simboli
+							errore = ContieneSimboli(buffer);
+
+							if (errore == false)
+								AssegnaStringa(&creatore.professione, buffer);
+						} while (errore == true);
 
 						// Inserimento NAZIONALITA
 						do
@@ -207,19 +189,12 @@ void MenuIniziale()
 							printf("Inserire la nazionalita': ");
 							char buffer[MAX_BUFFER] = { 0 };
 							scanf("%100s", buffer);
-							buffer[0] = toupper(buffer[0]);
 
-							// Controlla che non si inseriscano numeri
-							size_t i = 0;
-							while (i < strlen(buffer) && errore == false)
-							{
-								if (buffer[i] >= '0' && buffer[i] <= '9')
-								{
-									errore = true;
-									printf("Errore! I numeri non sono ammessi!\n");
-								}
-								i++;
-							}
+							// Conversione della stringa in minuscolo
+							ConversioneMinuscolo(buffer);
+
+							// Controlla che non contenga simboli
+							errore = ContieneSimboli(buffer);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -256,6 +231,8 @@ void MenuIniziale()
 						}
 						else
 						{
+							// va aggiustato, vanno aggiunte parole chiave anche per gli altri campi e vanno aggiunti i campi assegnati dal sistema
+							// inoltre dovrei estrarne una funzione
 							fputs("user:", file);
 							fputs(creatore.nomeUtente, file);
 							fputs("\n", file);
@@ -385,19 +362,12 @@ void MenuIniziale()
 							printf("Inserire il nome: ");
 							char buffer[MAX_BUFFER] = { 0 };
 							scanf("%100s", buffer);
-							buffer[0] = toupper(buffer[0]);
 
-							// Controlla che non si inseriscano numeri
-							size_t i = 0;
-							while (i < strlen(buffer) && errore == false)
-							{
-								if (buffer[i] >= '0' && buffer[i] <= '9')
-								{
-									//errore = true;
-									printf("Errore! I numeri non sono ammessi!\n");
-								}
-								i++;
-							}
+							// Conversione della stringa in minuscolo
+							ConversioneMinuscolo(buffer);
+
+							// Controlla che non contenga simboli
+							errore = ContieneSimboli(buffer);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -411,19 +381,12 @@ void MenuIniziale()
 							printf("Inserire il cognome: ");
 							char buffer[MAX_BUFFER] = { 0 };
 							scanf("%100s", buffer);
-							buffer[0] = toupper(buffer[0]);
+							
+							// Conversione della stringa in minuscolo
+							ConversioneMinuscolo(buffer);
 
-							// Controlla che non si inseriscano numeri
-							size_t i = 0;
-							while (i < strlen(buffer) && errore == false)
-							{
-								if (buffer[i] >= '0' && buffer[i] <= '9')
-								{
-									errore = true;
-									printf("Errore! I numeri non sono ammessi!\n");
-								}
-								i++;
-							}
+							// Controlla che non contenga simboli
+							errore = ContieneSimboli(buffer);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -448,12 +411,22 @@ void MenuIniziale()
 						} while (errore == true);
 
 						// Inserimento PROFESSIONE
-						errore = false;
-						printf("Inserire la professione: ");
-						char buffer[MAX_BUFFER] = { 0 };
-						scanf("%100s", buffer);
-						buffer[0] = toupper(buffer[0]);
-						AssegnaStringa(&utilizzatore.professione, buffer);
+						do
+						{
+							errore = false;
+							printf("Inserire la professione: ");
+							char buffer[MAX_BUFFER] = { 0 };
+							scanf("%100s", buffer);
+
+							// Conversione della stringa in minuscolo
+							ConversioneMinuscolo(buffer);
+
+							// Controlla che non contenga simboli
+							errore = ContieneSimboli(buffer);
+
+							if (errore == false)
+								AssegnaStringa(&utilizzatore.professione, buffer);
+						} while (errore == true);
 
 						// Inserimento NAZIONALITA
 						do
@@ -462,19 +435,12 @@ void MenuIniziale()
 							printf("Inserire la nazionalita': ");
 							char buffer[MAX_BUFFER] = { 0 };
 							scanf("%100s", buffer);
-							buffer[0] = toupper(buffer[0]);
 
-							// Controlla che non si inseriscano numeri
-							size_t i = 0;
-							while (i < strlen(buffer) && errore == false)
-							{
-								if (buffer[i] >= '0' && buffer[i] <= '9')
-								{
-									errore = true;
-									printf("Errore! I numeri non sono ammessi!\n");
-								}
-								i++;
-							}
+							// Conversione della stringa in minuscolo
+							ConversioneMinuscolo(buffer);
+
+							// Controlla che non contenga simboli
+							errore = ContieneSimboli(buffer);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -511,6 +477,8 @@ void MenuIniziale()
 						}
 						else
 						{
+							// va aggiustato, vanno aggiunte parole chiave anche per gli altri campi e vanno aggiunti i campi assegnati dal sistema
+							// inoltre dovrei estrarne una funzione
 							fputs("user:", file);
 							fputs(utilizzatore.nomeUtente, file);
 							fputs("\n", file);

@@ -24,9 +24,12 @@ void SvuotaInput();
 
 void AssegnaStringa(char** destinazione, char buffer[]);
 
-// Ritorna true (1) se è corretta, false (0) se è scorretta
+// Ritorna true (1) se è corretta, false (0) altrimenti
 unsigned short int DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno);
 
+void ConversioneMinuscolo(char buffer[]);
 
+// Ritorna true (1) se contiene simboli, false (0) altrimenti
+unsigned short int ContieneSimboli(char buffer[]);
 
 #endif

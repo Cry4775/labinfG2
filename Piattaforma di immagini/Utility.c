@@ -9,6 +9,7 @@ void SvuotaInput()
 
 void AssegnaStringa(char** destinazione, char buffer[])
 {
+    buffer[0] = toupper(buffer[0]);
     *destinazione = (char*)malloc(strlen(buffer) + 1);
     strcpy(*destinazione, buffer);
 }
@@ -57,4 +58,29 @@ unsigned short int DataCorretta(unsigned short int giorno, unsigned short int me
         return false;
 }
 
+void ConversioneMinuscolo(char buffer[])
+{
+    for (size_t i = 0; i < strlen(buffer); i++)
+    {
+        buffer[i] = tolower(buffer[i]);
+    }
+}
+
+unsigned short int ContieneSimboli(char buffer[])
+{
+    size_t i = 0;
+    while (i < strlen(buffer))
+    {
+        if (buffer[i] >= 'a' && buffer[i] <= 'z')
+        {
+            i++;
+        }
+        else
+        {
+            printf("Errore! I simboli e i numeri non sono ammessi!\n");
+            return true;
+        }
+    }
+    return false;
+}
 
