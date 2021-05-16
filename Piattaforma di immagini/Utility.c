@@ -85,3 +85,9 @@ unsigned short int ContieneSimboli(char buffer[])
     return false;
 }
 
+void InvioPerContinuare()
+{
+    puts("Premere INVIO per continuare...");
+    SvuotaInput();
+    getc(stdin);
+}

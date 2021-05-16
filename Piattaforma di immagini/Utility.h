@@ -32,4 +32,6 @@ void ConversioneMinuscolo(char buffer[]);
 // Ritorna true (1) se contiene simboli, false (0) altrimenti
 unsigned short int ContieneSimboli(char buffer[]);
 
+void InvioPerContinuare();
+
 #endif

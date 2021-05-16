@@ -53,7 +53,6 @@ unsigned short int MenuIniziale()
 							// Se il file non esiste, creane uno
 							if (file == NULL)
 							{
-								//file = fopen("creatori.dat", "w");
 								file = fopen(PERCORSO_FILE_CREATORI, "w");
 								fclose(file);
 								file = fopen(PERCORSO_FILE_CREATORI, "r");
@@ -232,72 +231,21 @@ unsigned short int MenuIniziale()
 						if (file == NULL)
 						{
 							printf("\n\n\nERRORE FATALE! Non e' stato possibile aprire il file\n");
-							exit(1);
+							exit(EXIT_SUCCESS);
 						}
 						else
 						{
-							// dovrei estrarne una funzione
-							fputs("nomeUtente:", file);
-							fputs(creatore.nomeUtente, file);
-							fputs("\n", file);
-							free(creatore.nomeUtente);
-
-							fputs("password:", file);
-							fputs(creatore.password, file);
-							fputs("\n", file);
-							free(creatore.password);
-
-							fputs("nome:", file);
-							fputs(creatore.nome, file);
-							fputs("\n", file);
-							free(creatore.nome);
-
-							fputs("cognome:", file);
-							fputs(creatore.cognome, file);
-							fputs("\n", file);
-							free(creatore.cognome);
-
-							fputs("sesso:", file);
-							fputc(creatore.sesso, file);
-							fputs("\n", file);
-
-							fputs("professione:", file);
-							fputs(creatore.professione, file);
-							fputs("\n", file);
-							free(creatore.professione);
-
-							fputs("nazionalita:", file);
-							fputs(creatore.nazionalita, file);
-							fputs("\n", file);
-							free(creatore.nazionalita);
-
-							fputs("dataNascita:", file);
-							fprintf(file, "%u/%u/%u\n", creatore.dataNascita.giorno, creatore.dataNascita.mese, creatore.dataNascita.anno);
-
-							fputs("dataIscrizione:", file);
-							fprintf(file, "%u/%u/%u\n", creatore.dataIscrizione.giorno, creatore.dataIscrizione.mese, creatore.dataIscrizione.anno);
-
-							fputs("numImmagini:", file);
-							fprintf(file, "%u\n", creatore.numImmagini);
-
-							fputs("numDownloadTot:", file);
-							fprintf(file, "%u\n", creatore.numDownloadTot);
-
-							fputs("mediaValutazioni:", file);
-							fprintf(file, "%f", creatore.mediaValutazioni);
+							SalvaDatiCreatore(file, &creatore);
 
 							fclose(file);
 
-							printf("Creatore correttamente registrato! Verrai ora reindirizzato al menu principale.\nPremere INVIO per continuare...");
-							SvuotaInput();
-							getc(stdin);
+							printf("Creatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
+							InvioPerContinuare();
 							return true;
 						}
 						break;
 					}
 					
-
-
 
 
 					// Registrazione utente Utilizzatore
@@ -496,62 +444,16 @@ unsigned short int MenuIniziale()
 						if (file == NULL)
 						{
 							printf("\n\n\nERRORE FATALE! Non e' stato possibile aprire il file\n");
-							return;
+							exit(EXIT_SUCCESS);
 						}
 						else
 						{	
-							//dovrei estrarne una funzione
-							fputs("nomeUtente:", file);
-							fputs(utilizzatore.nomeUtente, file);
-							fputs("\n", file);
-							free(utilizzatore.nomeUtente);
-
-							fputs("password:", file);
-							fputs(utilizzatore.password, file);
-							fputs("\n", file);
-							free(utilizzatore.password);
-
-							fputs("nome:", file);
-							fputs(utilizzatore.nome, file);
-							fputs("\n", file);
-							free(utilizzatore.nome);
-
-							fputs("cognome:", file);
-							fputs(utilizzatore.cognome, file);
-							fputs("\n", file);
-							free(utilizzatore.cognome);
-
-							fputs("sesso:", file);
-							fputc(utilizzatore.sesso, file);
-							fputs("\n", file);
-
-							fputs("professione:", file);
-							fputs(utilizzatore.professione, file);
-							fputs("\n", file);
-							free(utilizzatore.professione);
-
-							fputs("nazionalita:", file);
-							fputs(utilizzatore.nazionalita, file);
-							fputs("\n", file);
-							free(utilizzatore.nazionalita);
-
-							fputs("dataNascita:", file);
-							fprintf(file, "%u/%u/%u\n", utilizzatore.dataNascita.giorno, utilizzatore.dataNascita.mese, utilizzatore.dataNascita.anno);
-
-							fputs("dataIscrizione:", file);
-							fprintf(file, "%u/%u/%u\n\n", utilizzatore.dataIscrizione.giorno, utilizzatore.dataIscrizione.mese, utilizzatore.dataIscrizione.anno);
-
-							fputs("numValutazioni:", file);
-							fprintf(file, "%u\n", utilizzatore.numValutazioni);
-
-							fputs("numDownloadTot:", file);
-							fprintf(file, "%u\n", utilizzatore.numDownloadTot);
+							SalvaDatiUtilizzatore(file, &utilizzatore);
 
 							fclose(file);
 
-							printf("\n\nUtilizzatore correttamente registrato! Verrai ora reindirizzato al menu principale.\nPremere INVIO per continuare...");
-							SvuotaInput();
-							getc(stdin);
+							printf("\n\nUtilizzatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
+							InvioPerContinuare();
 							return true;
 						}
 						break;
@@ -572,8 +474,6 @@ unsigned short int MenuIniziale()
 
 
 
-
-
 		// Accesso utente
 		case 2:
 		{
@@ -581,20 +481,24 @@ unsigned short int MenuIniziale()
 			{
 				system("cls");
 				printf("Inserire il nome utente: ");
-				char bufferNomeUtente[MAX_BUFFER] = { 0 };
-				unsigned short int indietro = false;
+				char buffer[MAX_BUFFER] = { 0 };
 
-				scanf("%s", bufferNomeUtente);
+				unsigned short int indietro = false; // flag indietro
 
-				if (bufferNomeUtente[0] == '0')
+				scanf("%s", buffer);
+
+				// Controlla se l'utente ha inserito '0', nel caso flagga indietro
+				if (buffer[0] == '0')
 				{
-					if (bufferNomeUtente[1] == '\0')
+					if (buffer[1] == '\0')
 					{
 						errore = false;
 						indietro = true;
 					}
 				}
 
+				// Se invece ha messo un input valido per il nome utente prosegui
+				// Controlla prima creatori e poi utilizzatori se necessario
 				if (indietro == false)
 				{
 					file = fopen(PERCORSO_FILE_CREATORI, "r");
@@ -606,9 +510,7 @@ unsigned short int MenuIniziale()
 						file = fopen(PERCORSO_FILE_CREATORI, "r");
 					}
 
-					unsigned short int esisteNomeUtente = ControllaNomeUtente(file, bufferNomeUtente);
-
-					
+					unsigned short int esisteNomeUtente = ControllaNomeUtente(file, buffer);
 
 					if (esisteNomeUtente == false)
 					{
@@ -622,40 +524,40 @@ unsigned short int MenuIniziale()
 							file = fopen(PERCORSO_FILE_UTILIZZATORI, "r");
 						}
 
-						esisteNomeUtente = ControllaNomeUtente(file, bufferNomeUtente);
+						esisteNomeUtente = ControllaNomeUtente(file, buffer);
 					}
 
 
-
+					// Se il nome utente inserito esiste, chiedi la password
+					// N.B. Il file non è stato ancora chiuso! Quindi la lettura riprenderà dall'ultimo strtok,
+					// N.B. ovvero esattamente alla riga della password corrispondente al nome utente inserito.
 					if (esisteNomeUtente == true)
 					{
 						printf("Inserire la password: ");
-						char bufferPassword[MAX_BUFFER] = { 0 };
+						char buffer[MAX_BUFFER] = { 0 };
 
-						scanf("%s", bufferPassword);
-						unsigned short int passwordCorretta = ControllaPassword(file, bufferNomeUtente, bufferPassword);
+						scanf("%s", buffer);
+
+						unsigned short int passwordCorretta = ControllaPassword(file, buffer);
 
 						if (passwordCorretta == true)
 						{
 							fclose(file);
 							return true;
+							// Esci dal menu iniziale e prosegui nel main col menu principale
 						}
 						else
 						{
 							printf("Errore! Password non corretta! Riprovare.\n\n");
-							puts("Premere INVIO per continuare...");
-							SvuotaInput();
-							getc(stdin);
+							InvioPerContinuare();
 							errore = true;
 						}
 
 					}
 					else
 					{
-						printf("Errore! Nome utente non esistente. Controllare il nome utente digitato oppure digita 0 per tornare al menu iniziale e registrarsi.\n\n");
-						puts("Premere INVIO per continuare...");
-						SvuotaInput();
-						getc(stdin);
+						printf("Errore! Nome utente non esistente. \nControllare il nome utente digitato oppure digita 0 per tornare al menu iniziale e registrarsi.\n\n");
+						InvioPerContinuare();
 						errore = true;
 					}
 					fclose(file);
@@ -668,9 +570,8 @@ unsigned short int MenuIniziale()
 			inEsecuzione = false;
 			break;
 		default:
-			puts("Errore! Selezionare un'opzione valida!\nPremere INVIO per continuare...");
-			SvuotaInput();
-			getc(stdin);
+			puts("Errore! Selezionare un'opzione valida!\n");
+			InvioPerContinuare();
 			break;
 		}
 

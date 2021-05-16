@@ -45,6 +45,12 @@ typedef struct
 
 unsigned short int ControllaNomeUtente(FILE* file, char buffer[]);
 
-unsigned short int ControllaPassword(FILE* file, char bufferNomeUtente[], char bufferPassword[]);
+unsigned short int ControllaPassword(FILE* file, char buffer[]);
+
+void SalvaDatiCreatore(FILE* file, Creatore_t* creatore);
+
+void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore);
+
+
 
 #endif
