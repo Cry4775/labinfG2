@@ -4,11 +4,12 @@
 
 int main(void)
 {
-    unsigned short int accessoEseguito = MenuIniziale();
+    bool isCreatore = false;
+    bool accessoEseguito = MenuIniziale(&isCreatore);
 
     if (accessoEseguito == true)
     {
-
+        MenuPrincipale(&isCreatore);
     }
 
     system("pause"); // Da rimuovere a programma finito

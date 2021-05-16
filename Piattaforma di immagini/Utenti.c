@@ -1,6 +1,6 @@
 #include "Utenti.h"
 
-unsigned short int ControllaNomeUtente(FILE* file, char buffer[])
+bool ControllaNomeUtente(FILE* file, char buffer[])
 {
     char buf[BUFSIZ];
     char* ptr = NULL;
@@ -22,7 +22,7 @@ unsigned short int ControllaNomeUtente(FILE* file, char buffer[])
     return false;
 }
 
-unsigned short int ControllaPassword(FILE* file, char buffer[])
+bool ControllaPassword(FILE* file, char buffer[])
 {
     char buf[BUFSIZ];
     char* ptr = NULL;
@@ -90,7 +90,7 @@ void SalvaDatiCreatore(FILE* file, Creatore_t* creatore)
 	fprintf(file, "%u\n", creatore->numDownloadTot);
 
 	fputs("mediaValutazioni:", file);
-	fprintf(file, "%f", creatore->mediaValutazioni);
+	fprintf(file, "%f\n\n", creatore->mediaValutazioni);
 }
 
 void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore)
@@ -133,11 +133,11 @@ void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore)
 	fprintf(file, "%u/%u/%u\n", utilizzatore->dataNascita.giorno, utilizzatore->dataNascita.mese, utilizzatore->dataNascita.anno);
 
 	fputs("dataIscrizione:", file);
-	fprintf(file, "%u/%u/%u\n\n", utilizzatore->dataIscrizione.giorno, utilizzatore->dataIscrizione.mese, utilizzatore->dataIscrizione.anno);
+	fprintf(file, "%u/%u/%u\n", utilizzatore->dataIscrizione.giorno, utilizzatore->dataIscrizione.mese, utilizzatore->dataIscrizione.anno);
 
 	fputs("numValutazioni:", file);
 	fprintf(file, "%u\n", utilizzatore->numValutazioni);
 
 	fputs("numDownloadTot:", file);
-	fprintf(file, "%u\n", utilizzatore->numDownloadTot);
+	fprintf(file, "%u\n\n", utilizzatore->numDownloadTot);
 }

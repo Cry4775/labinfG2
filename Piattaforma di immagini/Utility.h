@@ -9,8 +9,6 @@
 #include <ctype.h>
 #include <time.h>
 
-#define true 1
-#define false 0
 #define MAX_BUFFER 101
 
 typedef struct
@@ -20,17 +18,22 @@ typedef struct
     unsigned int anno;
 } Data_t;
 
+typedef enum {
+    false,
+    true
+} bool;
+
 void SvuotaInput();
 
 void AssegnaStringa(char** destinazione, char buffer[], unsigned short int primaMaiuscola);
 
 // Ritorna true (1) se è corretta, false (0) altrimenti
-unsigned short int DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno);
+bool DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno);
 
 void ConversioneMinuscolo(char buffer[]);
 
 // Ritorna true (1) se contiene simboli, false (0) altrimenti
-unsigned short int ContieneSimboli(char buffer[]);
+bool ContieneSimboli(char buffer[]);
 
 void InvioPerContinuare();
 

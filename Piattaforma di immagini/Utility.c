@@ -11,11 +11,12 @@ void AssegnaStringa(char** destinazione, char buffer[], unsigned short int prima
 {
     if (primaMaiuscola == true)
         buffer[0] = toupper(buffer[0]);
+
     *destinazione = (char*)malloc(strlen(buffer) + 1);
     strcpy(*destinazione, buffer);
 }
 
-unsigned short int DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno)
+bool DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno)
 {
     if (anno >= 1900 && anno <= 2021)
     {
@@ -67,7 +68,7 @@ void ConversioneMinuscolo(char buffer[])
     }
 }
 
-unsigned short int ContieneSimboli(char buffer[])
+bool ContieneSimboli(char buffer[])
 {
     size_t i = 0;
     while (i < strlen(buffer))

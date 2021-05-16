@@ -43,9 +43,9 @@ typedef struct
     unsigned int numDownloadTot;
 } Utilizzatore_t;
 
-unsigned short int ControllaNomeUtente(FILE* file, char buffer[]);
+bool ControllaNomeUtente(FILE* file, char buffer[]);
 
-unsigned short int ControllaPassword(FILE* file, char buffer[]);
+bool ControllaPassword(FILE* file, char buffer[]);
 
 void SalvaDatiCreatore(FILE* file, Creatore_t* creatore);
 

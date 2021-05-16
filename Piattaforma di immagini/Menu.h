@@ -8,8 +8,8 @@
 FILE* file;
 
 // Gestisce le funzionalità del Menu Iniziale, quali registrazione e accesso utente
-unsigned short int MenuIniziale();
+bool MenuIniziale(bool* isCreatore);
 
-void MenuPrincipale();
+void MenuPrincipale(bool* isCreatore);
 
 #endif

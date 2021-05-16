@@ -2,16 +2,16 @@
 
 #include "Menu.h"
 
-unsigned short int MenuIniziale()
+bool MenuIniziale(bool* isCreatore)
 {
-	unsigned int inEsecuzione = true;
+	bool inEsecuzione = true;
 	do
 	{
 		puts("Benvenuto sulla piattaforma di immagini! \n\n1. Registrazione utente\n2. Accesso utente\n3. Esci\n");
 
 		unsigned int sceltaMenu;
-		unsigned short int errore = false;
-		scanf("%1d", &sceltaMenu);
+		bool errore = false;
+		scanf("%1u", &sceltaMenu);
 
 
 		switch (sceltaMenu)
@@ -26,7 +26,7 @@ unsigned short int MenuIniziale()
 				Utilizzatore_t utilizzatore = { 0 };
 
 				puts("Che tipologia di utente sei?\n1. Creatore\n2. Utilizzatore\n3. Indietro\n");
-				scanf("%1d", &sceltaMenu);
+				scanf("%1u", &sceltaMenu);
 
 				system("cls");
 
@@ -241,6 +241,7 @@ unsigned short int MenuIniziale()
 
 							printf("Creatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
 							InvioPerContinuare();
+							*isCreatore = true;
 							return true;
 						}
 						break;
@@ -454,6 +455,7 @@ unsigned short int MenuIniziale()
 
 							printf("\n\nUtilizzatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
 							InvioPerContinuare();
+							*isCreatore = false;
 							return true;
 						}
 						break;
@@ -479,11 +481,13 @@ unsigned short int MenuIniziale()
 		{
 			do
 			{
+				errore = false;
+				*isCreatore = false;
 				system("cls");
 				printf("Inserire il nome utente: ");
 				char buffer[MAX_BUFFER] = { 0 };
 
-				unsigned short int indietro = false; // flag indietro
+				bool indietro = false; // flag indietro
 
 				scanf("%s", buffer);
 
@@ -510,7 +514,8 @@ unsigned short int MenuIniziale()
 						file = fopen(PERCORSO_FILE_CREATORI, "r");
 					}
 
-					unsigned short int esisteNomeUtente = ControllaNomeUtente(file, buffer);
+					bool esisteNomeUtente = ControllaNomeUtente(file, buffer);
+					*isCreatore = true;
 
 					if (esisteNomeUtente == false)
 					{
@@ -525,6 +530,7 @@ unsigned short int MenuIniziale()
 						}
 
 						esisteNomeUtente = ControllaNomeUtente(file, buffer);
+						*isCreatore = false;
 					}
 
 
@@ -566,6 +572,8 @@ unsigned short int MenuIniziale()
 		
 			break;
 		}
+
+
 		case 3:
 			inEsecuzione = false;
 			break;
@@ -582,7 +590,31 @@ unsigned short int MenuIniziale()
 	return false;
 }
 
-void MenuPrincipale()
+void MenuPrincipale(bool* isCreatore)
 {
+	bool inEsecuzione = true;
+	if (*isCreatore == true)
+	{
+		do
+		{
+			system("cls");
 
+			puts("Benvenuto sulla piattaforma di immagini! \n\n1. Gestione creatore\n2. Ricerca immagine\n3. Statistiche creatore\n4. Classifiche\n5. Esci");
+
+			unsigned int sceltaMenu;
+			bool errore = false;
+			scanf("%1u", &sceltaMenu);
+
+
+
+
+
+
+		} while (inEsecuzione == true);
+	}
+	
+	else
+	{
+		// Utilizzatore
+	}
 }
