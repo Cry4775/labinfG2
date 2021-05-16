@@ -2,7 +2,7 @@
 
 #include "Menu.h"
 
-bool MenuIniziale(bool* isCreatore)
+bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 {
 	bool inEsecuzione = true;
 	do
@@ -90,7 +90,10 @@ bool MenuIniziale(bool* isCreatore)
 							}
 							// Altrimenti procedi
 							else
+							{
 								AssegnaStringa(&creatore.nomeUtente, buffer, false);
+								AssegnaStringa(&*nomeUtente, buffer, false);
+							}
 						} while (errore == true);
 
 						// Inserimento PASSWORD
@@ -125,7 +128,7 @@ bool MenuIniziale(bool* isCreatore)
 							ConversioneMinuscolo(buffer);
 
 							// Controlla che non contenga simboli
-							errore = ContieneSimboli(buffer);
+							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -144,7 +147,7 @@ bool MenuIniziale(bool* isCreatore)
 							ConversioneMinuscolo(buffer);
 
 							// Controlla che non contenga simboli
-							errore = ContieneSimboli(buffer);
+							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -180,7 +183,7 @@ bool MenuIniziale(bool* isCreatore)
 							ConversioneMinuscolo(buffer);
 
 							// Controlla che non contenga simboli
-							errore = ContieneSimboli(buffer);
+							errore = ContieneSimboli(buffer, false);
 
 							if (errore == false)
 								AssegnaStringa(&creatore.professione, buffer, true);
@@ -198,7 +201,7 @@ bool MenuIniziale(bool* isCreatore)
 							ConversioneMinuscolo(buffer);
 
 							// Controlla che non contenga simboli
-							errore = ContieneSimboli(buffer);
+							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -304,7 +307,10 @@ bool MenuIniziale(bool* isCreatore)
 							}
 							// Altrimenti procedi
 							else
+							{
 								AssegnaStringa(&utilizzatore.nomeUtente, buffer, false);
+								AssegnaStringa(&*nomeUtente, buffer, false);
+							}
 						} while (errore == true);
 
 						// Inserimento PASSWORD
@@ -339,7 +345,7 @@ bool MenuIniziale(bool* isCreatore)
 							ConversioneMinuscolo(buffer);
 
 							// Controlla che non contenga simboli
-							errore = ContieneSimboli(buffer);
+							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -358,7 +364,7 @@ bool MenuIniziale(bool* isCreatore)
 							ConversioneMinuscolo(buffer);
 
 							// Controlla che non contenga simboli
-							errore = ContieneSimboli(buffer);
+							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -394,7 +400,7 @@ bool MenuIniziale(bool* isCreatore)
 							ConversioneMinuscolo(buffer);
 
 							// Controlla che non contenga simboli
-							errore = ContieneSimboli(buffer);
+							errore = ContieneSimboli(buffer, false);
 
 							if (errore == false)
 								AssegnaStringa(&utilizzatore.professione, buffer, true);
@@ -412,7 +418,7 @@ bool MenuIniziale(bool* isCreatore)
 							ConversioneMinuscolo(buffer);
 
 							// Controlla che non contenga simboli
-							errore = ContieneSimboli(buffer);
+							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
 							if (errore == false)
@@ -489,7 +495,7 @@ bool MenuIniziale(bool* isCreatore)
 
 				bool indietro = false; // flag indietro
 
-				scanf("%s", buffer);
+				scanf("%100s", buffer);
 
 				// Controlla se l'utente ha inserito '0', nel caso flagga indietro
 				if (buffer[0] == '0')
@@ -516,6 +522,7 @@ bool MenuIniziale(bool* isCreatore)
 
 					bool esisteNomeUtente = ControllaNomeUtente(file, buffer);
 					*isCreatore = true;
+					
 
 					if (esisteNomeUtente == false)
 					{
@@ -542,13 +549,14 @@ bool MenuIniziale(bool* isCreatore)
 						printf("Inserire la password: ");
 						char buffer[MAX_BUFFER] = { 0 };
 
-						scanf("%s", buffer);
+						scanf("%100s", buffer);
 
 						unsigned short int passwordCorretta = ControllaPassword(file, buffer);
 
 						if (passwordCorretta == true)
 						{
 							fclose(file);
+							AssegnaStringa(&*nomeUtente, buffer, false);
 							return true;
 							// Esci dal menu iniziale e prosegui nel main col menu principale
 						}
@@ -590,7 +598,7 @@ bool MenuIniziale(bool* isCreatore)
 	return false;
 }
 
-void MenuPrincipale(bool* isCreatore)
+void MenuPrincipale(bool* isCreatore, char** nomeUtente)
 {
 	bool inEsecuzione = true;
 	if (*isCreatore == true)
@@ -604,6 +612,120 @@ void MenuPrincipale(bool* isCreatore)
 			unsigned int sceltaMenu;
 			bool errore = false;
 			scanf("%1u", &sceltaMenu);
+
+			switch (sceltaMenu)
+			{
+				// Gestione creatore
+				case 1:
+				{
+					system("cls");
+
+					puts("1. Carica immagine\n2. Modifica immagine\n3. Rimuovi immagine\n4. Visualizza statistiche\n5. Indietro");
+					scanf("%1u", &sceltaMenu);
+
+					Immagine_t immagine = { 0 };
+
+					// Sottomenu gestione creatore
+					switch (sceltaMenu)
+					{
+						// Carica immagine
+						case 1:
+						{
+							// Inserimento TITOLO
+							bool errore = false;
+							do
+							{
+								errore = false;
+								system("cls");
+								printf("Inserire il titolo dell'immagine: ");
+
+								char buffer[MAX_BUFFER] = { 0 };
+								scanf("%100s", buffer);
+
+								// Controlla che non contenga simboli
+								errore = ContieneSimboli(buffer, true);
+
+								// Altrimenti procedi
+								if (errore == false)
+									AssegnaStringa(&immagine.titolo, buffer, true);
+
+							} while (errore == true);
+
+							// Inserimento CATEGORIA
+							do
+							{
+								errore = false;
+								for (size_t i = 0; i < NUM_CATEGORIE; i++)
+								{
+									if (i % 2 == 0)
+										printf("%d. %-30s", i+1, categoria[i]);
+									else
+										printf("%d. %-30s\n", i+1, categoria[i]);
+
+									// All'ultimo ciclo scrivi
+									if (i == NUM_CATEGORIE - 1)
+										printf("\n\nInserire il numero della categoria scelta: ");
+								}
+
+								unsigned int categoriaScelta;
+								scanf("%u", &categoriaScelta);
+
+								if (categoriaScelta >= 1 && categoriaScelta <= NUM_CATEGORIE)
+								{
+
+									AssegnaStringa(&immagine.categoria, categoria[categoriaScelta-1], false);
+								}
+								else
+								{
+									errore = true;
+									printf("Errore! Inserire un'opzione valida!");
+									InvioPerContinuare();
+								}
+
+							} while (errore == true);
+
+							// Inserimento TAGS
+							do
+							{
+
+								errore = false;
+								for (size_t i = 0; i < NUM_TAGS; i++)
+								{
+									if (i % 2 == 0)
+										printf("%d. %-30s", i + 1, tags[i]);
+									else
+										printf("%d. %-30s\n", i + 1, tags[i]);
+								}
+
+								size_t j = 0;
+								for (size_t i = 3; i > 0; i--)
+								{
+									printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti): ", i);
+
+									unsigned int tagScelto;
+									scanf("%u", &tagScelto);
+
+									if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
+									{
+										AssegnaStringa(&immagine.tags[j], tags[tagScelto - 1], false);
+										j++;
+									}
+									else
+									{
+										errore = true;
+										printf("Errore! Inserire un'opzione valida!");
+										InvioPerContinuare();
+									}
+								}
+								
+							} while (errore == true);
+
+							// Assegnazione AUTORE
+
+						}
+					}
+				}
+			}
 
 
 

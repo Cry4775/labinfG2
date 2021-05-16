@@ -27,6 +27,9 @@
     <ClCompile Include="Utenti.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Immagini.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Immagini.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

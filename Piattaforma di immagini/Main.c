@@ -5,11 +5,12 @@
 int main(void)
 {
     bool isCreatore = false;
-    bool accessoEseguito = MenuIniziale(&isCreatore);
+    char* nomeUtente = { 0 };
+    bool accessoEseguito = MenuIniziale(&isCreatore, &nomeUtente);
 
     if (accessoEseguito == true)
     {
-        MenuPrincipale(&isCreatore);
+        MenuPrincipale(&isCreatore, &nomeUtente);
     }
 
     system("pause"); // Da rimuovere a programma finito

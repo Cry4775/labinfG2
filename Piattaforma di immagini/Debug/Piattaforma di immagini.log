@@ -1,2 +1,4 @@
 ﻿  Menu.c
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(676,74): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(710,64): warning C4090: 'function': different 'const' qualifiers
   Piattaforma di immagini.vcxproj -> C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Debug\Piattaforma di immagini.exe

@@ -7,7 +7,7 @@ void SvuotaInput()
     while (getchar() != '\n');
 }
 
-void AssegnaStringa(char** destinazione, char buffer[], unsigned short int primaMaiuscola)
+void AssegnaStringa(char** destinazione, char buffer[], bool primaMaiuscola)
 {
     if (primaMaiuscola == true)
         buffer[0] = toupper(buffer[0]);
@@ -68,22 +68,44 @@ void ConversioneMinuscolo(char buffer[])
     }
 }
 
-bool ContieneSimboli(char buffer[])
+bool ContieneSimboli(char buffer[], bool numeriAmmessi)
 {
-    size_t i = 0;
-    while (i < strlen(buffer))
+    if (numeriAmmessi == false)
     {
-        if (buffer[i] >= 'a' && buffer[i] <= 'z')
+        size_t i = 0;
+        while (i < strlen(buffer))
         {
-            i++;
+            if (buffer[i] >= 'a' && buffer[i] <= 'z')
+            {
+                i++;
+            }
+            else
+            {
+                printf("Errore! I simboli e i numeri non sono ammessi!\n");
+                InvioPerContinuare();
+                return true;
+            }
         }
-        else
-        {
-            printf("Errore! I simboli e i numeri non sono ammessi!\n");
-            return true;
-        }
+        return false;
     }
-    return false;
+    else
+    {
+        size_t i = 0;
+        while (i < strlen(buffer))
+        {
+            if ((buffer[i] >= 'a' && buffer[i] <= 'z') || (buffer[i] >= '0' && buffer[i] <= '9'))
+            {
+                i++;
+            }
+            else
+            {
+                printf("Errore! I simboli non sono ammessi!\n");
+                InvioPerContinuare();
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 void InvioPerContinuare()

@@ -25,7 +25,7 @@ typedef enum {
 
 void SvuotaInput();
 
-void AssegnaStringa(char** destinazione, char buffer[], unsigned short int primaMaiuscola);
+void AssegnaStringa(char** destinazione, char buffer[], bool primaMaiuscola);
 
 // Ritorna true (1) se è corretta, false (0) altrimenti
 bool DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno);
@@ -33,7 +33,7 @@ bool DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned s
 void ConversioneMinuscolo(char buffer[]);
 
 // Ritorna true (1) se contiene simboli, false (0) altrimenti
-bool ContieneSimboli(char buffer[]);
+bool ContieneSimboli(char buffer[], bool numeriAmmessi);
 
 void InvioPerContinuare();
 
