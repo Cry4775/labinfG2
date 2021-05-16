@@ -255,7 +255,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 					// Registrazione utente Utilizzatore
 					case 2:
 					{
-						puts("Registrazione utente creatore");
+						puts("Registrazione utente utilizzatore");
 						// Inserimento NOME UTENTE
 						do
 						{
@@ -265,7 +265,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							scanf("%100s", buffer);
 
 							file = fopen(PERCORSO_FILE_CREATORI, "r");
-							unsigned int giaEsistente = false;
+							bool giaEsistente = false;
 
 							// Se il file non esiste, creane uno
 							if (file == NULL)
@@ -661,11 +661,8 @@ void MenuPrincipale(bool* isCreatore, char** nomeUtente)
 										printf("%d. %-30s", i+1, categoria[i]);
 									else
 										printf("%d. %-30s\n", i+1, categoria[i]);
-
-									// All'ultimo ciclo scrivi
-									if (i == NUM_CATEGORIE - 1)
-										printf("\n\nInserire il numero della categoria scelta: ");
 								}
+								printf("\n\nInserire il numero della categoria scelta: ");
 
 								unsigned int categoriaScelta;
 								scanf("%u", &categoriaScelta);
