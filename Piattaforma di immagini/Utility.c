@@ -7,9 +7,10 @@ void SvuotaInput()
     while (getchar() != '\n');
 }
 
-void AssegnaStringa(char** destinazione, char buffer[])
+void AssegnaStringa(char** destinazione, char buffer[], unsigned short int primaMaiuscola)
 {
-    buffer[0] = toupper(buffer[0]);
+    if (primaMaiuscola == true)
+        buffer[0] = toupper(buffer[0]);
     *destinazione = (char*)malloc(strlen(buffer) + 1);
     strcpy(*destinazione, buffer);
 }

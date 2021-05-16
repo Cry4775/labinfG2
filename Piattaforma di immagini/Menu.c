@@ -1,7 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
+
 #include "Menu.h"
 
-void MenuIniziale()
+unsigned short int MenuIniziale()
 {
 	unsigned int inEsecuzione = true;
 	do
@@ -45,14 +46,17 @@ void MenuIniziale()
 							// METTERE GLI INPUT DA FILE
 							scanf("%100s", buffer);
 
-							file = fopen("creatori.dat", "r");
+
+							file = fopen(PERCORSO_FILE_CREATORI, "r");
 							unsigned int giaEsistente = false;
 
 							// Se il file non esiste, creane uno
 							if (file == NULL)
 							{
-								file = fopen("creatori.dat", "w");
-								file = fopen("creatori.dat", "r");
+								//file = fopen("creatori.dat", "w");
+								file = fopen(PERCORSO_FILE_CREATORI, "w");
+								fclose(file);
+								file = fopen(PERCORSO_FILE_CREATORI, "r");
 							}
 							
 							giaEsistente = ControllaNomeUtente(file, buffer);
@@ -61,12 +65,13 @@ void MenuIniziale()
 							// Controlliamo anche il file utilizzatori.dat
 							if (giaEsistente == false)
 							{
-								file = fopen("utilizzatori.dat", "r");
+								file = fopen(PERCORSO_FILE_UTILIZZATORI, "r");
 								// Se è la prima esecuzione e/o il file non esiste, creane uno
 								if (file == NULL)
 								{
-									file = fopen("utilizzatori.dat", "w");
-									file = fopen("utilizzatori.dat", "r");
+									file = fopen(PERCORSO_FILE_UTILIZZATORI, "w");
+									fclose(file);
+									file = fopen(PERCORSO_FILE_UTILIZZATORI, "r");
 								}
 
 								giaEsistente = ControllaNomeUtente(file, buffer);
@@ -86,7 +91,7 @@ void MenuIniziale()
 							}
 							// Altrimenti procedi
 							else
-								AssegnaStringa(&creatore.nomeUtente, buffer);
+								AssegnaStringa(&creatore.nomeUtente, buffer, false);
 						} while (errore == true);
 
 						// Inserimento PASSWORD
@@ -106,7 +111,7 @@ void MenuIniziale()
 
 							// Altrimenti procedi
 							else
-								AssegnaStringa(&creatore.password, buffer);
+								AssegnaStringa(&creatore.password, buffer, false);
 						} while (errore == true);
 
 						// Inserimento NOME
@@ -125,7 +130,7 @@ void MenuIniziale()
 
 							// Altrimenti procedi
 							if (errore == false)
-								AssegnaStringa(&creatore.nome, buffer);
+								AssegnaStringa(&creatore.nome, buffer, true);
 						} while (errore == true);
 
 						// Inserimento COGNOME
@@ -144,7 +149,7 @@ void MenuIniziale()
 
 							// Altrimenti procedi
 							if (errore == false)
-								AssegnaStringa(&creatore.cognome, buffer);
+								AssegnaStringa(&creatore.cognome, buffer, true);
 						} while (errore == true);
 
 						// Inserimento SESSO
@@ -179,7 +184,7 @@ void MenuIniziale()
 							errore = ContieneSimboli(buffer);
 
 							if (errore == false)
-								AssegnaStringa(&creatore.professione, buffer);
+								AssegnaStringa(&creatore.professione, buffer, true);
 						} while (errore == true);
 
 						// Inserimento NAZIONALITA
@@ -198,7 +203,7 @@ void MenuIniziale()
 
 							// Altrimenti procedi
 							if (errore == false)
-								AssegnaStringa(&creatore.nazionalita, buffer);
+								AssegnaStringa(&creatore.nazionalita, buffer, true);
 						} while (errore == true);
 
 						// Inserimento DATA DI NASCITA
@@ -223,7 +228,7 @@ void MenuIniziale()
 						creatore.dataIscrizione.anno = tm.tm_year + 1900;
 
 						// Fase di salvataggio dei dati su file
-						file = fopen("creatori.dat", "a");
+						file = fopen(PERCORSO_FILE_CREATORI, "a");
 						if (file == NULL)
 						{
 							printf("\n\n\nERRORE FATALE! Non e' stato possibile aprire il file\n");
@@ -231,45 +236,62 @@ void MenuIniziale()
 						}
 						else
 						{
-							// va aggiustato, vanno aggiunte parole chiave anche per gli altri campi e vanno aggiunti i campi assegnati dal sistema
-							// inoltre dovrei estrarne una funzione
-							fputs("user:", file);
+							// dovrei estrarne una funzione
+							fputs("nomeUtente:", file);
 							fputs(creatore.nomeUtente, file);
 							fputs("\n", file);
 							free(creatore.nomeUtente);
 
+							fputs("password:", file);
 							fputs(creatore.password, file);
 							fputs("\n", file);
 							free(creatore.password);
 
+							fputs("nome:", file);
 							fputs(creatore.nome, file);
 							fputs("\n", file);
 							free(creatore.nome);
 
+							fputs("cognome:", file);
 							fputs(creatore.cognome, file);
 							fputs("\n", file);
 							free(creatore.cognome);
 
+							fputs("sesso:", file);
 							fputc(creatore.sesso, file);
 							fputs("\n", file);
 
+							fputs("professione:", file);
 							fputs(creatore.professione, file);
 							fputs("\n", file);
 							free(creatore.professione);
 
+							fputs("nazionalita:", file);
 							fputs(creatore.nazionalita, file);
 							fputs("\n", file);
 							free(creatore.nazionalita);
 
+							fputs("dataNascita:", file);
 							fprintf(file, "%u/%u/%u\n", creatore.dataNascita.giorno, creatore.dataNascita.mese, creatore.dataNascita.anno);
 
-							fprintf(file, "%u/%u/%u\n\n", creatore.dataIscrizione.giorno, creatore.dataIscrizione.mese, creatore.dataIscrizione.anno);
+							fputs("dataIscrizione:", file);
+							fprintf(file, "%u/%u/%u\n", creatore.dataIscrizione.giorno, creatore.dataIscrizione.mese, creatore.dataIscrizione.anno);
+
+							fputs("numImmagini:", file);
+							fprintf(file, "%u\n", creatore.numImmagini);
+
+							fputs("numDownloadTot:", file);
+							fprintf(file, "%u\n", creatore.numDownloadTot);
+
+							fputs("mediaValutazioni:", file);
+							fprintf(file, "%f", creatore.mediaValutazioni);
 
 							fclose(file);
 
-							printf("Creatore correttamente registrato! Verrai ora reindirizzato al menu principale.\nPremere un tasto per continuare...");
+							printf("Creatore correttamente registrato! Verrai ora reindirizzato al menu principale.\nPremere INVIO per continuare...");
 							SvuotaInput();
 							getc(stdin);
+							return true;
 						}
 						break;
 					}
@@ -290,15 +312,15 @@ void MenuIniziale()
 							char buffer[MAX_BUFFER] = { 0 };
 							scanf("%100s", buffer);
 
-							file = fopen("creatori.dat", "r");
-							char string[101] = { 0 };
+							file = fopen(PERCORSO_FILE_CREATORI, "r");
 							unsigned int giaEsistente = false;
 
 							// Se il file non esiste, creane uno
 							if (file == NULL)
 							{
-								file = fopen("creatori.dat", "w");
-								file = fopen("creatori.dat", "r");
+								file = fopen(PERCORSO_FILE_CREATORI, "w");
+								fclose(file);
+								file = fopen(PERCORSO_FILE_CREATORI, "r");
 							}
 
 							giaEsistente = ControllaNomeUtente(file, buffer);
@@ -307,12 +329,13 @@ void MenuIniziale()
 
 							if (giaEsistente == false)
 							{
-								file = fopen("utilizzatori.dat", "r");
+								file = fopen(PERCORSO_FILE_UTILIZZATORI, "r");
 								// Se il file non esiste, creane uno
 								if (file == NULL)
 								{
-									file = fopen("utilizzatori.dat", "w");
-									file = fopen("utilizzatori.dat", "r");
+									file = fopen(PERCORSO_FILE_UTILIZZATORI, "w");
+									fclose(file);
+									file = fopen(PERCORSO_FILE_UTILIZZATORI, "r");
 								}
 
 								giaEsistente = ControllaNomeUtente(file, buffer);
@@ -332,7 +355,7 @@ void MenuIniziale()
 							}
 							// Altrimenti procedi
 							else
-								AssegnaStringa(&utilizzatore.nomeUtente, buffer);
+								AssegnaStringa(&utilizzatore.nomeUtente, buffer, false);
 						} while (errore == true);
 
 						// Inserimento PASSWORD
@@ -352,7 +375,7 @@ void MenuIniziale()
 
 							// Altrimenti procedi
 							else
-								AssegnaStringa(&utilizzatore.password, buffer);
+								AssegnaStringa(&utilizzatore.password, buffer, false);
 						} while (errore == true);
 
 						// Inserimento NOME
@@ -371,7 +394,7 @@ void MenuIniziale()
 
 							// Altrimenti procedi
 							if (errore == false)
-								AssegnaStringa(&utilizzatore.nome, buffer);
+								AssegnaStringa(&utilizzatore.nome, buffer, true);
 						} while (errore == true);
 
 						// Inserimento COGNOME
@@ -390,7 +413,7 @@ void MenuIniziale()
 
 							// Altrimenti procedi
 							if (errore == false)
-								AssegnaStringa(&utilizzatore.cognome, buffer);
+								AssegnaStringa(&utilizzatore.cognome, buffer, true);
 						} while (errore == true);
 
 						// Inserimento SESSO
@@ -425,7 +448,7 @@ void MenuIniziale()
 							errore = ContieneSimboli(buffer);
 
 							if (errore == false)
-								AssegnaStringa(&utilizzatore.professione, buffer);
+								AssegnaStringa(&utilizzatore.professione, buffer, true);
 						} while (errore == true);
 
 						// Inserimento NAZIONALITA
@@ -444,7 +467,7 @@ void MenuIniziale()
 
 							// Altrimenti procedi
 							if (errore == false)
-								AssegnaStringa(&utilizzatore.nazionalita, buffer);
+								AssegnaStringa(&utilizzatore.nazionalita, buffer, true);
 						} while (errore == true);
 
 						// Inserimento DATA DI NASCITA
@@ -469,53 +492,67 @@ void MenuIniziale()
 						utilizzatore.dataIscrizione.anno = tm.tm_year + 1900;
 
 						// Fase di salvataggio dei dati su file
-						file = fopen("utilizzatori.dat", "a");
+						file = fopen(PERCORSO_FILE_UTILIZZATORI, "a");
 						if (file == NULL)
 						{
 							printf("\n\n\nERRORE FATALE! Non e' stato possibile aprire il file\n");
 							return;
 						}
 						else
-						{
-							// va aggiustato, vanno aggiunte parole chiave anche per gli altri campi e vanno aggiunti i campi assegnati dal sistema
-							// inoltre dovrei estrarne una funzione
-							fputs("user:", file);
+						{	
+							//dovrei estrarne una funzione
+							fputs("nomeUtente:", file);
 							fputs(utilizzatore.nomeUtente, file);
 							fputs("\n", file);
 							free(utilizzatore.nomeUtente);
 
+							fputs("password:", file);
 							fputs(utilizzatore.password, file);
 							fputs("\n", file);
 							free(utilizzatore.password);
 
+							fputs("nome:", file);
 							fputs(utilizzatore.nome, file);
 							fputs("\n", file);
 							free(utilizzatore.nome);
 
+							fputs("cognome:", file);
 							fputs(utilizzatore.cognome, file);
 							fputs("\n", file);
 							free(utilizzatore.cognome);
 
+							fputs("sesso:", file);
 							fputc(utilizzatore.sesso, file);
 							fputs("\n", file);
 
+							fputs("professione:", file);
 							fputs(utilizzatore.professione, file);
 							fputs("\n", file);
 							free(utilizzatore.professione);
 
+							fputs("nazionalita:", file);
 							fputs(utilizzatore.nazionalita, file);
 							fputs("\n", file);
 							free(utilizzatore.nazionalita);
 
+							fputs("dataNascita:", file);
 							fprintf(file, "%u/%u/%u\n", utilizzatore.dataNascita.giorno, utilizzatore.dataNascita.mese, utilizzatore.dataNascita.anno);
 
+							fputs("dataIscrizione:", file);
 							fprintf(file, "%u/%u/%u\n\n", utilizzatore.dataIscrizione.giorno, utilizzatore.dataIscrizione.mese, utilizzatore.dataIscrizione.anno);
+
+							fputs("numValutazioni:", file);
+							fprintf(file, "%u\n", utilizzatore.numValutazioni);
+
+							fputs("numDownloadTot:", file);
+							fprintf(file, "%u\n", utilizzatore.numDownloadTot);
 
 							fclose(file);
 
-							printf("\n\nUtilizzatore correttamente registrato! Verrai ora reindirizzato al menu principale.\nPremere un tasto per continuare...");
+							printf("\n\nUtilizzatore correttamente registrato! Verrai ora reindirizzato al menu principale.\nPremere INVIO per continuare...");
 							SvuotaInput();
 							getc(stdin);
+							return true;
 						}
 						break;
 					}
@@ -531,13 +568,107 @@ void MenuIniziale()
 			} while (errore == true);
 			break;
 		}
+
+
+
+
+
+
+		// Accesso utente
 		case 2:
+		{
+			do
+			{
+				system("cls");
+				printf("Inserire il nome utente: ");
+				char bufferNomeUtente[MAX_BUFFER] = { 0 };
+				unsigned short int indietro = false;
+
+				scanf("%s", bufferNomeUtente);
+
+				if (bufferNomeUtente[0] == '0')
+				{
+					if (bufferNomeUtente[1] == '\0')
+					{
+						errore = false;
+						indietro = true;
+					}
+				}
+
+				if (indietro == false)
+				{
+					file = fopen(PERCORSO_FILE_CREATORI, "r");
+					// Se il file non esiste, creane uno
+					if (file == NULL)
+					{
+						file = fopen(PERCORSO_FILE_CREATORI, "w");
+						fclose(file);
+						file = fopen(PERCORSO_FILE_CREATORI, "r");
+					}
+
+					unsigned short int esisteNomeUtente = ControllaNomeUtente(file, bufferNomeUtente);
+
+					
+
+					if (esisteNomeUtente == false)
+					{
+						fclose(file);
+						file = fopen(PERCORSO_FILE_UTILIZZATORI, "r");
+						// Se è la prima esecuzione e/o il file non esiste, creane uno
+						if (file == NULL)
+						{
+							file = fopen(PERCORSO_FILE_UTILIZZATORI, "w");
+							fclose(file);
+							file = fopen(PERCORSO_FILE_UTILIZZATORI, "r");
+						}
+
+						esisteNomeUtente = ControllaNomeUtente(file, bufferNomeUtente);
+					}
+
+
+
+					if (esisteNomeUtente == true)
+					{
+						printf("Inserire la password: ");
+						char bufferPassword[MAX_BUFFER] = { 0 };
+
+						scanf("%s", bufferPassword);
+						unsigned short int passwordCorretta = ControllaPassword(file, bufferNomeUtente, bufferPassword);
+
+						if (passwordCorretta == true)
+						{
+							fclose(file);
+							return true;
+						}
+						else
+						{
+							printf("Errore! Password non corretta! Riprovare.\n\n");
+							puts("Premere INVIO per continuare...");
+							SvuotaInput();
+							getc(stdin);
+							errore = true;
+						}
+
+					}
+					else
+					{
+						printf("Errore! Nome utente non esistente. Controllare il nome utente digitato oppure digita 0 per tornare al menu iniziale e registrarsi.\n\n");
+						puts("Premere INVIO per continuare...");
+						SvuotaInput();
+						getc(stdin);
+						errore = true;
+					}
+					fclose(file);
+				}
+			} while (errore == true);
+		
 			break;
+		}
 		case 3:
 			inEsecuzione = false;
 			break;
 		default:
-			puts("Errore! Selezionare un'opzione valida!\nPremere un tasto per continuare...");
+			puts("Errore! Selezionare un'opzione valida!\nPremere INVIO per continuare...");
 			SvuotaInput();
 			getc(stdin);
 			break;
@@ -546,4 +677,11 @@ void MenuIniziale()
 		system("cls");
 
 	} while (inEsecuzione == true);
+
+	return false;
+}
+
+void MenuPrincipale()
+{
+
 }

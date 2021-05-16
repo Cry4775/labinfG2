@@ -150,7 +150,8 @@
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="creatori.dat" />
+    <None Include="utenti\creatori.dat" />
+    <None Include="utenti\utilizzatori.dat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

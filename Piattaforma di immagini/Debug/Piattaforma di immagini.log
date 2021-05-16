@@ -1,2 +1,4 @@
 ﻿  Menu.c
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(499,8): warning C4033: 'MenuIniziale' must return a value
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(679): warning C4715: 'MenuIniziale': not all control paths return a value
   Piattaforma di immagini.vcxproj -> C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Debug\Piattaforma di immagini.exe

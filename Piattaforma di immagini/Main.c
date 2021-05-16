@@ -4,7 +4,12 @@
 
 int main(void)
 {
-    MenuIniziale();
+    unsigned short int accessoEseguito = MenuIniziale();
+
+    if (accessoEseguito == true)
+    {
+
+    }
 
     system("pause"); // Da rimuovere a programma finito
     return 0;

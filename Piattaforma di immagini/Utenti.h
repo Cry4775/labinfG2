@@ -9,6 +9,8 @@
 
 #define MIN_CAR_NOME_UTENTE 4
 #define MIN_CAR_PASSWORD 8
+#define PERCORSO_FILE_CREATORI "utenti/creatori.dat"
+#define PERCORSO_FILE_UTILIZZATORI "utenti/utilizzatori.dat"
 
 typedef struct
 {
@@ -42,5 +44,7 @@ typedef struct
 } Utilizzatore_t;
 
 unsigned short int ControllaNomeUtente(FILE* file, char buffer[]);
+
+unsigned short int ControllaPassword(FILE* file, char bufferNomeUtente[], char bufferPassword[]);
 
 #endif
