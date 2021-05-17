@@ -94,7 +94,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 								AssegnaStringa(&creatore.nomeUtente, buffer, false);
 								AssegnaStringa(&*nomeUtente, buffer, false);
 							}
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento PASSWORD
 						do
@@ -103,6 +103,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							printf("Inserire una password (min. 8 caratteri): ");
 							char buffer[MAX_BUFFER] = { 0 };
 							scanf("%100s", buffer);
+							SvuotaInput();
 
 							// Controlla che il minimo sia rispettato
 							if (strlen(buffer) < MIN_CAR_PASSWORD)
@@ -114,7 +115,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							// Altrimenti procedi
 							else
 								AssegnaStringa(&creatore.password, buffer, false);
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento NOME
 						do
@@ -122,7 +123,8 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = false;
 							printf("Inserire il nome: ");
 							char buffer[MAX_BUFFER] = { 0 };
-							scanf("%100s", buffer);
+							fgets(buffer, 100, stdin);
+							SvuotaInputFGets(buffer);
 
 							// Conversione della stringa in minuscolo
 							ConversioneMinuscolo(buffer);
@@ -131,9 +133,9 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
-							if (errore == false)
+							if (!errore)
 								AssegnaStringa(&creatore.nome, buffer, true);
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento COGNOME
 						do
@@ -141,7 +143,8 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = false;
 							printf("Inserire il cognome: ");
 							char buffer[MAX_BUFFER] = { 0 };
-							scanf("%100s", buffer);
+							fgets(buffer, 100, stdin);
+							SvuotaInputFGets(buffer);
 
 							// Conversione della stringa in minuscolo
 							ConversioneMinuscolo(buffer);
@@ -150,18 +153,18 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
-							if (errore == false)
+							if (!errore)
 								AssegnaStringa(&creatore.cognome, buffer, true);
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento SESSO
 						do
 						{
 							errore = false;
 							printf("Inserire il sesso (M/F): ");
-							SvuotaInput();
 							scanf("%c", &creatore.sesso);
 							creatore.sesso = toupper(creatore.sesso);
+							SvuotaInput();
 
 							// Controllo errori
 							if (creatore.sesso != 'M' && creatore.sesso != 'F')
@@ -169,7 +172,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 								errore = true;
 								printf("Errore! Inserire M o F!\n");
 							}
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento PROFESSIONE
 						do
@@ -177,7 +180,8 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = false;
 							printf("Inserire la professione: ");
 							char buffer[MAX_BUFFER] = { 0 };
-							scanf("%100s", buffer);
+							fgets(buffer, 100, stdin);
+							SvuotaInputFGets(buffer);
 
 							// Conversione della stringa in minuscolo
 							ConversioneMinuscolo(buffer);
@@ -185,9 +189,9 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							// Controlla che non contenga simboli
 							errore = ContieneSimboli(buffer, false);
 
-							if (errore == false)
+							if (!errore)
 								AssegnaStringa(&creatore.professione, buffer, true);
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento NAZIONALITA
 						do
@@ -195,7 +199,8 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = false;
 							printf("Inserire la nazionalita': ");
 							char buffer[MAX_BUFFER] = { 0 };
-							scanf("%100s", buffer);
+							fgets(buffer, 100, stdin);
+							SvuotaInputFGets(buffer);
 
 							// Conversione della stringa in minuscolo
 							ConversioneMinuscolo(buffer);
@@ -204,9 +209,9 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
-							if (errore == false)
+							if (!errore)
 								AssegnaStringa(&creatore.nazionalita, buffer, true);
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento DATA DI NASCITA
 						do
@@ -220,7 +225,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 								errore = true;
 								printf("Errore! La data e' incorretta!\n");
 							}
-						} while (errore == true);
+						} while (errore);
 
 						// Assegnazione data di iscrizione
 						time_t t = time(NULL);
@@ -311,7 +316,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 								AssegnaStringa(&utilizzatore.nomeUtente, buffer, false);
 								AssegnaStringa(&*nomeUtente, buffer, false);
 							}
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento PASSWORD
 						do
@@ -331,7 +336,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							// Altrimenti procedi
 							else
 								AssegnaStringa(&utilizzatore.password, buffer, false);
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento NOME
 						do
@@ -339,7 +344,8 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = false;
 							printf("Inserire il nome: ");
 							char buffer[MAX_BUFFER] = { 0 };
-							scanf("%100s", buffer);
+							fgets(buffer, 100, stdin);
+							SvuotaInputFGets(buffer);
 
 							// Conversione della stringa in minuscolo
 							ConversioneMinuscolo(buffer);
@@ -348,9 +354,9 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
-							if (errore == false)
+							if (!errore)
 								AssegnaStringa(&utilizzatore.nome, buffer, true);
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento COGNOME
 						do
@@ -358,7 +364,8 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = false;
 							printf("Inserire il cognome: ");
 							char buffer[MAX_BUFFER] = { 0 };
-							scanf("%100s", buffer);
+							fgets(buffer, 100, stdin);
+							SvuotaInputFGets(buffer);
 							
 							// Conversione della stringa in minuscolo
 							ConversioneMinuscolo(buffer);
@@ -367,18 +374,18 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
-							if (errore == false)
+							if (!errore)
 								AssegnaStringa(&utilizzatore.cognome, buffer, true);
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento SESSO
 						do
 						{
 							errore = false;
 							printf("Inserire il sesso (M/F): ");
-							SvuotaInput();
 							scanf("%c", &utilizzatore.sesso);
 							utilizzatore.sesso = toupper(utilizzatore.sesso);
+							SvuotaInput();
 
 							// Controllo errori
 							if (utilizzatore.sesso != 'M' && utilizzatore.sesso != 'F')
@@ -386,7 +393,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 								errore = true;
 								printf("Errore! Inserire M o F!\n");
 							}
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento PROFESSIONE
 						do
@@ -394,7 +401,8 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = false;
 							printf("Inserire la professione: ");
 							char buffer[MAX_BUFFER] = { 0 };
-							scanf("%100s", buffer);
+							fgets(buffer, 100, stdin);
+							SvuotaInputFGets(buffer);
 
 							// Conversione della stringa in minuscolo
 							ConversioneMinuscolo(buffer);
@@ -402,9 +410,9 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							// Controlla che non contenga simboli
 							errore = ContieneSimboli(buffer, false);
 
-							if (errore == false)
+							if (!errore)
 								AssegnaStringa(&utilizzatore.professione, buffer, true);
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento NAZIONALITA
 						do
@@ -412,7 +420,8 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = false;
 							printf("Inserire la nazionalita': ");
 							char buffer[MAX_BUFFER] = { 0 };
-							scanf("%100s", buffer);
+							fgets(buffer, 100, stdin);
+							SvuotaInputFGets(buffer);
 
 							// Conversione della stringa in minuscolo
 							ConversioneMinuscolo(buffer);
@@ -421,9 +430,9 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 							errore = ContieneSimboli(buffer, false);
 
 							// Altrimenti procedi
-							if (errore == false)
+							if (!errore)
 								AssegnaStringa(&utilizzatore.nazionalita, buffer, true);
-						} while (errore == true);
+						} while (errore);
 
 						// Inserimento DATA DI NASCITA
 						do
@@ -437,7 +446,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 								errore = true;
 								printf("Errore! La data e' incorretta!\n");
 							}
-						} while (errore == true);
+						} while (errore);
 
 						// Assegnazione data di iscrizione
 						time_t t = time(NULL);
@@ -475,7 +484,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 						printf("Errore! Selezionare un'opzione valida!");
 						break;
 					}
-			} while (errore == true);
+			} while (errore);
 			break;
 		}
 
@@ -546,6 +555,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 					// N.B. ovvero esattamente alla riga della password corrispondente al nome utente inserito.
 					if (esisteNomeUtente == true)
 					{
+						AssegnaStringa(&*nomeUtente, buffer, false);
 						printf("Inserire la password: ");
 						char buffer[MAX_BUFFER] = { 0 };
 
@@ -556,7 +566,6 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 						if (passwordCorretta == true)
 						{
 							fclose(file);
-							AssegnaStringa(&*nomeUtente, buffer, false);
 							return true;
 							// Esci dal menu iniziale e prosegui nel main col menu principale
 						}
@@ -576,7 +585,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 					}
 					fclose(file);
 				}
-			} while (errore == true);
+			} while (errore);
 		
 			break;
 		}
@@ -600,6 +609,7 @@ bool MenuIniziale(bool* isCreatore, char** nomeUtente)
 
 void MenuPrincipale(bool* isCreatore, char** nomeUtente)
 {
+	
 	bool inEsecuzione = true;
 	if (*isCreatore == true)
 	{
@@ -635,26 +645,29 @@ void MenuPrincipale(bool* isCreatore, char** nomeUtente)
 							bool errore = false;
 							do
 							{
+								SvuotaInput();
 								errore = false;
 								system("cls");
 								printf("Inserire il titolo dell'immagine: ");
 
 								char buffer[MAX_BUFFER] = { 0 };
-								scanf("%100s", buffer);
+								fgets(buffer, 100, stdin);
+								SvuotaInputFGets(buffer);
 
 								// Controlla che non contenga simboli
 								errore = ContieneSimboli(buffer, true);
 
 								// Altrimenti procedi
-								if (errore == false)
+								if (!errore)
 									AssegnaStringa(&immagine.titolo, buffer, true);
-
-							} while (errore == true);
+								
+							} while (errore);
 
 							// Inserimento CATEGORIA
 							do
 							{
 								errore = false;
+								printf("\n");
 								for (size_t i = 0; i < NUM_CATEGORIE; i++)
 								{
 									if (i % 2 == 0)
@@ -679,12 +692,12 @@ void MenuPrincipale(bool* isCreatore, char** nomeUtente)
 									InvioPerContinuare();
 								}
 
-							} while (errore == true);
+							} while (errore);
 
 							// Inserimento TAGS
 							do
 							{
-
+								printf("\n");
 								errore = false;
 								for (size_t i = 0; i < NUM_TAGS; i++)
 								{
@@ -697,29 +710,112 @@ void MenuPrincipale(bool* isCreatore, char** nomeUtente)
 								size_t j = 0;
 								for (size_t i = 3; i > 0; i--)
 								{
-									printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti): ", i);
-
-									unsigned int tagScelto;
-									scanf("%u", &tagScelto);
-
-									if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
+									do
 									{
-										AssegnaStringa(&immagine.tags[j], tags[tagScelto - 1], false);
-										j++;
+										errore = false;
+										printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti - Inserire 0 per terminare): ", i);
+
+										unsigned int tagScelto;
+										scanf("%u", &tagScelto);
+
+										if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
+										{
+											AssegnaStringa(&immagine.tags[j], tags[tagScelto - 1], false);
+											j++;
+										}
+										else if (tagScelto == 0)
+										{
+											if (i == MAX_TAGS)
+											{
+												errore = true;
+												printf("\nErrore! Selezionare almeno un tag!\n");
+											}
+											else
+												i = 1;
+												// Esci dal ciclo
+										}
+										else
+										{
+											errore = true;
+											printf("Errore! Inserire un'opzione valida!");
+											InvioPerContinuare();
+										}
+									} while (errore);
+								}
+								
+							} while (errore);
+
+							// Assegnazione AUTORE
+							AssegnaStringa(&immagine.nomeUtente, *nomeUtente, false);
+
+							// Assegnazione FORMATO e TIPOLOGIA
+							int indiceFormato = RNG(0, NUM_FORMATI);
+							AssegnaStringa(&immagine.formato, formato[indiceFormato], false);
+							AssegnaStringa(&immagine.tipologia, tipologia[indiceFormato], false);
+
+							// Assegnazione NOME FILE
+							char buffer[MAX_BUFFER] = { 0 };
+							strcpy(buffer, immagine.titolo);
+							strcat(buffer, immagine.formato);
+							AssegnaStringa(&immagine.nomeFile, buffer, false);
+
+							// Assegnazione DATA DI CREAZIONE
+							time_t t = time(NULL);
+							struct tm tm = *localtime(&t);
+							immagine.dataCaricamento.giorno = tm.tm_mday;
+							immagine.dataCaricamento.mese = tm.tm_mon + 1;
+							immagine.dataCaricamento.anno = tm.tm_year + 1900;
+
+							// Assegnazione RISOLUZIONE (supponiamo proporzioni 16:9)
+							immagine.risoluzione.x = RNG(480, 3840);
+							immagine.risoluzione.y = immagine.risoluzione.x / 1.7777;
+
+							// Assegnazione DIMENSIONE (in MB) - Moltiplichiamo il numero totale dei pixel per 3 byte ovvero il peso di ogni pixel e dividiamo per ottenere i megabyte
+							immagine.dimensione = (float)((immagine.risoluzione.x * immagine.risoluzione.y) * 3) / 1000000;
+
+							// Fase di salvataggio dei dati su file
+							file = fopen(PERCORSO_FILE_IMMAGINI, "a");
+							if (file == NULL)
+							{
+								printf("\n\n\nERRORE FATALE! Non e' stato possibile aprire il file\n");
+								exit(EXIT_SUCCESS);
+							}
+							else
+							{
+								SalvaDatiImmagine(file, &immagine);
+								fclose(file);
+
+								if (file = fopen(PERCORSO_FILE_CREATORI, "r+"))
+								{
+									if (!AggiornaNumImmaginiCreatore(file, *nomeUtente))
+									{
+										printf("Errore nell'aggiornamento del profilo creatore!");
+										InvioPerContinuare();
 									}
 									else
 									{
-										errore = true;
-										printf("Errore! Inserire un'opzione valida!");
+										printf("Immagine caricata con successo!\n\n");
 										InvioPerContinuare();
 									}
+									fclose(file);
 								}
-								
-							} while (errore == true);
-
-							// Assegnazione AUTORE
-
+							}
+							break;
 						}
+						// Modifica immagine
+						case 2:
+						{
+							if (file = fopen(PERCORSO_FILE_IMMAGINI, "r+") == NULL)
+							{
+								file = fopen(PERCORSO_FILE_IMMAGINI, "w+");
+							}
+							
+							// Conta prima le immagini caricate
+							//unsigned short int immaginiCaricate = 
+
+							break;
+						}
+						
 					}
 				}
 			}

@@ -3,8 +3,6 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <stdio.h>
-
 #include "Utility.h"
 
 #define MIN_CAR_NOME_UTENTE 4
@@ -50,6 +48,8 @@ bool ControllaPassword(FILE* file, char buffer[]);
 void SalvaDatiCreatore(FILE* file, Creatore_t* creatore);
 
 void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore);
+
+bool AggiornaNumImmaginiCreatore(FILE* file, char* nomeUtente);
 
 
 

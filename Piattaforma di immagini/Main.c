@@ -4,6 +4,8 @@
 
 int main(void)
 {
+    srand(time(NULL));
+
     bool isCreatore = false;
     char* nomeUtente = { 0 };
     bool accessoEseguito = MenuIniziale(&isCreatore, &nomeUtente);
@@ -16,13 +18,3 @@ int main(void)
     system("pause"); // Da rimuovere a programma finito
     return 0;
 }
-
-
-
-
-
-
-/* per formattare l'allineamento delle colonne
-printf("%15s%15s\n", "ciao", "ciao");
-printf("%15s%15s\n", "ciaoooo", "ciao");
-*/

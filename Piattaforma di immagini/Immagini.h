@@ -9,6 +9,8 @@
 
 #define MAX_TAGS 3
 
+#define PERCORSO_FILE_IMMAGINI "immagini/immagini.dat"
+
 extern const char* formato[NUM_FORMATI];
 extern const char* tipologia[NUM_FORMATI];
 extern const char* categoria[NUM_CATEGORIE];
@@ -38,6 +40,7 @@ typedef struct
     Data_t dataCaricamento;
 } Immagine_t;
 
+void SalvaDatiImmagine(FILE* file, Immagine_t* immagine);
 
 
 #endif

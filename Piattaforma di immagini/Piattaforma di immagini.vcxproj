@@ -152,6 +152,7 @@
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="immagini\immagini.dat" />
     <None Include="utenti\creatori.dat" />
     <None Include="utenti\utilizzatori.dat" />
   </ItemGroup>

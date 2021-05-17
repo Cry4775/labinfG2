@@ -141,3 +141,49 @@ void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore)
 	fputs("numDownloadTot:", file);
 	fprintf(file, "%u\n\n", utilizzatore->numDownloadTot);
 }
+
+bool AggiornaNumImmaginiCreatore (FILE* file, char* nomeUtente)
+{
+	char buf[BUFSIZ];
+	char buffer[BUFSIZ] = { 0 };
+	char* ptr = NULL;
+	unsigned int oldNumImmagini = 0;
+
+	while (fgets(buf, sizeof(buf), file)) // Leggo ogni riga del file su buf
+	{
+		ptr = buf; // Assegno a ptr la stringa appena copiata dal file (buf)
+		while ((ptr = strtok(ptr, ":")) != NULL) // Quando trova un : (delimitatore) dividi la stringa
+		{
+			if (strcmp(ptr, "nomeUtente") == 0)
+			{
+				ptr = strtok(NULL, " \n\0"); // Richiedi il token successivo (ciò che sta dopo nomeUtente: )
+				if (strcmp(ptr, nomeUtente) == 0) // Compara la stringa contrassegnata da nomeUtente con la stringa memorizzata nel buffer
+				{
+					double posizione;
+					while (fgets(buffer, sizeof(buffer), file))
+					{
+						ptr = buffer;
+						if (strstr(buffer, "numImmagini"))
+						{
+							ptr = strtok(ptr, ":");
+							if (strcmp(ptr, "numImmagini") == 0)
+							{
+								fseek(file, posizione, SEEK_SET); // Torno sulla riga di numImmagini
+								fscanf(file, " %99[^:]:%u", buffer, &oldNumImmagini);
+								fseek(file, posizione, SEEK_SET); // Torno sulla riga di numImmagini
+								unsigned int newNumImmagini = oldNumImmagini + 1;
+								fputs("numImmagini:", file);
+								fprintf(file, "%u", newNumImmagini);
+								return true;
+							}
+						}
+						else
+							posizione = ftell(file);
+					}
+				}
+			}
+			ptr = NULL;
+		}
+	}
+	return false;
+}

@@ -1,4 +1,8 @@
 ﻿  Menu.c
-C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(676,74): warning C4090: 'function': different 'const' qualifiers
-C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(710,64): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(686,74): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(723,65): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(753,64): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(754,68): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(771,64): warning C4244: '=': conversion from 'double' to 'unsigned int', possible loss of data
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(808,62): warning C4047: '=': 'FILE *' differs in levels of indirection from 'int'
   Piattaforma di immagini.vcxproj -> C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Debug\Piattaforma di immagini.exe

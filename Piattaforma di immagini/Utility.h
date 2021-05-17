@@ -25,6 +25,8 @@ typedef enum {
 
 void SvuotaInput();
 
+void SvuotaInputFGets(char buffer[]);
+
 void AssegnaStringa(char** destinazione, char buffer[], bool primaMaiuscola);
 
 // Ritorna true (1) se è corretta, false (0) altrimenti
@@ -36,5 +38,7 @@ void ConversioneMinuscolo(char buffer[]);
 bool ContieneSimboli(char buffer[], bool numeriAmmessi);
 
 void InvioPerContinuare();
+
+int RNG(int MIN, int MAX);
 
 #endif
