@@ -12,13 +12,13 @@
 
 typedef struct
 {
-    char* nomeUtente;
-    char* password;
-    char* nome;
-    char* cognome;
+    char nomeUtente[MAX_BUFFER];
+    char password[MAX_BUFFER];
+    char nome[MAX_BUFFER];
+    char cognome[MAX_BUFFER];
     char sesso;
-    char* professione;
-    char* nazionalita;
+    char professione[MAX_BUFFER];
+    char nazionalita[MAX_BUFFER];
     Data_t dataNascita;
     Data_t dataIscrizione;
     unsigned int numImmagini;
@@ -28,13 +28,13 @@ typedef struct
 
 typedef struct
 {
-    char* nomeUtente;
-    char* password;
-    char* nome;
-    char* cognome;
+    char nomeUtente[MAX_BUFFER];
+    char password[MAX_BUFFER];
+    char nome[MAX_BUFFER];
+    char cognome[MAX_BUFFER];
     char sesso;
-    char* professione;
-    char* nazionalita;
+    char professione[MAX_BUFFER];
+    char nazionalita[MAX_BUFFER];
     Data_t dataNascita;
     Data_t dataIscrizione;
     unsigned int numValutazioni;
@@ -48,8 +48,6 @@ bool ControllaPassword(FILE* file, char buffer[]);
 void SalvaDatiCreatore(FILE* file, Creatore_t* creatore);
 
 void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore);
-
-bool AggiornaNumImmaginiCreatore(FILE* file, char* nomeUtente);
 
 
 

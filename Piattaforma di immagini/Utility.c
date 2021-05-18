@@ -2,7 +2,7 @@
 #include "Utility.h"
 
 
-void SvuotaInput()
+void SvuotaInputGetChar()
 {
     while (getchar() != '\n');
 }
@@ -12,13 +12,12 @@ void SvuotaInputFGets(char buffer[])
     while (!strchr(buffer, '\n') && fgets(buffer, 100, stdin));
 }
 
-void AssegnaStringa(char** destinazione, char buffer[], bool primaMaiuscola)
+void AssegnaStringa(char destinazione[], char buffer[], bool primaMaiuscola)
 {
-    if (primaMaiuscola == true)
+    if (primaMaiuscola)
         buffer[0] = toupper(buffer[0]);
 
-    *destinazione = (char*)malloc(strlen(buffer) + 1);
-    strcpy(*destinazione, buffer);
+    strcpy(destinazione, buffer);
 }
 
 bool DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno)
@@ -75,7 +74,7 @@ void ConversioneMinuscolo(char buffer[])
 
 bool ContieneSimboli(char buffer[], bool numeriAmmessi)
 {
-    if (numeriAmmessi == false)
+    if (!numeriAmmessi)
     {
         size_t i = 0;
         while (i < strlen(buffer))
@@ -120,7 +119,7 @@ bool ContieneSimboli(char buffer[], bool numeriAmmessi)
 void InvioPerContinuare()
 {
     puts("Premere INVIO per continuare...");
-    SvuotaInput();
+    SvuotaInputGetChar();
     getc(stdin);
 }
 

@@ -23,18 +23,22 @@ typedef enum {
     true
 } bool;
 
-void SvuotaInput();
+
+void SvuotaInputGetChar();
 
 void SvuotaInputFGets(char buffer[]);
 
-void AssegnaStringa(char** destinazione, char buffer[], bool primaMaiuscola);
+// Copia la stringa da buffer a destinazione e se primaMaiuscola viene passata come true, la prima lettera verrà impostata maiuscola
+void AssegnaStringa(char destinazione, char buffer[], bool primaMaiuscola);
 
 // Ritorna true (1) se è corretta, false (0) altrimenti
 bool DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno);
 
+// Converte tutta la stringa in minuscolo
 void ConversioneMinuscolo(char buffer[]);
 
-// Ritorna true (1) se contiene simboli, false (0) altrimenti
+// Ritorna true (1) se contiene simboli, false (0) altrimenti, 
+//se numeriAmmessi viene passata come true, allora i numeri non saranno contati come simboli
 bool ContieneSimboli(char buffer[], bool numeriAmmessi);
 
 void InvioPerContinuare();

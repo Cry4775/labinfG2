@@ -24,14 +24,13 @@ typedef struct
 
 typedef struct
 {
-    char* titolo;
-    char* categoria;
-    char* tags[MAX_TAGS];
-    
-    char* nomeUtente;
-    char* formato;
-    char* tipologia;
-    char* nomeFile; // titolo + formato
+    char titolo[MAX_BUFFER];
+    char categoria[MAX_BUFFER];
+    char tags[MAX_TAGS][MAX_BUFFER];
+    char nomeUtente[MAX_BUFFER];
+    char formato[MAX_BUFFER];
+    char tipologia[MAX_BUFFER];
+    char nomeFile[MAX_BUFFER]; // titolo + formato
     unsigned int valutazione;
     float valutazioneMedia;
     unsigned int numDownload;

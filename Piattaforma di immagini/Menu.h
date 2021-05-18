@@ -9,8 +9,8 @@
 FILE* file;
 
 // Gestisce le funzionalità del Menu Iniziale, quali registrazione e accesso utente
-bool MenuIniziale(bool* isCreatore, char** nomeUtente);
+bool MenuIniziale(bool* isCreatore, char nomeUtente[]);
 
-void MenuPrincipale(bool* isCreatore, char** nomeUtente);
+void MenuPrincipale(bool* isCreatore, char nomeUtente[]);
 
 #endif
