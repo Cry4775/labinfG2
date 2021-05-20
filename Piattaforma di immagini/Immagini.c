@@ -410,9 +410,9 @@ void InserisciCategoriaCaricamento(Immagine_t** immagine)
 	} while (errore);
 }
 
-bool StampaImmaginiCaricate(FILE* file, char nomeUtente[])
+bool StampaImmaginiCaricate(FILE* file, char nomeUtente[])	
 {
-	bool trovato = false;
+	bool trovato = false;	 // trovato = c'è almeno un'immagine caricata dall'utente?								
 	// Stampa le immagini caricate dall'utente
 	printf("Immagini caricate");
 	while (!feof(file))

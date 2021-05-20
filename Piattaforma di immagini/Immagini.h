@@ -53,10 +53,12 @@ void StampaCategorieDisponibili();
 void StampaTagsDisponibili();
 
 void InserisciTagsCaricamento(Immagine_t** immagine);
-void InserisciTags(Immagine_t* immagine);
+
+void InserisciTags(Immagine_t* immagine);       //aggiungi MODIFICA nel nome
 
 void InserisciCategoriaCaricamento(Immagine_t** immagine);
-void InserisciCategoria(Immagine_t* immagine);
+
+void InserisciCategoria(Immagine_t* immagine);  //aggiungi MODIFICA nel nome
 
 bool StampaImmaginiCaricate(FILE* file, char nomeUtente[]);
 
