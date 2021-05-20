@@ -221,7 +221,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 						// Sottomenu gestione creatore
 						switch (sceltaMenu)
 						{
-							// Carica immagine
+							// Carica immagine - Creatore
 							case 1:
 							{
 								InserisciDatiImmagine(&immagine, nomeUtente);
@@ -250,7 +250,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 
 								break;
 							}
-							// Modifica immagine
+							// Modifica immagine - Creatore
 							case 2:
 							{
 								file = ApriFile(PERCORSO_FILE_IMMAGINI);
@@ -269,17 +269,26 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 								fclose(file);
 								break;
 							}
-							// Rimuovi immagine
+							// Rimuovi immagine - Creatore
 							case 3:
 							{
 								file = ApriFile(PERCORSO_FILE_IMMAGINI);
 
-
+								if (RimuoviImmagine(file, nomeUtente))
+								{
+									printf("\n\nImmagine rimossa con successo!\n\n");
+									system("pause");
+								}
+								else
+								{
+									printf("\n\nErrore nella rimozione dell'immagine!\n\n");
+									system("pause");
+								}
 
 								fclose(file);
 								break;
 							}
-							// Visualizza statistiche
+							// Visualizza statistiche - Creatore
 							case 4:
 							{
 								file = ApriFile(PERCORSO_FILE_IMMAGINI);
@@ -287,7 +296,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 								fclose(file);
 								break;
 							}
-							// Indietro
+							// Indietro - Creatore
 							case 5:
 								errore = false;
 								break;

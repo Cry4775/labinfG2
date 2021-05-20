@@ -111,153 +111,134 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 		system("cls");
 		rewind(file);
 
-		bool trovato = false;
+		bool trovato = StampaImmaginiCaricate(file, nomeUtente); // trovato = c'è almeno un'immagine caricata dall'utente?
 
-		// Stampa le immagini caricate (e modificabili) dall'utente
-		printf("Immagini caricate");
-		while (!feof(file))
+		if (trovato)
 		{
-			Immagine_t immagine = { 0 };
-			int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
-			if (esito != 0)
+
+			rewind(file);
+
+			// Inserimento titolo dell'immagine da modificare
+			char buffer[MAX_BUFFER] = { 0 };
+			printf("\n\nInserisci il titolo dell'immagine da modificare: ");
+
+			scanf("%[^\n]", buffer);
+
+			buffer[0] = toupper(buffer[0]);
+
+			// Controlla che non contenga simboli
+			errore = ContieneSimboli(buffer, true);
+
+			if (!errore)
 			{
-				if (strcmp(nomeUtente, immagine.nomeUtente) == 0)
+				while (!feof(file))
 				{
-					trovato = true;
-					printf("\n\nTitolo: %s\nCategoria: %s", immagine.titolo, immagine.categoria);
-				}
-			}
-		}
+					Immagine_t immagine = { 0 };
+					int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
 
-		if (!trovato)
-		{
-			puts("\nNon hai ancora caricato immagini!\n\n");
-			system("pause");
-			return false;
-		}
-
-		rewind(file);
-	
-		// Inserimento titolo dell'immagine da modificare
-		char buffer[MAX_BUFFER] = { 0 };
-		printf("\n\nInserisci il titolo dell'immagine da modificare: ");
-
-		scanf("%[^\n]", buffer);
-
-		buffer[0] = toupper(buffer[0]);
-
-		// Controlla che non contenga simboli
-		errore = ContieneSimboli(buffer, true);
-		
-		if (!errore)
-		{
-			while (!feof(file))
-			{
-				Immagine_t immagine = { 0 };
-				int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
-
-				if (esito != 0)
-				{
-					if (strcmp(buffer, immagine.titolo) == 0)
+					if (esito != 0)
 					{
-						bool ripeti = true;
-						do
+						if (strcmp(buffer, immagine.titolo) == 0)
 						{
-							printf("\n\n0. Indietro\n1. Titolo\n2. Categoria\n3. Tags");
-							printf("\n\nScegli il campo da modificare: ");
-							int scelta;
-							scanf("%d", &scelta);
-
-							switch (scelta)
+							bool ripeti = true;
+							do
 							{
-							case 0:
-								ripeti = false;
-								break;
-							case 1:
-								SvuotaInput();
-								do
+								printf("\n\n0. Indietro\n1. Titolo\n2. Categoria\n3. Tags");
+								printf("\n\nScegli il campo da modificare: ");
+								int scelta;
+								scanf("%d", &scelta);
+
+								switch (scelta)
 								{
-									if (errore)
-										SvuotaInput();
-
-									system("cls");
-									errore = false;
-									printf("Il titolo attuale e': %s\n", immagine.titolo);
-									printf("Inserisci il nuovo titolo: ");
-
-									scanf("%[^\n]", buffer);
-
-									// Controlla che non contenga simboli
-									errore = ContieneSimboli(buffer, true);
-
-									// Altrimenti procedi
-									if (!errore)
+								case 0:
+									ripeti = false;
+									break;
+								case 1:
+									SvuotaInput();
+									do
 									{
-										AssegnaStringa(immagine.titolo, buffer, true);
+										if (errore)
+											SvuotaInput();
+
+										system("cls");
+										errore = false;
+										printf("Il titolo attuale e': %s\n", immagine.titolo);
+										printf("Inserisci il nuovo titolo: ");
+
+										scanf("%[^\n]", buffer);
+
+										// Controlla che non contenga simboli
+										errore = ContieneSimboli(buffer, true);
+
+										// Altrimenti procedi
+										if (!errore)
+										{
+											AssegnaStringa(immagine.titolo, buffer, true);
+											printf("Operazione effettuata!\n\n");
+											system("pause");
+										}
+									} while (errore);
+
+									break;
+								case 2:
+									do
+									{
+										errore = false;
+										system("cls");
+
+										printf("La categoria attuale e': %s\n\n", immagine.categoria);
+
+										printf("Le categorie disponibili sono: \n\n");
+										StampaCategorieDisponibili();
+
+
+										printf("\n\nInserisci la nuova categoria: ");
+										InserisciCategoria(&immagine);
+
 										printf("Operazione effettuata!\n\n");
 										system("pause");
-									}
-								} while (errore);
+									} while (errore);
 
-								break;
-							case 2:
-								do
-								{
+									break;
+								case 3:
 									errore = false;
 									system("cls");
 
-									printf("La categoria attuale e': %s\n\n", immagine.categoria);
+									printf("I tag attuali sono: ");
+									StampaTagsImmagine(immagine);
 
-									printf("Le categorie disponibili sono: \n\n");
-									StampaCategorieDisponibili();
+									// Stampa i tags disponibili
+									printf("I tags disponibili sono:\n\n");
+									StampaTagsDisponibili();
 
-
-									printf("\n\nInserisci la nuova categoria: ");
-									InserisciCategoria(&immagine);
+									// Selezione dei tags
+									InserisciTags(&immagine);
 
 									printf("Operazione effettuata!\n\n");
 									system("pause");
-								} while (errore);
 
-								break;
-							case 3:
-								errore = false;
-								system("cls");
-								
-								printf("I tag attuali sono: ");
-								StampaTagsImmagine(immagine);
+									break;
+								default:
+									printf("Errore! Selezionare un'opzione valida!\n\n");
 
-								// Stampa i tags disponibili
-								printf("I tags disponibili sono:\n\n");
-								StampaTagsDisponibili();
-								
-								// Selezione dei tags
-								InserisciTags(&immagine);
+									system("pause");
 
-								printf("Operazione effettuata!\n\n");
-								system("pause");
+									break;
+								}
+							} while (ripeti);
 
-								break;
-							default:
-								printf("Errore! Selezionare un'opzione valida!\n\n");
-
-								system("pause");
-
-								break;
-							}
-						} while (ripeti);
-
-						// Salva le modifiche sul file
-						fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
-						fwrite(&immagine, sizeof(Immagine_t), 1, file);
-						return true;
+							// Salva le modifiche sul file
+							fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
+							fwrite(&immagine, sizeof(Immagine_t), 1, file);
+							return true;
+						}
 					}
-				}
-				else
-				{
-					puts("\nNon è stata trovata nessuna immagine corrispondente al titolo inserito!");
-					errore = true;
-					system("pause");
+					else
+					{
+						puts("\nNon è stata trovata nessuna immagine corrispondente al titolo inserito!");
+						errore = true;
+						system("pause");
+					}
 				}
 			}
 		}
@@ -427,4 +408,97 @@ void InserisciCategoriaCaricamento(Immagine_t** immagine)
 			system("pause");
 		}
 	} while (errore);
+}
+
+bool StampaImmaginiCaricate(FILE* file, char nomeUtente[])
+{
+	bool trovato = false;
+	// Stampa le immagini caricate dall'utente
+	printf("Immagini caricate");
+	while (!feof(file))
+	{
+		Immagine_t immagine = { 0 };
+		int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
+		if (esito != 0)
+		{
+			if (strcmp(nomeUtente, immagine.nomeUtente) == 0)
+			{
+				printf("\n\nTitolo: %s\nCategoria: %s", immagine.titolo, immagine.categoria);
+				trovato = true;
+			}
+		}
+	}
+
+	if (!trovato)
+	{
+		puts("\nNon hai ancora caricato immagini!\n\n");
+		system("pause");
+	}
+
+	return trovato;
+}
+
+bool RimuoviImmagine(FILE* file, char nomeUtente[])
+{
+	SvuotaInput();
+	bool errore = false;
+
+	do
+	{
+		if (errore)
+			SvuotaInput();
+
+		errore = false;
+
+		system("cls");
+		rewind(file);
+
+		bool trovato = StampaImmaginiCaricate(file, nomeUtente); // trovato = c'è almeno un'immagine caricata dall'utente?
+
+		if (trovato)
+		{
+			rewind(file);
+
+			// Inserimento titolo dell'immagine da rimuovere
+			char buffer[MAX_BUFFER] = { 0 };
+			printf("\n\nInserisci il titolo dell'immagine da rimuovere: ");
+
+			scanf("%[^\n]", buffer);
+
+			buffer[0] = toupper(buffer[0]);
+
+			// Controlla che non contenga simboli
+			errore = ContieneSimboli(buffer, true);
+
+			if (!errore)
+			{
+				while (!feof(file))
+				{
+					Immagine_t immagine = { 0 };
+					Immagine_t immagineVuota = { 0 };
+					int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
+
+					if (esito != 0)
+					{
+						if (strcmp(buffer, immagine.titolo) == 0)
+						{
+							fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
+							if (fwrite(&immagineVuota, sizeof(Immagine_t), 1, file) != 0)
+								return true;
+							else
+								return false;
+						}
+					}
+					else
+					{
+						puts("\nNon è stata trovata nessuna immagine corrispondente al titolo inserito!");
+						errore = true;
+						system("pause");
+					}
+				}
+			}
+		}
+	} while (errore);
+
+	return false;
 }

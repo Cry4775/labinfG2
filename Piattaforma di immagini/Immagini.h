@@ -58,4 +58,8 @@ void InserisciTags(Immagine_t* immagine);
 void InserisciCategoriaCaricamento(Immagine_t** immagine);
 void InserisciCategoria(Immagine_t* immagine);
 
+bool StampaImmaginiCaricate(FILE* file, char nomeUtente[]);
+
+bool RimuoviImmagine(FILE* file, char nomeUtente[]);
+
 #endif

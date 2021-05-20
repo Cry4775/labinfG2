@@ -78,7 +78,6 @@ bool ControllaPassword(FILE* file, char buffer[], char nomeUtente[])
 		else
 			return false;
 	}
-
 }
 
 void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char nomeUtente[])
