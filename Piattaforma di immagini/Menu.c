@@ -16,197 +16,169 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 
 		switch (sceltaMenu)
 		{
-		case 1: // Registrazione utente
-		{
-			system("cls");
-			do
+			case 1: // Registrazione utente
 			{
-				errore = false;
-				Creatore_t creatore = { 0 };
-				Utilizzatore_t utilizzatore = { 0 };
-
-				puts("Che tipologia di utente sei?\n1. Creatore\n2. Utilizzatore\n3. Indietro\n");
-				scanf("%1u", &sceltaMenu);
-
 				system("cls");
-
-				switch (sceltaMenu)
+				do
 				{
-					// Registrazione utente Creatore
-					case 1: 
+					errore = false;
+					Creatore_t creatore = { 0 };
+					Utilizzatore_t utilizzatore = { 0 };
+
+					puts("Che tipologia di utente sei?\n1. Creatore\n2. Utilizzatore\n3. Indietro\n");
+					scanf("%1u", &sceltaMenu);
+
+					system("cls");
+
+					switch (sceltaMenu)
 					{
-						InserisciDatiCreatore(file, &creatore, nomeUtente);
+						// Registrazione utente Creatore
+						case 1: 
+						{
+							InserisciDatiCreatore(file, &creatore, nomeUtente);
 						
-						// Fase di salvataggio dei dati su file
-						file = fopen(PERCORSO_FILE_CREATORI, "rb+");
-						if (file == NULL)
-						{
-							printf("\n\n\nERRORE FATALE! Non e' stato possibile aprire il file\n");
-							exit(EXIT_SUCCESS);
-						}
-						else
-						{
+							// Fase di salvataggio dei dati su file
+							file = ApriFile(PERCORSO_FILE_CREATORI);
 							SalvaDatiCreatore(file, &creatore);
 
 							fclose(file);
 
 							printf("Creatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
-							InvioPerContinuare();
+							system("pause");
 							*isCreatore = true; // Do l'accesso al menu principale creatore
 							return true;
+							break;
 						}
-						break;
-					}
 					
 
 
-					// Registrazione utente Utilizzatore
-					case 2:
-					{
-						InserisciDatiUtilizzatore(file, &utilizzatore, nomeUtente);
-
-						// Fase di salvataggio dei dati su file
-						file = fopen(PERCORSO_FILE_UTILIZZATORI, "rb+");
-						if (file == NULL)
+						// Registrazione utente Utilizzatore
+						case 2:
 						{
-							printf("\n\n\nERRORE FATALE! Non e' stato possibile aprire il file\n");
-							exit(EXIT_SUCCESS);
-						}
-						else
-						{	
+							InserisciDatiUtilizzatore(file, &utilizzatore, nomeUtente);
+
+							// Fase di salvataggio dei dati su file
+							file = ApriFile(PERCORSO_FILE_UTILIZZATORI);
+						
 							SalvaDatiUtilizzatore(file, &utilizzatore);
 
 							fclose(file);
 
 							printf("\n\nUtilizzatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
-							InvioPerContinuare();
+							system("pause");
 							*isCreatore = false;
 							return true;
+							break;
 						}
-						break;
-					}
-					// Indietro
-					case 3:
-						errore = false;
-						break;
-					default:
-						errore = true;
-						printf("Errore! Selezionare un'opzione valida!");
-						break;
-					}
-			} while (errore);
-			break;
-		}
+						// Indietro
+						case 3:
+							errore = false;
+							break;
+						default:
+							errore = true;
+							printf("Errore! Selezionare un'opzione valida!");
+							break;
+						}
+				} while (errore);
+				break;
+			}
 
 
 
 
-		// Accesso utente
-		case 2:
-		{
-			do
+			// Accesso utente
+			case 2:
 			{
-				errore = false;
-				*isCreatore = false;
-				bool indietro = false; // flag indietro
-				system("cls");
-				printf("Inserire il nome utente: ");
-				char buffer[MAX_BUFFER] = { 0 };
-
-				scanf("%100s", buffer);
-
-				// Controlla se l'utente ha inserito '0', nel caso flagga indietro
-				if (buffer[0] == '0')
+				do
 				{
-					if (buffer[1] == '\0')
-					{
-						errore = false;
-						indietro = true;
-					}
-				}
+					errore = false;
+					*isCreatore = false;
+					bool indietro = false; // flag indietro
+					system("cls");
+					printf("Inserire il nome utente: ");
+					char buffer[MAX_BUFFER] = { 0 };
 
-				// Se invece ha messo un input valido per il nome utente prosegui
-				// Controlla prima creatori e poi utilizzatori se necessario
-				if (indietro == false)
-				{
-					file = fopen(PERCORSO_FILE_CREATORI, "rb+");
-					// Se il file non esiste, creane uno
-					if (file == NULL)
+					scanf("%100s", buffer);
+
+					// Controlla se l'utente ha inserito '0', nel caso flagga indietro
+					if (buffer[0] == '0')
 					{
-						file = fopen(PERCORSO_FILE_CREATORI, "wb+");
-						fclose(file);
-						file = fopen(PERCORSO_FILE_CREATORI, "rb+");
+						if (buffer[1] == '\0')
+						{
+							errore = false;
+							indietro = true;
+						}
 					}
 
-					bool esisteNomeUtente = ControllaNomeUtenteCreatore(file, buffer);
-					if (esisteNomeUtente)
-						*isCreatore = true;
+					// Se invece ha messo un input valido per il nome utente prosegui
+					// Controlla prima creatori e poi utilizzatori se necessario
+					if (indietro == false)
+					{
+						file = ApriFile(PERCORSO_FILE_CREATORI);
+
+						bool esisteNomeUtente = ControllaNomeUtenteCreatore(file, buffer);
+						if (esisteNomeUtente)
+							*isCreatore = true;
 					
 
-					if (!esisteNomeUtente)
-					{
-						fclose(file);
-						file = fopen(PERCORSO_FILE_UTILIZZATORI, "rb+");
-						// Se è la prima esecuzione e/o il file non esiste, creane uno
-						if (file == NULL)
+						if (!esisteNomeUtente)
 						{
-							file = fopen(PERCORSO_FILE_UTILIZZATORI, "wb+");
 							fclose(file);
-							file = fopen(PERCORSO_FILE_UTILIZZATORI, "rb+");
+							file = ApriFile(PERCORSO_FILE_UTILIZZATORI);
+
+							esisteNomeUtente = ControllaNomeUtenteUtilizzatore(file, buffer);
+							*isCreatore = false;
+							fclose(file);
 						}
 
-						esisteNomeUtente = ControllaNomeUtenteUtilizzatore(file, buffer);
-						*isCreatore = false;
-						fclose(file);
-					}
 
-
-					// Se il nome utente inserito esiste, chiedi la password
-					if (esisteNomeUtente)
-					{
-						strcpy(nomeUtente, buffer);
-						printf("Inserire la password: ");
-						char buffer[MAX_BUFFER] = { 0 };
-						scanf("%100s", buffer);
-						SvuotaInputGetChar();
-
-						bool passwordCorretta = ControllaPassword(file, buffer, nomeUtente);
-
-						if (passwordCorretta)
+						// Se il nome utente inserito esiste, chiedi la password
+						if (esisteNomeUtente)
 						{
-							fclose(file);
-							return true;
-							// Esci dal menu iniziale e prosegui nel main col menu principale
+							strcpy(nomeUtente, buffer);
+							printf("Inserire la password: ");
+							char buffer[MAX_BUFFER] = { 0 };
+							SvuotaInput();
+							scanf("%100s", buffer);
+						
+
+							bool passwordCorretta = ControllaPassword(file, buffer, nomeUtente);
+
+							if (passwordCorretta)
+							{
+								fclose(file);
+								return true;
+								// Esci dal menu iniziale e prosegui nel main col menu principale
+							}
+							else
+							{
+								printf("Errore! Password non corretta! Riprovare.\n\n");
+								system("pause");
+								errore = true;
+							}
+
 						}
 						else
 						{
-							printf("Errore! Password non corretta! Riprovare.\n\n");
-							InvioPerContinuare();
+							printf("Errore! Nome utente non esistente. \nControllare il nome utente digitato oppure digita 0 per tornare al menu iniziale e registrarsi.\n\n");
+							system("pause");
 							errore = true;
 						}
-
+						fclose(file);
 					}
-					else
-					{
-						printf("Errore! Nome utente non esistente. \nControllare il nome utente digitato oppure digita 0 per tornare al menu iniziale e registrarsi.\n\n");
-						InvioPerContinuare();
-						errore = true;
-					}
-					fclose(file);
-				}
-			} while (errore);
+				} while (errore);
 		
-			break;
-		}
+				break;
+			}
 
 
-		case 3:
-			inEsecuzione = false;
-			break;
-		default:
-			puts("Errore! Selezionare un'opzione valida!\n");
-			InvioPerContinuare();
-			break;
+			case 3:
+				inEsecuzione = false;
+				break;
+			default:
+				puts("Errore! Selezionare un'opzione valida!\n");
+				system("pause");
+				break;
 		}
 
 		system("cls");
@@ -237,75 +209,99 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 				// Gestione creatore
 				case 1:
 				{
-					system("cls");
-
-					puts("1. Carica immagine\n2. Modifica immagine\n3. Rimuovi immagine\n4. Visualizza statistiche\n5. Indietro");
-					scanf("%1u", &sceltaMenu);
-
-					Immagine_t immagine = { 0 };
-
-					// Sottomenu gestione creatore
-					switch (sceltaMenu)
+					do
 					{
-						// Carica immagine
-						case 1:
+						system("cls");
+
+						puts("1. Carica immagine\n2. Modifica immagine\n3. Rimuovi immagine\n4. Visualizza statistiche\n5. Indietro");
+						scanf("%1u", &sceltaMenu);
+
+						Immagine_t immagine = { 0 };
+
+						// Sottomenu gestione creatore
+						switch (sceltaMenu)
 						{
-							InserisciDatiImmagine(&immagine, nomeUtente);
-
-
-							// Fase di salvataggio dei dati su file
-							file = fopen(PERCORSO_FILE_IMMAGINI, "rb+");
-							if (file == NULL)
+							// Carica immagine
+							case 1:
 							{
-								file = fopen(PERCORSO_FILE_IMMAGINI, "wb+");
+								InserisciDatiImmagine(&immagine, nomeUtente);
+
+								// Fase di salvataggio dei dati su file
+								file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+								SalvaDatiImmagine(file, &immagine);
+
 								fclose(file);
-								file = fopen(PERCORSO_FILE_IMMAGINI, "rb+");
-							}
-							
-							SalvaDatiImmagine(file, &immagine);
-							fclose(file);
 
-							if (file = fopen(PERCORSO_FILE_CREATORI, "rb+"))
-							{
+								file = ApriFile(PERCORSO_FILE_CREATORI);
+
 								if (!AggiornaNumImmaginiCreatore(file, nomeUtente))
 								{
 									printf("Errore nell'aggiornamento del profilo creatore!");
-									InvioPerContinuare();
+									system("pause");
 								}
 								else
 								{
 									printf("Immagine caricata con successo!\n\n");
-									InvioPerContinuare();
+									system("pause");
 								}
+
 								fclose(file);
+
+								break;
 							}
-							
-							break;
-						}
-						// Modifica immagine
-						case 2:
-						{
-							file = fopen(PERCORSO_FILE_IMMAGINI, "rb+");
-							if (file == NULL)
+							// Modifica immagine
+							case 2:
 							{
-								file = fopen(PERCORSO_FILE_IMMAGINI, "wb+");
+								file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+								if (ModificaImmagini(file, nomeUtente))
+								{
+									printf("\n\nImmagine modificata con successo!\n\n");
+									system("pause");
+								}
+								else
+								{
+									printf("\n\nErrore nell'aggiornamento dell'immagine!\n\n");
+									system("pause");
+								}
+
 								fclose(file);
-								file = fopen(PERCORSO_FILE_IMMAGINI, "rb+");
+								break;
 							}
+							// Rimuovi immagine
+							case 3:
+							{
+								file = ApriFile(PERCORSO_FILE_IMMAGINI);
 
-							ModificaImmagini(file, nomeUtente);
-							break;
+
+
+								fclose(file);
+								break;
+							}
+							// Visualizza statistiche
+							case 4:
+							{
+								file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+								fclose(file);
+								break;
+							}
+							// Indietro
+							case 5:
+								errore = false;
+								break;
+							default:
+								printf("Errore! Selezionare un'opzione valida!\n\n");
+								errore = true;
+								system("pause");
+								break;
 						}
-						
-					}
+					} while (errore);
 				}
+
+				// case 2, case 3, case 4, case 5 del menu PRINCIPALE
 			}
-
-
-
-
-
-
 		} while (inEsecuzione == true);
 	}
 	

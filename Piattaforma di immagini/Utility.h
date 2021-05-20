@@ -24,12 +24,10 @@ typedef enum {
 } bool;
 
 
-void SvuotaInputGetChar();
-
-void SvuotaInputFGets(char buffer[]);
+void SvuotaInput();
 
 // Copia la stringa da buffer a destinazione e se primaMaiuscola viene passata come true, la prima lettera verrà impostata maiuscola
-void AssegnaStringa(char destinazione, char buffer[], bool primaMaiuscola);
+void AssegnaStringa(char destinazione[], char buffer[], bool primaMaiuscola);
 
 // Ritorna true (1) se è corretta, false (0) altrimenti
 bool DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno);
@@ -41,8 +39,8 @@ void ConversioneMinuscolo(char buffer[]);
 //se numeriAmmessi viene passata come true, allora i numeri non saranno contati come simboli
 bool ContieneSimboli(char buffer[], bool numeriAmmessi);
 
-void InvioPerContinuare();
-
 int RNG(int MIN, int MAX);
+
+FILE* ApriFile(const char* percorsoFile);
 
 #endif

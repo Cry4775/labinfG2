@@ -8,19 +8,21 @@ const char* tags[NUM_TAGS] = { "Colazione", "Pranzo", "Cena", "Capo", "Collega",
 
 void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 {
-	// Inserimento TITOLO
+	SvuotaInput();
 	bool errore = false;
 
+	// Inserimento TITOLO
 	do
 	{
-		SvuotaInputGetChar();
+		if (errore)
+			SvuotaInput();
+
 		errore = false;
 		system("cls");
 		printf("Inserire il titolo dell'immagine: ");
 
 		char buffer[MAX_BUFFER] = { 0 };
-		fgets(buffer, 100, stdin);
-		SvuotaInputFGets(buffer);
+		scanf("%[^\n]", buffer);
 
 		// Controlla che non contenga simboli
 		errore = ContieneSimboli(buffer, true);
@@ -36,29 +38,12 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 	{
 		errore = false;
 		printf("\n");
-		for (size_t i = 0; i < NUM_CATEGORIE; i++)
-		{
-			if (i % 2 == 0)
-				printf("%d. %-30s", i + 1, categoria[i]);
-			else
-				printf("%d. %-30s\n", i + 1, categoria[i]);
-		}
+
+		StampaCategorieDisponibili();
+
 		printf("\n\nInserire il numero della categoria scelta: ");
 
-		unsigned int categoriaScelta;
-		scanf("%u", &categoriaScelta);
-
-		if (categoriaScelta >= 1 && categoriaScelta <= NUM_CATEGORIE)
-		{
-
-			AssegnaStringa(immagine->categoria, categoria[categoriaScelta - 1], false);
-		}
-		else
-		{
-			errore = true;
-			printf("Errore! Inserire un'opzione valida!");
-			InvioPerContinuare();
-		}
+		InserisciCategoriaCaricamento(&immagine);
 
 	} while (errore);
 
@@ -67,50 +52,10 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 	{
 		printf("\n");
 		errore = false;
-		for (size_t i = 0; i < NUM_TAGS; i++)
-		{
-			if (i % 2 == 0)
-				printf("%d. %-30s", i + 1, tags[i]);
-			else
-				printf("%d. %-30s\n", i + 1, tags[i]);
-		}
 
-		size_t j = 0;
-		for (size_t i = 3; i > 0; i--)
-		{
-			do
-			{
-				// Bisogna aggiungere il controllo per la selezione di tags uguali
-				errore = false;
-				printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti - Inserire 0 per terminare): ", i);
+		StampaTagsDisponibili();
 
-				unsigned int tagScelto;
-				scanf("%u", &tagScelto);
-
-				if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
-				{
-					AssegnaStringa(immagine->tags[j], tags[tagScelto - 1], false);
-					j++;
-				}
-				else if (tagScelto == 0)
-				{
-					if (i == MAX_TAGS)
-					{
-						errore = true;
-						printf("\nErrore! Selezionare almeno un tag!\n");
-					}
-					else
-						i = 1;
-					// Esci dal ciclo
-				}
-				else
-				{
-					errore = true;
-					printf("Errore! Inserire un'opzione valida!");
-					InvioPerContinuare();
-				}
-			} while (errore);
-		}
+		InserisciTagsCaricamento(&immagine);
 
 	} while (errore);
 
@@ -152,33 +97,54 @@ void SalvaDatiImmagine(FILE* file, Immagine_t* immagine)
 	fwrite(&*immagine, sizeof(Immagine_t), 1, file);
 }
 
-void ModificaImmagini(FILE* file, char nomeUtente[])
+bool ModificaImmagini(FILE* file, char nomeUtente[])
 {
-	
-	while (!feof(file))
-	{
-		Immagine_t immagine = { 0 };
-		int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
-		if (esito != 0)
-		{
-			if (strcmp(nomeUtente, immagine.nomeUtente) == 0)
-			{
-				printf("\nIMMAGINI CARICATE:");
-				printf("\nTitolo: %s\nCategoria: %s", immagine.titolo, immagine.categoria);
-			}
-			else 
-				puts("\nNon hai ancora caricato immagini!");
-		}
-	}
-	rewind(file);
-	bool errore;
+	SvuotaInput();
+	bool errore = false;
 	do
 	{
-		char buffer[MAX_BUFFER];
-		SvuotaInputFGets(buffer);
-		printf("\nInserisci il titolo dell'immagine da modificare: ");
-		fgets(buffer, 100, stdin);
-		SvuotaInputFGets(buffer);
+		if (errore)
+			SvuotaInput();
+
+		errore = false; 
+
+		system("cls");
+		rewind(file);
+
+		bool trovato = false;
+
+		// Stampa le immagini caricate (e modificabili) dall'utente
+		printf("Immagini caricate");
+		while (!feof(file))
+		{
+			Immagine_t immagine = { 0 };
+			int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
+			if (esito != 0)
+			{
+				if (strcmp(nomeUtente, immagine.nomeUtente) == 0)
+				{
+					trovato = true;
+					printf("\n\nTitolo: %s\nCategoria: %s", immagine.titolo, immagine.categoria);
+				}
+			}
+		}
+
+		if (!trovato)
+		{
+			puts("\nNon hai ancora caricato immagini!\n\n");
+			system("pause");
+			return false;
+		}
+
+		rewind(file);
+	
+		// Inserimento titolo dell'immagine da modificare
+		char buffer[MAX_BUFFER] = { 0 };
+		printf("\n\nInserisci il titolo dell'immagine da modificare: ");
+
+		scanf("%[^\n]", buffer);
+
+		buffer[0] = toupper(buffer[0]);
 
 		// Controlla che non contenga simboli
 		errore = ContieneSimboli(buffer, true);
@@ -189,134 +155,276 @@ void ModificaImmagini(FILE* file, char nomeUtente[])
 			{
 				Immagine_t immagine = { 0 };
 				int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
+
 				if (esito != 0)
 				{
 					if (strcmp(buffer, immagine.titolo) == 0)
 					{
-						printf("\nSCEGLI IL CAMPO DA MODIFICARE:");
-						printf("\n1. Titolo\n2. Categoria\n3. Tags\n");
-						int scelta;
-						scanf("%d", &scelta);
-
-						switch (scelta)
+						bool ripeti = true;
+						do
 						{
-						case 1:
-							printf("\nIl titolo attuale è: %s", immagine.titolo);
-							printf("\nInserisci il nuovo titolo: ");
-							fgets(buffer, 100, stdin);
-							SvuotaInputFGets(buffer);
-							AssegnaStringa(immagine.titolo, buffer, true);
+							printf("\n\n0. Indietro\n1. Titolo\n2. Categoria\n3. Tags");
+							printf("\n\nScegli il campo da modificare: ");
+							int scelta;
+							scanf("%d", &scelta);
 
-							break;
-						case 2:
-							printf("\nLa categoria attuale è: %s", immagine.categoria);
-
-							printf("\nLe categorie disponibili sono: ");
-							for (size_t i = 0; i < NUM_CATEGORIE; i++)
+							switch (scelta)
 							{
-								if (i % 2 == 0)
-									printf("%d. %-30s", i + 1, categoria[i]);
-								else
-									printf("%d. %-30s\n", i + 1, categoria[i]);
-							}
-
-
-							printf("\nInserisci la nuova categoria: ");
-							bool errore = false;
-							do
-							{
-								unsigned int categoriaScelta;
-								scanf("%u", &categoriaScelta);
-
-								if (categoriaScelta >= 1 && categoriaScelta <= NUM_CATEGORIE)
-								{
-									AssegnaStringa(immagine.categoria, categoria[categoriaScelta - 1], false);
-								}
-								else
-								{
-									errore = true;
-									printf("Errore! Inserire un'opzione valida!");
-									InvioPerContinuare();
-								}
-							} while (errore);
-							break;
-						case 3:
-							printf("\nI tag attuali sono: ");
-							for (size_t i = 0; i < MAX_TAGS; i++)
-							{
-								printf("%s ", immagine.tags[i]);
-							}
-							printf("\n");
-
-
-							// Stampa i tags disponibili
-							printf("I tags disponibili sono:\n");
-							errore = false;
-							for (size_t i = 0; i < NUM_TAGS; i++)
-							{
-								if (i % 2 == 0)
-									printf("%d. %-30s", i + 1, tags[i]);
-								else
-									printf("%d. %-30s\n", i + 1, tags[i]);
-							}
-
-							// Selezione dei tags
-							size_t j = 0;
-							for (size_t i = 3; i > 0; i--)
-							{
+							case 0:
+								ripeti = false;
+								break;
+							case 1:
+								SvuotaInput();
 								do
 								{
-									// Bisogna aggiungere il controllo per la selezione di tags uguali
+									if (errore)
+										SvuotaInput();
+
+									system("cls");
 									errore = false;
-									printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti - Inserire 0 per terminare): ", i);
+									printf("Il titolo attuale e': %s\n", immagine.titolo);
+									printf("Inserisci il nuovo titolo: ");
 
-									unsigned int tagScelto;
-									scanf("%u", &tagScelto);
+									scanf("%[^\n]", buffer);
 
-									if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
+									// Controlla che non contenga simboli
+									errore = ContieneSimboli(buffer, true);
+
+									// Altrimenti procedi
+									if (!errore)
 									{
-										AssegnaStringa(immagine.tags[j], tags[tagScelto - 1], false);
-										j++;
-									}
-									else if (tagScelto == 0)
-									{
-										if (i == MAX_TAGS)
-										{
-											errore = true;
-											printf("\nErrore! Selezionare almeno un tag!\n");
-										}
-										else
-											i = 1;
-										// Esci dal ciclo
-									}
-									else
-									{
-										errore = true;
-										printf("Errore! Inserire un'opzione valida!");
-										InvioPerContinuare();
+										AssegnaStringa(immagine.titolo, buffer, true);
+										printf("Operazione effettuata!\n\n");
+										system("pause");
 									}
 								} while (errore);
-							}
-							break;
-						default:
-							printf("Errore! Selezionare un'opzione valida!");
-							break;
-						}
 
-						fseek(file, -(int)sizeof(Immagine_t), 1, SEEK_CUR);
+								break;
+							case 2:
+								do
+								{
+									errore = false;
+									system("cls");
+
+									printf("La categoria attuale e': %s\n\n", immagine.categoria);
+
+									printf("Le categorie disponibili sono: \n\n");
+									StampaCategorieDisponibili();
+
+
+									printf("\n\nInserisci la nuova categoria: ");
+									InserisciCategoria(&immagine);
+
+									printf("Operazione effettuata!\n\n");
+									system("pause");
+								} while (errore);
+
+								break;
+							case 3:
+								errore = false;
+								system("cls");
+								
+								printf("I tag attuali sono: ");
+								StampaTagsImmagine(immagine);
+
+								// Stampa i tags disponibili
+								printf("I tags disponibili sono:\n\n");
+								StampaTagsDisponibili();
+								
+								// Selezione dei tags
+								InserisciTags(&immagine);
+
+								printf("Operazione effettuata!\n\n");
+								system("pause");
+
+								break;
+							default:
+								printf("Errore! Selezionare un'opzione valida!\n\n");
+
+								system("pause");
+
+								break;
+							}
+						} while (ripeti);
+
+						// Salva le modifiche sul file
+						fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
 						fwrite(&immagine, sizeof(Immagine_t), 1, file);
+						return true;
 					}
 				}
 				else
-					puts("\nNon è stata trovata nessuna immagine corrispondente al titolo inserito");
-
+				{
+					puts("\nNon è stata trovata nessuna immagine corrispondente al titolo inserito!");
+					errore = true;
+					system("pause");
+				}
 			}
 		}
 	} while (errore);
-	
+	return false;
 }
 
 void VisualizzaImmagine(FILE* file, Immagine_t immagine)
 {
 	printf("\nTitolo: %s\nCategoria: %s", immagine.titolo, immagine.categoria);
+}
+
+void StampaTagsImmagine(Immagine_t immagine)
+{
+	for (size_t i = 0; i < MAX_TAGS; i++)
+	{
+		printf("%s ", immagine.tags[i]);
+	}
+	printf("\n");
+}
+
+void StampaCategorieDisponibili()
+{
+	for (size_t i = 0; i < NUM_CATEGORIE; i++)
+	{
+		if (i % 2 == 0)
+			printf("%d. %-30s", i + 1, categoria[i]);
+		else
+			printf("%d. %-30s\n", i + 1, categoria[i]);
+	}
+}
+
+void StampaTagsDisponibili()
+{
+	for (size_t i = 0; i < NUM_TAGS; i++)
+	{
+		if (i % 2 == 0)
+			printf("%d. %-30s", i + 1, tags[i]);
+		else
+			printf("%d. %-30s\n", i + 1, tags[i]);
+	}
+}
+
+void InserisciTags(Immagine_t* immagine)
+{
+	bool errore = false;
+
+	size_t j = 0;
+	for (size_t i = 3; i > 0; i--)
+	{
+		do
+		{
+			// Bisogna aggiungere il controllo per la selezione di tags uguali
+			errore = false;
+			printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti - Inserire 0 per terminare): ", i);
+
+			unsigned int tagScelto;
+			scanf("%u", &tagScelto);
+
+			if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
+			{
+				AssegnaStringa(immagine->tags[j], tags[tagScelto - 1], false);
+				j++;
+			}
+			else if (tagScelto == 0)
+			{
+				if (i == MAX_TAGS)
+				{
+					errore = true;
+					printf("\nErrore! Selezionare almeno un tag!\n");
+				}
+				else
+					i = 1;
+				// Esci dal ciclo
+			}
+			else
+			{
+				errore = true;
+				printf("Errore! Inserire un'opzione valida!\n\n");
+				system("pause");
+			}
+		} while (errore);
+	}
+}
+
+void InserisciCategoria(Immagine_t* immagine)
+{
+	bool errore = false;
+	do
+	{
+		errore = false;
+		unsigned int categoriaScelta;
+		scanf("%u", &categoriaScelta);
+
+		if (categoriaScelta >= 1 && categoriaScelta <= NUM_CATEGORIE)
+		{
+			AssegnaStringa(immagine->categoria, categoria[categoriaScelta - 1], false);
+		}
+		else
+		{
+			errore = true;
+			printf("Errore! Inserire un'opzione valida!\n\n");
+			system("pause");
+		}
+	} while (errore);
+}
+
+void InserisciTagsCaricamento(Immagine_t** immagine)
+{
+	bool errore = false;
+
+	size_t j = 0;
+	for (size_t i = 3; i > 0; i--)
+	{
+		do
+		{
+			// Bisogna aggiungere il controllo per la selezione di tags uguali
+			errore = false;
+			printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti - Inserire 0 per terminare): ", i);
+
+			unsigned int tagScelto;
+			scanf("%u", &tagScelto);
+
+			if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
+			{
+				AssegnaStringa((*immagine)->tags[j], tags[tagScelto - 1], false);
+				j++;
+			}
+			else if (tagScelto == 0)
+			{
+				if (i == MAX_TAGS)
+				{
+					errore = true;
+					printf("\nErrore! Selezionare almeno un tag!\n");
+				}
+				else
+					i = 1;
+				// Esci dal ciclo
+			}
+			else
+			{
+				errore = true;
+				printf("Errore! Inserire un'opzione valida!\n\n");
+				system("pause");
+			}
+		} while (errore);
+	}
+}
+
+void InserisciCategoriaCaricamento(Immagine_t** immagine)
+{
+	bool errore = false;
+	do
+	{
+		errore = false;
+		unsigned int categoriaScelta;
+		scanf("%u", &categoriaScelta);
+
+		if (categoriaScelta >= 1 && categoriaScelta <= NUM_CATEGORIE)
+		{
+			AssegnaStringa((*immagine)->categoria, categoria[categoriaScelta - 1], false);
+		}
+		else
+		{
+			errore = true;
+			printf("Errore! Inserire un'opzione valida!\n\n");
+			system("pause");
+		}
+	} while (errore);
 }

@@ -2,14 +2,11 @@
 #include "Utility.h"
 
 
-void SvuotaInputGetChar()
+void SvuotaInput()
 {
-    while (getchar() != '\n');
-}
-
-void SvuotaInputFGets(char buffer[])
-{
-    while (!strchr(buffer, '\n') && fgets(buffer, 100, stdin));
+    int ch;
+    while ((ch = getchar()) != '\n' && ch != EOF)
+        continue;
 }
 
 void AssegnaStringa(char destinazione[], char buffer[], bool primaMaiuscola)
@@ -88,7 +85,7 @@ bool ContieneSimboli(char buffer[], bool numeriAmmessi)
             else
             {
                 printf("Errore! I simboli e i numeri non sono ammessi!\n");
-                InvioPerContinuare();
+                system("pause");
                 return true;
             }
         }
@@ -108,7 +105,7 @@ bool ContieneSimboli(char buffer[], bool numeriAmmessi)
             else
             {
                 printf("Errore! I simboli non sono ammessi!\n");
-                InvioPerContinuare();
+                system("pause");
                 return true;
             }
         }
@@ -116,14 +113,20 @@ bool ContieneSimboli(char buffer[], bool numeriAmmessi)
     }
 }
 
-void InvioPerContinuare()
-{
-    puts("Premere INVIO per continuare...");
-    SvuotaInputGetChar();
-    getc(stdin);
-}
-
 int RNG(int MIN, int MAX)
 {
     return MIN + (rand() / (RAND_MAX / (MAX - MIN)));
+}
+
+FILE* ApriFile(const char* percorsoFile)
+{
+    FILE* file = fopen(percorsoFile, "rb+");
+    if (file == NULL)
+    {
+        file = fopen(percorsoFile, "wb+");
+        fclose(file);
+        file = fopen(percorsoFile, "rb+");
+    }
+
+    return file;
 }

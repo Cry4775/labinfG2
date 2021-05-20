@@ -1,30 +1,13 @@
 ﻿  Immagini.c
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(30,35): warning C4047: 'funzione': 'char' differisce da 'char [101]' nei livelli di riferimento indiretto
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(30,27): warning C4024: 'AssegnaStringa': tipi diversi tra il parametro 1 formale e quello effettivo
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(54,38): warning C4047: 'funzione': 'char' differisce da 'char [101]' nei livelli di riferimento indiretto
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(54,27): warning C4024: 'AssegnaStringa': tipi diversi tra il parametro 1 formale e quello effettivo
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(54,70): warning C4090: 'funzione': qualificatori 'const' differenti
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(92,38): warning C4047: 'funzione': 'char' differisce da 'char [101]' nei livelli di riferimento indiretto
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(92,35): warning C4024: 'AssegnaStringa': tipi diversi tra il parametro 1 formale e quello effettivo
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(92,59): warning C4090: 'funzione': qualificatori 'const' differenti
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(118,37): warning C4047: 'funzione': 'char' differisce da 'char [101]' nei livelli di riferimento indiretto
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(118,25): warning C4024: 'AssegnaStringa': tipi diversi tra il parametro 1 formale e quello effettivo
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(122,34): warning C4047: 'funzione': 'char' differisce da 'char [101]' nei livelli di riferimento indiretto
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(122,25): warning C4024: 'AssegnaStringa': tipi diversi tra il parametro 1 formale e quello effettivo
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(122,58): warning C4090: 'funzione': qualificatori 'const' differenti
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(123,36): warning C4047: 'funzione': 'char' differisce da 'char [101]' nei livelli di riferimento indiretto
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(123,25): warning C4024: 'AssegnaStringa': tipi diversi tra il parametro 1 formale e quello effettivo
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(123,62): warning C4090: 'funzione': qualificatori 'const' differenti
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(129,35): warning C4047: 'funzione': 'char' differisce da 'char [101]' nei livelli di riferimento indiretto
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(129,25): warning C4024: 'AssegnaStringa': tipi diversi tra il parametro 1 formale e quello effettivo
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(140,60): warning C4244: '=': conversione da 'double' a 'unsigned int'. Possibile perdita di dati.
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(208,38): warning C4047: 'funzione': 'char' differisce da 'char [101]' nei livelli di riferimento indiretto
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(208,31): warning C4024: 'AssegnaStringa': tipi diversi tra il parametro 1 formale e quello effettivo
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(233,43): warning C4047: 'funzione': 'char' differisce da 'char [101]' nei livelli di riferimento indiretto
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(233,33): warning C4024: 'AssegnaStringa': tipi diversi tra il parametro 1 formale e quello effettivo
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(233,75): warning C4090: 'funzione': qualificatori 'const' differenti
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(278,42): warning C4047: 'funzione': 'char' differisce da 'char [101]' nei livelli di riferimento indiretto
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(278,39): warning C4024: 'AssegnaStringa': tipi diversi tra il parametro 1 formale e quello effettivo
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(278,63): warning C4090: 'funzione': qualificatori 'const' differenti
-C:\Users\Ningo\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(306,48): warning C4020: 'fseek': troppi parametri effettivi
-  Piattaforma di immagini.vcxproj -> C:\Users\Ningo\Documents\GitHub\labinfG2\Debug\Piattaforma di immagini.exe
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(67,58): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(68,62): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(85,60): warning C4244: '=': conversion from 'double' to 'unsigned int', possible loss of data
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(322,58): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(357,70): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(386,61): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(421,73): warning C4090: 'function': different 'const' qualifiers
+  Main.c
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Main.c(7,21): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Menu.c
+  Generating Code...
+  Piattaforma di immagini.vcxproj -> C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Debug\Piattaforma di immagini.exe

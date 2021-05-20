@@ -47,14 +47,7 @@ bool ControllaPassword(FILE* file, char buffer[], char nomeUtente[])
     // Controlla la struct dell'utente che sta effettuando l'accesso
     // Ritorna true se la password è corretta, false altrimenti
 
-	file = fopen(PERCORSO_FILE_CREATORI, "rb+");
-	// Se il file non esiste, creane uno
-	if (file == NULL)
-	{
-		file = fopen(PERCORSO_FILE_CREATORI, "wb+");
-		fclose(file);
-		file = fopen(PERCORSO_FILE_CREATORI, "rb+");
-	}
+	file = ApriFile(PERCORSO_FILE_CREATORI);
 
 	while (!feof(file)) //while controllo creatori
 	{
@@ -70,15 +63,7 @@ bool ControllaPassword(FILE* file, char buffer[], char nomeUtente[])
 
 	fclose(file);
 
-	file = fopen(PERCORSO_FILE_UTILIZZATORI, "rb+");
-
-	// Se il file non esiste, creane uno
-	if (file == NULL)
-	{
-		file = fopen(PERCORSO_FILE_CREATORI, "wb+");
-		fclose(file);
-		file = fopen(PERCORSO_FILE_CREATORI, "rb+");
-	}
+	file = ApriFile(PERCORSO_FILE_UTILIZZATORI);
 
 	while (!feof(file)) //while controllo utilizzatori
 	{
@@ -106,33 +91,18 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		errore = false;
 		printf("\nInserire un nome utente (min. 4 caratteri): ");
 		char buffer[MAX_BUFFER] = { 0 };
+		SvuotaInput();
 		scanf("%100s", buffer);
 
-		file = fopen(PERCORSO_FILE_CREATORI, "rb+");
-		bool giaEsistente = false;
+		file = ApriFile(PERCORSO_FILE_CREATORI);
 
-		// Se il file non esiste, creane uno
-		if (file == NULL)
-		{
-			file = fopen(PERCORSO_FILE_CREATORI, "wb+");
-			fclose(file);
-			file = fopen(PERCORSO_FILE_CREATORI, "rb+");
-		}
-
-		giaEsistente = ControllaNomeUtenteCreatore(file, buffer);
+		bool giaEsistente = ControllaNomeUtenteCreatore(file, buffer);
 
 		fclose(file);
 
 		if (giaEsistente == false)
 		{
-			file = fopen(PERCORSO_FILE_UTILIZZATORI, "rb+");
-			// Se il file non esiste, creane uno
-			if (file == NULL)
-			{
-				file = fopen(PERCORSO_FILE_UTILIZZATORI, "wb+");
-				fclose(file);
-				file = fopen(PERCORSO_FILE_UTILIZZATORI, "rb+");
-			}
+			file = ApriFile(PERCORSO_FILE_UTILIZZATORI);
 
 			giaEsistente = ControllaNomeUtenteUtilizzatore(file, buffer);
 
@@ -163,8 +133,8 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		errore = false;
 		printf("Inserire una password (min. 8 caratteri): ");
 		char buffer[MAX_BUFFER] = { 0 };
+		SvuotaInput();
 		scanf("%100s", buffer);
-		SvuotaInputGetChar();
 
 		// Controlla che il minimo sia rispettato
 		if (strlen(buffer) < MIN_CAR_PASSWORD)
@@ -184,8 +154,8 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		errore = false;
 		printf("Inserire il nome: ");
 		char buffer[MAX_BUFFER] = { 0 };
-		fgets(buffer, 100, stdin);
-		SvuotaInputFGets(buffer);
+		SvuotaInput();
+		scanf("%100[^\n]", buffer);
 
 		// Conversione della stringa in minuscolo
 		ConversioneMinuscolo(buffer);
@@ -204,8 +174,8 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		errore = false;
 		printf("Inserire il cognome: ");
 		char buffer[MAX_BUFFER] = { 0 };
-		fgets(buffer, 100, stdin);
-		SvuotaInputFGets(buffer);
+		SvuotaInput();
+		scanf("%100[^\n]", buffer);
 
 		// Conversione della stringa in minuscolo
 		ConversioneMinuscolo(buffer);
@@ -223,9 +193,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 	{
 		errore = false;
 		printf("Inserire il sesso (M/F): ");
+		SvuotaInput();
 		scanf("%c", &utilizzatore->sesso);
 		utilizzatore->sesso = toupper(utilizzatore->sesso);
-		SvuotaInputGetChar();
 
 		// Controllo errori
 		if (utilizzatore->sesso != 'M' && utilizzatore->sesso != 'F')
@@ -241,8 +211,8 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		errore = false;
 		printf("Inserire la professione: ");
 		char buffer[MAX_BUFFER] = { 0 };
-		fgets(buffer, 100, stdin);
-		SvuotaInputFGets(buffer);
+		SvuotaInput();
+		scanf("%100[^\n]", buffer);
 
 		// Conversione della stringa in minuscolo
 		ConversioneMinuscolo(buffer);
@@ -260,8 +230,8 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		errore = false;
 		printf("Inserire la nazionalita': ");
 		char buffer[MAX_BUFFER] = { 0 };
-		fgets(buffer, 100, stdin);
-		SvuotaInputFGets(buffer);
+		SvuotaInput();
+		scanf("%100[^\n]", buffer);
 
 		// Conversione della stringa in minuscolo
 		ConversioneMinuscolo(buffer);
@@ -307,34 +277,20 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		errore = false;
 		printf("\nInserire un nome utente (min. 4 caratteri): ");
 		char buffer[MAX_BUFFER] = { 0 };
+		SvuotaInput();
 		scanf("%100s", buffer);
 
 
-		file = fopen(PERCORSO_FILE_CREATORI, "rb+");
-		bool giaEsistente = false;
+		file = ApriFile(PERCORSO_FILE_CREATORI);
 
-		// Se il file non esiste, creane uno
-		if (file == NULL)
-		{
-			file = fopen(PERCORSO_FILE_CREATORI, "wb+");
-			fclose(file);
-			file = fopen(PERCORSO_FILE_CREATORI, "rb+");
-		}
+		bool giaEsistente = ControllaNomeUtenteCreatore(file, buffer);
 
-		giaEsistente = ControllaNomeUtenteCreatore(file, buffer);									//CREA FUNZIONE
 		fclose(file);
 
 		// Controlliamo anche il file utilizzatori.dat se non l'ha già trovato
 		if (giaEsistente == false)
 		{
-			file = fopen(PERCORSO_FILE_UTILIZZATORI, "rb+");
-			// Se è la prima esecuzione e/o il file non esiste, creane uno
-			if (file == NULL)
-			{
-				file = fopen(PERCORSO_FILE_UTILIZZATORI, "wb+");
-				fclose(file);
-				file = fopen(PERCORSO_FILE_UTILIZZATORI, "rb+");
-			}
+			file = ApriFile(PERCORSO_FILE_UTILIZZATORI);
 
 			giaEsistente = ControllaNomeUtenteUtilizzatore(file, buffer);
 
@@ -365,8 +321,8 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		errore = false;
 		printf("Inserire una password (min. 8 caratteri): ");
 		char buffer[MAX_BUFFER] = { 0 };
+		SvuotaInput();
 		scanf("%100s", buffer);
-		SvuotaInputGetChar();
 
 		// Controlla che il minimo sia rispettato
 		if (strlen(buffer) < MIN_CAR_PASSWORD)
@@ -386,8 +342,8 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		errore = false;
 		printf("Inserire il nome: ");
 		char buffer[MAX_BUFFER] = { 0 };
-		fgets(buffer, 100, stdin); // FGETS PER PRENDERE ANCHE GLI SPAZI EVENTUALMENTE
-		SvuotaInputFGets(buffer);
+		SvuotaInput();
+		scanf("%100[^\n]", buffer);
 
 		// Conversione della stringa in minuscolo
 		ConversioneMinuscolo(buffer);
@@ -406,8 +362,8 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		errore = false;
 		printf("Inserire il cognome: ");
 		char buffer[MAX_BUFFER] = { 0 };
-		fgets(buffer, 100, stdin);
-		SvuotaInputFGets(buffer);
+		SvuotaInput();
+		scanf("%100[^\n]", buffer);
 
 		// Conversione della stringa in minuscolo
 		ConversioneMinuscolo(buffer);
@@ -425,9 +381,9 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 	{
 		errore = false;
 		printf("Inserire il sesso (M/F): ");
+		SvuotaInput();
 		scanf("%c", &creatore->sesso);
 		creatore->sesso = toupper(creatore->sesso);
-		SvuotaInputGetChar();
 
 		// Controllo errori
 		if (creatore->sesso != 'M' && creatore->sesso != 'F')
@@ -443,8 +399,8 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		errore = false;
 		printf("Inserire la professione: ");
 		char buffer[MAX_BUFFER] = { 0 };
-		fgets(buffer, 100, stdin);
-		SvuotaInputFGets(buffer);
+		SvuotaInput();
+		scanf("%100[^\n]", buffer);
 
 		// Conversione della stringa in minuscolo
 		ConversioneMinuscolo(buffer);
@@ -462,8 +418,8 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		errore = false;
 		printf("Inserire la nazionalita': ");
 		char buffer[MAX_BUFFER] = { 0 };
-		fgets(buffer, 100, stdin);
-		SvuotaInputFGets(buffer);
+		SvuotaInput();
+		scanf("%100[^\n]", buffer);
 
 		// Conversione della stringa in minuscolo
 		ConversioneMinuscolo(buffer);
@@ -505,7 +461,6 @@ void SalvaDatiCreatore(FILE* file, Creatore_t* creatore)
 	fread(&precCreatore, sizeof(Creatore_t), 1, file);
 	creatore->id = precCreatore.id + 1;
 	fwrite(&*creatore, sizeof(Creatore_t), 1, file);
-
 }
 
 void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore)

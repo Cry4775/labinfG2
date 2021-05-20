@@ -44,6 +44,18 @@ void SalvaDatiImmagine(FILE* file, Immagine_t* immagine);
 
 void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[]);
 
-void ModificaImmagini(FILE* file, char nomeUtente[]);
+bool ModificaImmagini(FILE* file, char nomeUtente[]);
+
+void StampaTagsImmagine(Immagine_t immagine);
+
+void StampaCategorieDisponibili();
+
+void StampaTagsDisponibili();
+
+void InserisciTagsCaricamento(Immagine_t** immagine);
+void InserisciTags(Immagine_t* immagine);
+
+void InserisciCategoriaCaricamento(Immagine_t** immagine);
+void InserisciCategoria(Immagine_t* immagine);
 
 #endif
