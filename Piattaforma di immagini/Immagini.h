@@ -24,6 +24,7 @@ typedef struct
 
 typedef struct
 {
+    int id;
     char titolo[MAX_BUFFER];
     char categoria[MAX_BUFFER];
     char tags[MAX_TAGS][MAX_BUFFER];
@@ -41,5 +42,8 @@ typedef struct
 
 void SalvaDatiImmagine(FILE* file, Immagine_t* immagine);
 
+void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[]);
+
+void ModificaImmagini(FILE* file, char nomeUtente[]);
 
 #endif

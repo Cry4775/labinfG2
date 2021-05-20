@@ -12,6 +12,7 @@
 
 typedef struct
 {
+    int id;
     char nomeUtente[MAX_BUFFER];
     char password[MAX_BUFFER];
     char nome[MAX_BUFFER];
@@ -28,6 +29,7 @@ typedef struct
 
 typedef struct
 {
+    int id;
     char nomeUtente[MAX_BUFFER];
     char password[MAX_BUFFER];
     char nome[MAX_BUFFER];
@@ -41,14 +43,20 @@ typedef struct
     unsigned int numDownloadTot;
 } Utilizzatore_t;
 
-bool ControllaNomeUtente(FILE* file, char buffer[]);
+bool ControllaNomeUtenteCreatore(FILE* file, char buffer[]);
 
-bool ControllaPassword(FILE* file, char buffer[]);
+bool ControllaNomeUtenteUtilizzatore(FILE* file, char buffer[]);
+
+bool ControllaPassword(FILE* file, char buffer[], char nomeUtente[]);
+
+void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[]);
 
 void SalvaDatiCreatore(FILE* file, Creatore_t* creatore);
 
+void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char nomeUtente[]);
+
 void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore);
 
-
+bool AggiornaNumImmaginiCreatore(FILE* file, char nomeUtente[]);
 
 #endif

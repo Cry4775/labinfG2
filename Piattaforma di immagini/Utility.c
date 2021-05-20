@@ -79,7 +79,7 @@ bool ContieneSimboli(char buffer[], bool numeriAmmessi)
         size_t i = 0;
         while (i < strlen(buffer))
         {
-            if ((buffer[i] >= 'a' && buffer[i] <= 'z') || buffer[i] == ' ')
+            if ((buffer[i] >= 'a' && buffer[i] <= 'z') || (buffer[i] >= 'A' && buffer[i] <= 'Z') || buffer[i] == ' ')
             {
                 i++;
             }
@@ -99,7 +99,7 @@ bool ContieneSimboli(char buffer[], bool numeriAmmessi)
         size_t i = 0;
         while (i < strlen(buffer))
         {
-            if ((buffer[i] >= 'a' && buffer[i] <= 'z') || (buffer[i] >= '0' && buffer[i] <= '9') || buffer[i] == ' ')
+            if ((buffer[i] >= 'a' && buffer[i] <= 'z') || (buffer[i] >= 'A' && buffer[i] <= 'Z') || (buffer[i] >= '0' && buffer[i] <= '9') || buffer[i] == ' ')
             {
                 i++;
             }
