@@ -24,6 +24,7 @@ typedef struct
     Data_t dataIscrizione;
     unsigned int numImmagini;
     unsigned int numDownloadTot;
+    unsigned int numValutazioniRicevute;
     float mediaValutazioni;
 } Creatore_t;
 
@@ -58,5 +59,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore);
 
 bool AggiornaNumImmaginiCreatore(FILE* file, char nomeUtente[]);
+
+bool AggiornaNumDownloadCreatore(FILE* file, char nomeUtente[]);
+
+bool AggiornaMediaValutazioniCreatore(FILE* file, unsigned int valutazione);
 
 #endif

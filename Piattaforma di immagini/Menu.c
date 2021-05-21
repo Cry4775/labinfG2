@@ -198,10 +198,10 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 		{
 			system("cls");
 
-			puts("Benvenuto sulla piattaforma di immagini! \n\n1. Gestione creatore\n2. Ricerca immagine\n3. Statistiche creatore\n4. Classifiche\n5. Esci");
+			printf("Benvenuto sulla piattaforma di immagini %s! \n\n1. Gestione creatore\n2. Ricerca immagine\n3. Statistiche creatore\n4. Classifiche\n5. Esci\n", nomeUtente);
 
 			unsigned int sceltaMenu;
-			bool errore = false;
+			bool ripeti = false;
 			scanf("%1u", &sceltaMenu);
 
 			switch (sceltaMenu)
@@ -209,106 +209,17 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 				// Gestione creatore
 				case 1:
 				{
-					do
-					{
-						system("cls");
-
-						puts("1. Carica immagine\n2. Modifica immagine\n3. Rimuovi immagine\n4. Visualizza statistiche\n5. Indietro");
-						scanf("%1u", &sceltaMenu);
-
-						Immagine_t immagine = { 0 };
-
-						// Sottomenu gestione creatore
-						switch (sceltaMenu)
-						{
-							// Carica immagine - Creatore
-							case 1:
-							{
-								InserisciDatiImmagine(&immagine, nomeUtente);
-
-								// Fase di salvataggio dei dati su file
-								file = ApriFile(PERCORSO_FILE_IMMAGINI);
-
-								SalvaDatiImmagine(file, &immagine);
-
-								fclose(file);
-
-								file = ApriFile(PERCORSO_FILE_CREATORI);
-
-								if (!AggiornaNumImmaginiCreatore(file, nomeUtente))
-								{
-									printf("Errore nell'aggiornamento del profilo creatore!");
-									system("pause");
-								}
-								else
-								{
-									printf("Immagine caricata con successo!\n\n");
-									system("pause");
-								}
-
-								fclose(file);
-
-								break;
-							}
-							// Modifica immagine - Creatore
-							case 2:
-							{
-								file = ApriFile(PERCORSO_FILE_IMMAGINI);
-
-								if (ModificaImmagini(file, nomeUtente))
-								{
-									printf("\n\nImmagine modificata con successo!\n\n");
-									system("pause");
-								}
-								else
-								{
-									printf("\n\nErrore nell'aggiornamento dell'immagine!\n\n");
-									system("pause");
-								}
-
-								fclose(file);
-								break;
-							}
-							// Rimuovi immagine - Creatore
-							case 3:
-							{
-								file = ApriFile(PERCORSO_FILE_IMMAGINI);
-
-								if (RimuoviImmagine(file, nomeUtente))
-								{
-									printf("\n\nImmagine rimossa con successo!\n\n");
-									system("pause");
-								}
-								else
-								{
-									printf("\n\nErrore nella rimozione dell'immagine!\n\n");
-									system("pause");
-								}
-
-								fclose(file);
-								break;
-							}
-							// Visualizza statistiche - Creatore
-							case 4:
-							{
-								file = ApriFile(PERCORSO_FILE_IMMAGINI);
-
-								fclose(file);
-								break;
-							}
-							// Indietro - Creatore
-							case 5:
-								errore = false;
-								break;
-							default:
-								printf("Errore! Selezionare un'opzione valida!\n\n");
-								errore = true;
-								system("pause");
-								break;
-						}
-					} while (errore);
+					GestioneCreatore(nomeUtente);
+					break;
 				}
+				// Ricerca immagine
+				case 2:
+				{
+					RicercaImmagine(nomeUtente);
 
+					break;
+				}
+					
 				// case 2, case 3, case 4, case 5 del menu PRINCIPALE
 			}
 		} while (inEsecuzione == true);
@@ -319,3 +230,190 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 		// Menu Utilizzatore
 	}
 }
+
+void GestioneCreatore(char nomeUtente[])
+{
+	bool ripeti;
+	do
+	{
+		unsigned int sceltaMenu;
+		ripeti = false;
+		system("cls");
+
+		puts("1. Carica immagine\n2. Modifica immagine\n3. Rimuovi immagine\n4. Visualizza immagine\n5. Indietro");
+		scanf("%1u", &sceltaMenu);
+
+		Immagine_t immagine = { 0 };
+
+		// Sottomenu gestione creatore
+		switch (sceltaMenu)
+		{
+		// Carica immagine - Creatore
+		case 1:
+		{
+			InserisciDatiImmagine(&immagine, nomeUtente);
+
+			// Fase di salvataggio dei dati su file
+			file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+			SalvaDatiImmagine(file, &immagine);
+
+			fclose(file);
+
+			file = ApriFile(PERCORSO_FILE_CREATORI);
+
+			if (!AggiornaNumImmaginiCreatore(file, nomeUtente))
+			{
+				printf("Errore nell'aggiornamento del profilo creatore!");
+				system("pause");
+			}
+			else
+			{
+				printf("Immagine caricata con successo!\n\n");
+				system("pause");
+			}
+
+			fclose(file);
+			ripeti = true;
+			break;
+		}
+		// Modifica immagine - Creatore
+		case 2:
+		{
+			file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+			if (ModificaImmagini(file, nomeUtente))
+			{
+				printf("\n\nImmagine modificata con successo!\n\n");
+				system("pause");
+			}
+			else
+			{
+				printf("\n\nErrore nell'aggiornamento dell'immagine!\n\n");
+				system("pause");
+			}
+
+			fclose(file);
+			ripeti = true;
+			break;
+		}
+		// Rimuovi immagine - Creatore
+		case 3:
+		{
+			file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+			if (RimuoviImmagine(file, nomeUtente))
+			{
+				printf("\n\nImmagine rimossa con successo!\n\n");
+				system("pause");
+			}
+			else
+			{
+				printf("\n\nErrore nella rimozione dell'immagine!\n\n");
+				system("pause");
+			}
+
+			fclose(file);
+			ripeti = true;
+			break;
+		}
+		// Visualizza immagine - Creatore
+		case 4:
+		{
+			file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+			if (VisualizzaImmagineCreatore(file, nomeUtente))
+				system("pause");
+			else
+			{
+				printf("\n\nErrore nella visualizzazione dell'immagine!\n\n");
+				system("pause");
+			}
+
+			fclose(file);
+			ripeti = true;
+			break;
+		}
+		// Indietro - Creatore
+		case 5:
+			ripeti = false;
+			break;
+		default:
+			printf("Errore! Selezionare un'opzione valida!\n\n");
+			ripeti = true;
+			system("pause");
+			break;
+		}
+	} while (ripeti);
+}
+
+void RicercaImmagine(char nomeUtente[])
+{
+	bool ripeti;
+	do
+	{
+		unsigned int sceltaMenu;
+		ripeti = false;
+		system("cls");
+
+		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
+		scanf("%1u", &sceltaMenu);
+
+		Immagine_t immagine = { 0 };
+
+		// Sottomenu Ricerca Immagine
+		switch (sceltaMenu)
+		{
+			// Ricerca Immagine - Popolari
+			case 1:
+			{
+				file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+				// Da fare
+
+				fclose(file);
+				ripeti = true;
+				break;
+			}
+			// Ricerca Immagine - Categorie
+			case 2:
+			{
+				file = ApriFile(PERCORSO_FILE_IMMAGINI);
+				FILE* fileCreatori = ApriFile(PERCORSO_FILE_CREATORI);
+
+				if (RicercaCategoria(file))
+				{
+					bool scaricata = VisualizzaImmagine(file);
+					if (scaricata)
+					{
+						if (!AggiornaNumDownloadCreatore(fileCreatori, nomeUtente))
+						{
+							printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+							system("pause");
+						}
+						else
+						{
+							unsigned int valutazione = ValutaImmagine(file);
+							if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione))
+							{
+								printf("Valutazione correttamente inviata! Grazie!\n\n");
+								system("pause");
+							}
+							else
+							{
+								printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+								system("pause");
+							}
+						}
+					}
+				}
+
+				fclose(file);
+				fclose(fileCreatori);
+				ripeti = true;
+				break;
+			}
+		}
+	} while (ripeti);
+}
+

@@ -13,4 +13,8 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[]);
 
 void MenuPrincipale(bool* isCreatore, char nomeUtente[]);
 
+void GestioneCreatore(char nomeUtente[]);
+
+void RicercaImmagine(char nomeUtente[]);
+
 #endif

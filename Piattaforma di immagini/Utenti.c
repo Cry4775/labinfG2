@@ -492,3 +492,44 @@ bool AggiornaNumImmaginiCreatore(FILE* file, char nomeUtente[])
 			return false;
 	}
 }
+
+bool AggiornaNumDownloadCreatore(FILE* file, char nomeUtente[])
+{
+	while (!feof(file))
+	{
+		Creatore_t tempCreatore = { 0 };
+		int esito = fread(&tempCreatore, sizeof(Creatore_t), 1, file);
+
+		if (esito != 0)
+		{
+			if (strcmp(nomeUtente, tempCreatore.nomeUtente) == 0)
+			{
+				tempCreatore.numDownloadTot++;
+				fseek(file, -(int)sizeof(Creatore_t), SEEK_CUR);
+				fwrite(&tempCreatore, sizeof(Creatore_t), 1, file);
+				return true;
+			}
+		}
+		else
+			return false;
+	}
+}
+
+bool AggiornaMediaValutazioniCreatore(FILE* file, unsigned int valutazione)
+{
+	Creatore_t tempCreatore = { 0 };
+	fseek(file, -(int)sizeof(Creatore_t), SEEK_CUR);
+	if (fread(&tempCreatore, sizeof(Creatore_t), 1, file) != 0)
+	{
+
+		float sommaValutazioni = tempCreatore.mediaValutazioni * tempCreatore.numValutazioniRicevute;
+		tempCreatore.numValutazioniRicevute++;
+		sommaValutazioni += valutazione;
+		tempCreatore.mediaValutazioni = sommaValutazioni / tempCreatore.numValutazioniRicevute;
+		fseek(file, -(int)sizeof(Creatore_t), SEEK_CUR);
+		fwrite(&tempCreatore, sizeof(Creatore_t), 1, file);
+		return true;
+	}
+	else
+		return false;
+}

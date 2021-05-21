@@ -32,7 +32,7 @@ typedef struct
     char formato[MAX_BUFFER];
     char tipologia[MAX_BUFFER];
     char nomeFile[MAX_BUFFER]; // titolo + formato
-    unsigned int valutazione;
+    unsigned int numValutazioni;
     float valutazioneMedia;
     unsigned int numDownload;
     float dimensione;
@@ -46,6 +46,14 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[]);
 
 bool ModificaImmagini(FILE* file, char nomeUtente[]);
 
+bool StampaImmaginiCaricate(FILE* file, char nomeUtente[]);
+
+bool RimuoviImmagine(FILE* file, char nomeUtente[]);
+
+bool VisualizzaImmagineCreatore(FILE* file, char nomeUtente[]);
+
+bool VisualizzaImmagine(FILE* file);
+
 void StampaTagsImmagine(Immagine_t immagine);
 
 void StampaCategorieDisponibili();
@@ -54,14 +62,14 @@ void StampaTagsDisponibili();
 
 void InserisciTagsCaricamento(Immagine_t** immagine);
 
-void InserisciTags(Immagine_t* immagine);       //aggiungi MODIFICA nel nome
+void InserisciTagsModifica(Immagine_t* immagine);
 
 void InserisciCategoriaCaricamento(Immagine_t** immagine);
 
-void InserisciCategoria(Immagine_t* immagine);  //aggiungi MODIFICA nel nome
+void InserisciCategoriaModifica(Immagine_t* immagine);
 
-bool StampaImmaginiCaricate(FILE* file, char nomeUtente[]);
+bool RicercaCategoria(FILE* file);
 
-bool RimuoviImmagine(FILE* file, char nomeUtente[]);
+unsigned int ValutaImmagine(FILE* file);
 
 #endif
