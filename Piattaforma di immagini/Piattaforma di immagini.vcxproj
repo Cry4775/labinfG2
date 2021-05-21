@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="immagini\immagini.dat" />
+    <None Include="immagini\valutazioni.dat" />
     <None Include="utenti\creatori.dat" />
     <None Include="utenti\utilizzatori.dat" />
   </ItemGroup>

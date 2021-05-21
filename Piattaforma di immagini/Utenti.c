@@ -19,6 +19,7 @@ bool ControllaNomeUtenteCreatore(FILE* file, char buffer[])
 		else 
 			return false;
 	}
+	return false;
 }
 
 bool ControllaNomeUtenteUtilizzatore(FILE* file, char buffer[])
@@ -40,6 +41,7 @@ bool ControllaNomeUtenteUtilizzatore(FILE* file, char buffer[])
 		else
 			return false;
 	}
+	return false;
 }
 
 bool ControllaPassword(FILE* file, char buffer[], char nomeUtente[])
@@ -78,6 +80,7 @@ bool ControllaPassword(FILE* file, char buffer[], char nomeUtente[])
 		else
 			return false;
 	}
+	return false;
 }
 
 void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char nomeUtente[])
@@ -455,7 +458,8 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 
 void SalvaDatiCreatore(FILE* file, Creatore_t* creatore)
 {
-	Creatore_t precCreatore = { 0 };																			//rendi l'essagnazione una funzione e aggiungi il controllo di id = 0 tra i record
+	Creatore_t precCreatore = { 0 };
+
 	fseek(file, - (int)sizeof(Creatore_t), SEEK_END);
 	fread(&precCreatore, sizeof(Creatore_t), 1, file);
 	creatore->id = precCreatore.id + 1;
@@ -465,6 +469,7 @@ void SalvaDatiCreatore(FILE* file, Creatore_t* creatore)
 void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore)
 {
 	Utilizzatore_t precUtilizzatore = { 0 };
+
 	fseek(file, -(int)sizeof(Utilizzatore_t), SEEK_END);
 	fread(&precUtilizzatore, sizeof(Utilizzatore_t), 1, file);
 	utilizzatore->id = precUtilizzatore.id + 1;
@@ -491,6 +496,7 @@ bool AggiornaNumImmaginiCreatore(FILE* file, char nomeUtente[])
 		else
 			return false;
 	}
+	return false;
 }
 
 bool AggiornaNumDownloadCreatore(FILE* file, char nomeUtente[])
@@ -513,6 +519,7 @@ bool AggiornaNumDownloadCreatore(FILE* file, char nomeUtente[])
 		else
 			return false;
 	}
+	return false;
 }
 
 bool AggiornaMediaValutazioniCreatore(FILE* file, unsigned int valutazione)
@@ -521,7 +528,6 @@ bool AggiornaMediaValutazioniCreatore(FILE* file, unsigned int valutazione)
 	fseek(file, -(int)sizeof(Creatore_t), SEEK_CUR);
 	if (fread(&tempCreatore, sizeof(Creatore_t), 1, file) != 0)
 	{
-
 		float sommaValutazioni = tempCreatore.mediaValutazioni * tempCreatore.numValutazioniRicevute;
 		tempCreatore.numValutazioniRicevute++;
 		sommaValutazioni += valutazione;

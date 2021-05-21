@@ -90,11 +90,37 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 
 void SalvaDatiImmagine(FILE* file, Immagine_t* immagine)
 {
-	Immagine_t precImmagine = { 0 };																			//rendi l'essagnazione una funzione e aggiungi il controllo di id = 0 tra i record
-	fseek(file, -(int)sizeof(Immagine_t), SEEK_END);
-	fread(&precImmagine, sizeof(Immagine_t), 1, file);
-	immagine->id = precImmagine.id + 1;
-	fwrite(&*immagine, sizeof(Immagine_t), 1, file);
+	Immagine_t precImmagine = { 0 };
+
+	// Controllo innanzitutto che non ci sia un buco (un immagine rimossa)
+	bool trovatoBuco = false;
+	rewind(file);
+	while (!feof(file))
+	{
+		Immagine_t tempImmagine = { 0 };
+		int esito = fread(&tempImmagine, sizeof(Immagine_t), 1, file);
+
+		if (esito != 0)
+		{
+			if (tempImmagine.id == 0)
+			{
+				// Mando il cursore a 2 struct prima (struct vuota -> struct precedente a quella vuota)
+				fseek(file, -(int)sizeof(Immagine_t) * 2, SEEK_CUR);
+				fread(&precImmagine, sizeof(Immagine_t), 1, file);
+				immagine->id = precImmagine.id + 1;
+				fwrite(&*immagine, sizeof(Immagine_t), 1, file);
+				trovatoBuco = true;
+			}
+		}
+	}
+
+	if (!trovatoBuco)
+	{
+		fseek(file, -(int)sizeof(Immagine_t), SEEK_END);
+		fread(&precImmagine, sizeof(Immagine_t), 1, file);
+		immagine->id = precImmagine.id + 1;
+		fwrite(&*immagine, sizeof(Immagine_t), 1, file);
+	}
 }
 
 bool ModificaImmagini(FILE* file, char nomeUtente[])
@@ -596,6 +622,7 @@ bool RicercaCategoria(FILE* file)
 
 			if (esito != 0)
 			{
+				// Stampa tutte le immagini con quella categoria
 				if (strcmp(categoria[categoriaScelta-1], immagine.categoria) == 0)
 				{
 					trovato = true;
@@ -615,7 +642,7 @@ bool RicercaCategoria(FILE* file)
 	} while (errore);
 }
 
-bool VisualizzaImmagine(FILE* file)
+bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 {
 	SvuotaInput();
 	bool errore = false;
@@ -651,6 +678,8 @@ bool VisualizzaImmagine(FILE* file)
 				{
 					if (strcmp(buffer, immagine.titolo) == 0)
 					{
+						// Passo al menu l'autore dell'immagine
+						strcpy(autoreImmagine, immagine.nomeUtente);
 						system("cls");
 						printf("Titolo: %s\nAutore: %s\nCategoria: %s\nTags: ", immagine.titolo, immagine.nomeUtente, immagine.categoria);
 						StampaTagsImmagine(immagine);
@@ -689,11 +718,12 @@ bool VisualizzaImmagine(FILE* file)
 	return false;
 }
 
-unsigned int ValutaImmagine(FILE* file)
+unsigned int ValutaImmagine(FILE* file, char nomeUtente[])
 {
 	SvuotaInput();
 	bool errore = false;
 	unsigned int valutazione;
+
 	do
 	{
 		if (errore)
@@ -701,26 +731,58 @@ unsigned int ValutaImmagine(FILE* file)
 
 		errore = false;
 
+		Immagine_t immagine = { 0 };
 		
 		fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
-
-		Immagine_t immagine = { 0 };
 		fread(&immagine, sizeof(Immagine_t), 1, file);
 
-		printf("\n\nQuanto vuoi valutare quest'immagine? Inserire un numero da 1 a 5 (intero): ");
-		
-		if (scanf("%u", &valutazione) == 1)
-		{
-			if (valutazione >= 1 && valutazione <= 5)
-			{
-				float sommaValutazioni = immagine.valutazioneMedia * immagine.numValutazioni;
-				immagine.numValutazioni++;
-				sommaValutazioni += valutazione;
-				immagine.valutazioneMedia = sommaValutazioni / immagine.numValutazioni;
-				immagine.numDownload++;
+		FILE* fileValutazioni = ApriFile(PERCORSO_FILE_VALUTAZIONI);
 
-				fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
-				fwrite(&immagine, sizeof(Immagine_t), 1, file);
+		bool giaValutata = false;
+
+		// Controllo se l'immagine è stata già valutata
+		while (!feof(fileValutazioni) && !giaValutata)
+		{
+			Valutazione_t valutazioneStruct;
+			int esito = fread(&valutazioneStruct, sizeof(Valutazione_t), 1, fileValutazioni);
+
+			if (esito != 0)
+			{
+				if (strcmp(valutazioneStruct.nomeUtenteValutatore, nomeUtente) == 0 && immagine.id == valutazioneStruct.idImmagineValutata)
+					giaValutata = true;
+			}
+		}
+
+		// Assegno 0 a valutazione per far sapere al programma che è stata già valutata
+		valutazione = 0;
+		fclose(fileValutazioni);
+
+
+
+		if (!giaValutata)
+		{
+			printf("\n\nQuanto vuoi valutare quest'immagine? Inserire un numero da 1 a 5 (intero): ");
+
+			if (scanf("%u", &valutazione) == 1)
+			{
+				if (valutazione >= 1 && valutazione <= 5)
+				{
+					float sommaValutazioni = immagine.valutazioneMedia * immagine.numValutazioni;
+					immagine.numValutazioni++;
+					sommaValutazioni += valutazione;
+					immagine.valutazioneMedia = sommaValutazioni / immagine.numValutazioni;
+					immagine.numDownload++;
+
+					fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
+					fwrite(&immagine, sizeof(Immagine_t), 1, file);
+
+				}
+				else
+				{
+					errore = true;
+					printf("Errore! Inserire un numero tra 1 e 5!\n\n");
+					system("pause");
+				}
 			}
 			else
 			{
@@ -731,11 +793,36 @@ unsigned int ValutaImmagine(FILE* file)
 		}
 		else
 		{
-			errore = true;
-			printf("Errore! Inserire un numero tra 1 e 5!\n\n");
+			printf("L'immagine e' gia' stata valutata! Non puoi valutarla due volte!\n\n");
 			system("pause");
 		}
 	} while (errore);
 
 	return valutazione;
+}
+
+void SalvaValutazione(FILE* fileImmagine, char nomeUtente[], unsigned int valutazione)
+{
+	Immagine_t immagine = { 0 };
+
+	FILE* fileCreatore = ApriFile(PERCORSO_FILE_CREATORI);
+
+	// Prelevo l'ID dell'immagine valutata
+	fseek(fileImmagine, -(int)sizeof(Immagine_t), SEEK_CUR);
+	fread(&immagine, sizeof(Immagine_t), 1, fileImmagine);
+
+
+	Valutazione_t valutazioneStruct = { 0 };
+
+	// Assegno i valori
+	strcpy(valutazioneStruct.nomeUtenteValutatore, nomeUtente);
+	valutazioneStruct.idImmagineValutata = immagine.id;
+	valutazioneStruct.valutazione = valutazione;
+
+	// Salvo sul file
+	FILE* fileValutazioni = ApriFile(PERCORSO_FILE_VALUTAZIONI);
+
+	fseek(fileValutazioni, 0, SEEK_END);
+	fwrite(&valutazioneStruct, sizeof(Valutazione_t), 1, fileValutazioni);
+	fclose(fileValutazioni);
 }

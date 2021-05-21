@@ -379,37 +379,11 @@ void RicercaImmagine(char nomeUtente[])
 			case 2:
 			{
 				file = ApriFile(PERCORSO_FILE_IMMAGINI);
-				FILE* fileCreatori = ApriFile(PERCORSO_FILE_CREATORI);
-
-				if (RicercaCategoria(file))
-				{
-					bool scaricata = VisualizzaImmagine(file);
-					if (scaricata)
-					{
-						if (!AggiornaNumDownloadCreatore(fileCreatori, nomeUtente))
-						{
-							printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
-							system("pause");
-						}
-						else
-						{
-							unsigned int valutazione = ValutaImmagine(file);
-							if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione))
-							{
-								printf("Valutazione correttamente inviata! Grazie!\n\n");
-								system("pause");
-							}
-							else
-							{
-								printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
-								system("pause");
-							}
-						}
-					}
-				}
+				
+				RicercaCategoriaMenu(file, nomeUtente);
 
 				fclose(file);
-				fclose(fileCreatori);
+				
 				ripeti = true;
 				break;
 			}
@@ -417,3 +391,43 @@ void RicercaImmagine(char nomeUtente[])
 	} while (ripeti);
 }
 
+void RicercaCategoriaMenu(FILE* file, char nomeUtente[])
+{
+	FILE* fileCreatori = ApriFile(PERCORSO_FILE_CREATORI);
+
+	// Stampa le immagini a seconda della categoria scelta
+	if (RicercaCategoria(file))
+	{
+		char autoreImmagine[MAX_BUFFER];
+		bool scaricata = VisualizzaImmagine(file, autoreImmagine);
+		if (scaricata)
+		{
+			if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
+			{
+				printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+				system("pause");
+			}
+			else
+			{
+				unsigned int valutazione = ValutaImmagine(file, nomeUtente);
+
+				// Se non è già stata data la valutazione
+				if (valutazione != 0)
+				{
+					if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione))
+					{
+						SalvaValutazione(file, nomeUtente, valutazione);
+						printf("Valutazione correttamente inviata! Grazie!\n\n");
+						system("pause");
+					}
+					else
+					{
+						printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+						system("pause");
+					}
+				}
+			}
+		}
+	}
+	fclose(fileCreatori);
+}
