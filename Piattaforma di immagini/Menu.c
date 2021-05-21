@@ -216,7 +216,12 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 				case 2:
 				{
 					RicercaImmagine(nomeUtente);
-
+					break;
+				}
+				// Statistiche creatore
+				case 3:
+				{
+					StatisticheCreatore();
 					break;
 				}
 					
@@ -369,7 +374,7 @@ void RicercaImmagine(char nomeUtente[])
 			{
 				file = ApriFile(PERCORSO_FILE_IMMAGINI);
 
-				// Da fare
+																			// Da fare con l'ordinamento
 
 				fclose(file);
 				ripeti = true;
@@ -387,6 +392,22 @@ void RicercaImmagine(char nomeUtente[])
 				ripeti = true;
 				break;
 			}
+			// Ricerca Immagine - Tags
+			case 3:
+			{
+				file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+				RicercaTagsMenu(file, nomeUtente);
+
+				fclose(file);
+
+				ripeti = true;
+				break;
+			}
+			// Ricerca Immagine - Indietro
+			case 4:
+				ripeti = false;
+				break;
 		}
 	} while (ripeti);
 }
@@ -430,4 +451,155 @@ void RicercaCategoriaMenu(FILE* file, char nomeUtente[])
 		}
 	}
 	fclose(fileCreatori);
+}
+
+void RicercaTagsMenu(FILE* file, char nomeUtente[])
+{
+	FILE* fileCreatori = ApriFile(PERCORSO_FILE_CREATORI);
+
+	// Stampa le immagini a seconda della categoria scelta
+	if (RicercaTags(file))
+	{
+		char autoreImmagine[MAX_BUFFER];
+		bool scaricata = VisualizzaImmagine(file, autoreImmagine);
+		if (scaricata)
+		{
+			if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
+			{
+				printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+				system("pause");
+			}
+			else
+			{
+				unsigned int valutazione = ValutaImmagine(file, nomeUtente);
+
+				// Se non è già stata data la valutazione
+				if (valutazione != 0)
+				{
+					if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione))
+					{
+						SalvaValutazione(file, nomeUtente, valutazione);
+						printf("Valutazione correttamente inviata! Grazie!\n\n");
+						system("pause");
+					}
+					else
+					{
+						printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+						system("pause");
+					}
+				}
+			}
+		}
+	}
+	fclose(fileCreatori);
+}
+
+void StatisticheCreatore()
+{
+	bool errore = false;
+	do
+	{
+		file = ApriFile(PERCORSO_FILE_CREATORI);
+		errore = false;
+
+		system("cls");
+
+		char buffer[MAX_BUFFER] = { 0 };
+		printf("Inserire il nome utente del creatore di cui si vogliono visualizzare le statistiche: ");
+		SvuotaInput();
+		scanf("%s", buffer);
+
+		bool trovato = false;
+		Creatore_t creatore = { 0 };
+
+		while (!feof(file) && !trovato)
+		{
+			int esito = fread(&creatore, sizeof(Creatore_t), 1, file);
+
+			if (esito != 0)
+			{
+				if (strcmp(creatore.nomeUtente, buffer) == 0)
+					trovato = true;
+			}
+			else
+				trovato = false;
+		}
+
+		fclose(file);
+
+		if (trovato)
+		{
+			// Stampa le statistiche
+			system("cls");
+			printf("Nome utente: %s\n\n", creatore.nomeUtente);
+			printf("%-30s%-30s%-30s\n", "Categorie", "Numero di download", "Attivita'");
+
+			FILE* fileImmagini = ApriFile(PERCORSO_FILE_IMMAGINI);
+			Immagine_t immagine = { 0 };
+			unsigned int occorrenzeCategoria[NUM_CATEGORIE] = { 0 };
+			unsigned int numDownloadCategoria[NUM_CATEGORIE] = { 0 };
+
+			// Calcola occorrenze e numeri di download nelle categorie
+			while (!feof(fileImmagini))
+			{
+				int esito = fread(&immagine, sizeof(Immagine_t), 1, fileImmagini);
+
+				if (esito != 0)
+				{
+					if (strcmp(immagine.nomeUtente, creatore.nomeUtente) == 0)
+					{
+						size_t i = 0;
+						trovato = false;
+						
+						while (i < NUM_CATEGORIE && !trovato)
+						{
+							if (strcmp(immagine.categoria, categoria[i]) == 0)
+							{
+								occorrenzeCategoria[i]++;
+								numDownloadCategoria[i] = numDownloadCategoria[i] + immagine.numDownload;
+								trovato = true;
+							}
+							else
+								i++;
+						}
+					}
+				}
+			}
+
+			
+			unsigned int occorrenzeTot = 0;
+			// Calcola l'istogramma
+			for (size_t i = 0; i < NUM_CATEGORIE; i++)
+			{
+				occorrenzeTot += occorrenzeCategoria[i];
+			}
+
+			float percentualiOccorrenze[NUM_CATEGORIE] = { 0 };
+
+			for (size_t i = 0; i < NUM_CATEGORIE; i++)
+			{
+				percentualiOccorrenze[i] = ((float)occorrenzeCategoria[i] / (float)occorrenzeTot) * 10;
+			}
+
+			// Visualizza le statistiche
+			for (size_t i = 0; i < NUM_CATEGORIE; i++)
+			{
+				if (occorrenzeCategoria[i] != 0)
+				{
+					printf("%-30s%-30u%-30s\n", categoria[i], numDownloadCategoria[i], CreaIstogramma((int)percentualiOccorrenze[i]));
+				}
+			}
+			printf("\n\n");
+			system("pause");
+
+		}
+		else
+		{
+			printf("Nome utente non esistente!\n\n");
+			errore = true;
+			system("pause");
+		}
+
+		
+	} while (errore);
 }

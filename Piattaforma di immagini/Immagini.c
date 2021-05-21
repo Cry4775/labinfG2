@@ -95,7 +95,7 @@ void SalvaDatiImmagine(FILE* file, Immagine_t* immagine)
 	// Controllo innanzitutto che non ci sia un buco (un immagine rimossa)
 	bool trovatoBuco = false;
 	rewind(file);
-	while (!feof(file))
+	while (!feof(file) && !trovatoBuco)
 	{
 		Immagine_t tempImmagine = { 0 };
 		int esito = fread(&tempImmagine, sizeof(Immagine_t), 1, file);
@@ -107,7 +107,12 @@ void SalvaDatiImmagine(FILE* file, Immagine_t* immagine)
 				// Mando il cursore a 2 struct prima (struct vuota -> struct precedente a quella vuota)
 				fseek(file, -(int)sizeof(Immagine_t) * 2, SEEK_CUR);
 				fread(&precImmagine, sizeof(Immagine_t), 1, file);
+
+				// Mi salvo la posizione per flushare tra un'operazione e l'altra
+				long posizioneAttuale = ftell(file);
+
 				immagine->id = precImmagine.id + 1;
+				fseek(file, posizioneAttuale, SEEK_SET);
 				fwrite(&*immagine, sizeof(Immagine_t), 1, file);
 				trovatoBuco = true;
 			}
@@ -610,37 +615,121 @@ bool RicercaCategoria(FILE* file)
 
 		printf("\n\nSeleziona la categoria che vuoi ricercare: ");
 		unsigned int categoriaScelta;
-		scanf("%u", &categoriaScelta);
-		printf("\n");
-
-		bool trovato = false;
-
-		while (!feof(file))
+		if (scanf("%u", &categoriaScelta) != 0)
 		{
-			Immagine_t immagine = { 0 };
-			int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
-
-			if (esito != 0)
+			if (categoriaScelta >= 1 && categoriaScelta <= NUM_CATEGORIE)
 			{
-				// Stampa tutte le immagini con quella categoria
-				if (strcmp(categoria[categoriaScelta-1], immagine.categoria) == 0)
+				printf("\n");
+
+				bool trovato = false;
+
+				while (!feof(file))
 				{
-					trovato = true;
-					printf("Titolo: %s\nCategoria: %s\nAutore: %s\nNumero di downloads: %u\n\n", immagine.titolo, immagine.categoria, immagine.nomeUtente, immagine.numDownload);
+					Immagine_t immagine = { 0 };
+					int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
+
+					if (esito != 0)
+					{
+						// Stampa tutte le immagini con quella categoria
+						if (strcmp(categoria[categoriaScelta - 1], immagine.categoria) == 0)
+						{
+							trovato = true;
+							printf("Titolo: %s\nCategoria: %s\nAutore: %s\nNumero di downloads: %u\n\n", immagine.titolo, immagine.categoria, immagine.nomeUtente, immagine.numDownload);
+						}
+					}
 				}
+
+				if (!trovato)
+				{
+					puts("\nNon sono ancora state caricate immagini con la suddetta categoria!\n\n");
+					system("pause");
+				}
+
+				return trovato;
+			}
+			else
+			{
+				errore = true;
+				printf("Selezionare un'opzione valida!\n\n");
+				system("pause");
 			}
 		}
-
-		if (!trovato)
+		else
 		{
-			puts("\nNon sono ancora state caricate immagini con la suddetta categoria!\n\n");
+			errore = true;
+			printf("Sono ammessi solo numeri!\n\n");
 			system("pause");
 		}
-
-		return trovato;
-
 	} while (errore);
 }
+
+bool RicercaTags(FILE* file)
+{
+	bool errore = false;
+	do
+	{
+		errore = false;
+
+		system("cls");
+		rewind(file);
+
+		StampaTagsDisponibili();
+
+		printf("\n\nSeleziona il tag che vuoi ricercare: ");
+		unsigned int tagScelto;
+		if (scanf("%u", &tagScelto) != 0)
+		{
+
+			if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
+			{
+				printf("\n");
+
+				bool trovato = false;
+
+				while (!feof(file))
+				{
+					Immagine_t immagine = { 0 };
+					int esito = fread(&immagine, sizeof(Immagine_t), 1, file);
+
+					if (esito != 0)
+					{
+						// Stampa tutte le immagini con quel tag
+						for (size_t i = 0; i < MAX_TAGS; i++)
+						{
+							if (strcmp(tags[tagScelto - 1], immagine.tags[i]) == 0)
+							{
+								trovato = true;
+								printf("Titolo: %s\nCategoria: %s\nAutore: %s\nNumero di downloads: %u\n\n", immagine.titolo, immagine.categoria, immagine.nomeUtente, immagine.numDownload);
+							}
+						}
+
+					}
+				}
+
+				if (!trovato)
+				{
+					puts("\nNon sono ancora state caricate immagini con il suddetto tag!\n\n");
+					system("pause");
+				}
+
+				return trovato;
+			}
+			else
+			{
+				errore = true;
+				printf("Selezionare un'opzione valida!\n\n");
+				system("pause");
+			}
+		}
+		else
+		{
+			errore = true;
+			printf("Sono ammessi solo numeri!\n\n");
+			system("pause");
+		}
+	} while (errore);
+}
+
 
 bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 {

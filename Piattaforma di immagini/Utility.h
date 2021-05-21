@@ -45,4 +45,6 @@ int RNG(int MIN, int MAX);
 
 FILE* ApriFile(const char* percorsoFile);
 
+const char* CreaIstogramma(unsigned int percentualeOccorrenza);
+
 #endif

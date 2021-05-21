@@ -157,6 +157,8 @@ void InserisciCategoriaModifica(Immagine_t* immagine);
 /// <returns>Restituisce 1 se è andata a buon fine, 0 altrimenti</returns>
 bool RicercaCategoria(FILE* file);
 
+bool RicercaTags(FILE* file);
+
 /// <summary>
 /// Questa funzione permette di valutare l'immagine selezionata attualmente
 /// </summary>

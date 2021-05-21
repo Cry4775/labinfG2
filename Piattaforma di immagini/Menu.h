@@ -42,5 +42,18 @@ void RicercaImmagine(char nomeUtente[]);
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
 void RicercaCategoriaMenu(FILE* file, char nomeUtente[]);
 
+/// <summary>
+/// Questa procedura contiene tutte le funzioni dell'opzione Ricerca Tags
+/// </summary>
+/// <param name="file">File delle immagini</param>
+/// <param name="nomeUtente">Nome utente dell'utente loggato</param>
+void RicercaTagsMenu(FILE* file, char nomeUtente[]);
+
+/// <summary>
+/// Questa procedura contiene le funzioni dell'opzione Statistiche Creatore
+/// </summary>
+void StatisticheCreatore();
+
+
 
 #endif
