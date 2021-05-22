@@ -11,54 +11,75 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 	SvuotaInput();
 	bool errore = false;
 
-	// Inserimento TITOLO
-	do
+	char scelta = { 0 };
+
+	printf("Vuoi che i dati vengano inseriti automaticamente? (Y/N): ");
+	scanf("%c", &scelta);
+
+	scelta = toupper(scelta);
+	if (scelta == 'Y')
 	{
-		if (errore)
-			SvuotaInput();
+		for (size_t i = 0; i < 8; i++)
+		{
+			immagine->titolo[i] = RNG('a', 'z');
+		}
+		immagine->titolo[0] = toupper(immagine->titolo[0]);
 
-		errore = false;
-		system("cls");
-		printf("Inserire il titolo dell'immagine: ");
+		strcpy(immagine->categoria, categoria[RNG(0, NUM_CATEGORIE)]);
+		strcpy(immagine->tags[0], tags[RNG(0, NUM_TAGS)]);
+	}
 
-		char buffer[MAX_BUFFER] = { 0 };
-		scanf("%[^\n]", buffer);
-
-		// Controlla che non contenga simboli
-		errore = ContieneSimboli(buffer, true);
-
-		// Altrimenti procedi
-		if (!errore)
-			AssegnaStringa(immagine->titolo, buffer, true);
-
-	} while (errore);
-
-	// Inserimento CATEGORIA
-	do
+	else
 	{
-		errore = false;
-		printf("\n");
+		SvuotaInput();
+		// Inserimento TITOLO
+		do
+		{
+			if (errore)
+				SvuotaInput();
 
-		StampaCategorieDisponibili();
+			errore = false;
+			system("cls");
+			printf("Inserire il titolo dell'immagine: ");
 
-		printf("\n\nInserire il numero della categoria scelta: ");
+			char buffer[MAX_BUFFER] = { 0 };
+			scanf("%[^\n]", buffer);
 
-		InserisciCategoriaCaricamento(&immagine);
+			// Controlla che non contenga simboli
+			errore = ContieneSimboli(buffer, true);
 
-	} while (errore);
+			// Altrimenti procedi
+			if (!errore)
+				AssegnaStringa(immagine->titolo, buffer, true);
 
-	// Inserimento TAGS
-	do
-	{
-		printf("\n");
-		errore = false;
+		} while (errore);
 
-		StampaTagsDisponibili();
+		// Inserimento CATEGORIA
+		do
+		{
+			errore = false;
+			printf("\n");
 
-		InserisciTagsCaricamento(&immagine);
+			StampaCategorieDisponibili();
 
-	} while (errore);
+			printf("\n\nInserire il numero della categoria scelta: ");
 
+			InserisciCategoriaCaricamento(&immagine);
+
+		} while (errore);
+
+		// Inserimento TAGS
+		do
+		{
+			printf("\n");
+			errore = false;
+
+			StampaTagsDisponibili();
+
+			InserisciTagsCaricamento(&immagine);
+
+		} while (errore);
+	}
 	// Assegnazione AUTORE
 	AssegnaStringa(immagine->nomeUtente, nomeUtente, false);
 
@@ -86,6 +107,7 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 
 	// Assegnazione DIMENSIONE (in MB) - Moltiplichiamo il numero totale dei pixel per 3 byte ovvero il peso di ogni pixel e dividiamo per ottenere i megabyte
 	immagine->dimensione = (float)((immagine->risoluzione.x * immagine->risoluzione.y) * 3) / 1000000;
+
 }
 
 void SalvaDatiImmagine(FILE* file, Immagine_t* immagine)
@@ -384,7 +406,6 @@ void InserisciTagsCaricamento(Immagine_t** immagine)
 	{
 		do
 		{
-			// Bisogna aggiungere il controllo per la selezione di tags uguali
 			errore = false;
 			printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti - Inserire 0 per terminare): ", i);
 
@@ -393,8 +414,20 @@ void InserisciTagsCaricamento(Immagine_t** immagine)
 
 			if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
 			{
-				AssegnaStringa((*immagine)->tags[j], tags[tagScelto - 1], false);
-				j++;
+				for (size_t l = 0; l < MAX_TAGS; l++)
+				{
+					if (strcmp((*immagine)->tags[l], tags[tagScelto - 1]) == 0)
+					{
+						printf("Errore! Non puoi scegliere un tag che hai gia' scelto!\n\n");
+						system("pause");
+						errore = true;
+					}
+				}
+				if (!errore)
+				{
+					AssegnaStringa((*immagine)->tags[j], tags[tagScelto - 1], false);
+					j++;
+				}
 			}
 			else if (tagScelto == 0)
 			{

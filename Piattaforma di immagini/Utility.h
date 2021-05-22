@@ -29,7 +29,7 @@ typedef enum {
 void SvuotaInput();
 
 // Copia la stringa da buffer a destinazione e se primaMaiuscola viene passata come true, la prima lettera verrà impostata maiuscola
-void AssegnaStringa(char destinazione[], char buffer[], bool primaMaiuscola);
+void AssegnaStringa(char destinazione[], const char buffer[], bool primaMaiuscola);
 
 // Ritorna true (1) se è corretta, false (0) altrimenti
 bool DataCorretta(unsigned short int giorno, unsigned short int mese, unsigned short int anno);

@@ -142,12 +142,16 @@
     <ClCompile Include="Immagini.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Menu.c" />
+    <ClCompile Include="MenuCreatore.c" />
+    <ClCompile Include="MenuUtilizzatore.c" />
     <ClCompile Include="Utenti.c" />
     <ClCompile Include="Utility.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Immagini.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="MenuCreatore.h" />
+    <ClInclude Include="MenuUtilizzatore.h" />
     <ClInclude Include="Utenti.h" />
     <ClInclude Include="Utility.h" />
   </ItemGroup>
