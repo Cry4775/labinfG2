@@ -15,6 +15,5 @@ int main(void)
         MenuPrincipale(&isCreatore, nomeUtente);
     }
 
-    system("pause"); // Da rimuovere a programma finito
     return 0;
 }

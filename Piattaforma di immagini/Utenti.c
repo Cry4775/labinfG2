@@ -539,3 +539,181 @@ bool AggiornaMediaValutazioniCreatore(FILE* file, unsigned int valutazione)
 	else
 		return false;
 }
+
+bool AggiornaNumDownloadUtilizzatore(FILE* file, char nomeUtente[])
+{
+	while (!feof(file))
+	{
+		Utilizzatore_t tempUtilizzatore = { 0 };
+		int esito = fread(&tempUtilizzatore, sizeof(Utilizzatore_t), 1, file);
+
+		if (esito != 0)
+		{
+			if (strcmp(nomeUtente, tempUtilizzatore.nomeUtente) == 0)
+			{
+				tempUtilizzatore.numDownloadTot++;
+				fseek(file, -(int)sizeof(Utilizzatore_t), SEEK_CUR);
+				fwrite(&tempUtilizzatore, sizeof(Utilizzatore_t), 1, file);
+				return true;
+			}
+		}
+		else
+			return false;
+	}
+	return false;
+}
+
+bool AggiornaNumValutazioniUtilizzatore(FILE* file)
+{
+	Utilizzatore_t tempUtilizzatore = { 0 };
+	fseek(file, -(int)sizeof(Utilizzatore_t), SEEK_CUR);
+	if (fread(&tempUtilizzatore, sizeof(Utilizzatore_t), 1, file) != 0)
+	{
+		tempUtilizzatore.numValutazioni++;
+		fseek(file, -(int)sizeof(Utilizzatore_t), SEEK_CUR);
+		fwrite(&tempUtilizzatore, sizeof(Utilizzatore_t), 1, file);
+		return true;
+	}
+	else
+		return false;
+}
+
+size_t CaricaArrayCreatori(FILE* file, Creatore_t creatore[])
+{
+	file = ApriFile(PERCORSO_FILE_CREATORI);
+
+	size_t i = 0;
+	while (!feof(file) && i < MAX_BUFFER)
+	{
+		fread(&creatore[i], sizeof(Creatore_t), 1, file);
+		if (creatore[i].id != 0)
+			i++;
+	}
+
+
+	fclose(file);
+	return i;
+}
+
+void ScambiaCreatore(Creatore_t* creatoreA, Creatore_t* creatoreB)
+{
+	Creatore_t temp = *creatoreA;
+	*creatoreA = *creatoreB;
+	*creatoreB = temp;
+}
+
+int PartizionamentoCreatore(Creatore_t creatore[], int low, int high, bool criterio)
+{
+	// Criterio = true se vogliamo ordinare per numero di download
+	// Criterio = false se vogliamo ordinare per media valutazioni
+	Creatore_t pivot = creatore[high];
+
+	int i = (low - 1);
+	if (criterio)
+	{
+		for (size_t j = low; j < high; j++)
+		{
+			if (creatore[j].numDownloadTot >= pivot.numDownloadTot)
+			{
+				i++;
+				ScambiaCreatore(&creatore[i], &creatore[j]);
+			}
+		}
+	}
+	else
+	{
+		for (size_t j = low; j < high; j++)
+		{
+			if (creatore[j].mediaValutazioni >= pivot.mediaValutazioni)
+			{
+				i++;
+				ScambiaCreatore(&creatore[i], &creatore[j]);
+			}
+		}
+	}
+
+	ScambiaCreatore(&creatore[i + 1], &creatore[high]);
+
+	return (i + 1);
+}
+
+void QuickSortCreatore(Creatore_t creatore[], int low, int high, bool criterio)
+{
+	if (low < high)
+	{
+		int pi = PartizionamentoCreatore(creatore, low, high, criterio);
+
+		QuickSortCreatore(creatore, low, pi - 1, criterio);
+		QuickSortCreatore(creatore, pi + 1, high, criterio);
+	}
+}
+
+size_t CaricaArrayUtilizzatori(FILE* file, Utilizzatore_t utilizzatore[])
+{
+	file = ApriFile(PERCORSO_FILE_UTILIZZATORI);
+
+	size_t i = 0;
+	while (!feof(file) && i < MAX_BUFFER)
+	{
+		fread(&utilizzatore[i], sizeof(Utilizzatore_t), 1, file);
+		if (utilizzatore[i].id != 0)
+			i++;
+	}
+
+
+	fclose(file);
+	return i;
+}
+
+void ScambiaUtilizzatore(Utilizzatore_t* utilizzatoreA, Utilizzatore_t* utilizzatoreB)
+{
+	Utilizzatore_t temp = *utilizzatoreA;
+	*utilizzatoreA = *utilizzatoreB;
+	*utilizzatoreB = temp;
+}
+
+int PartizionamentoUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, bool criterio)
+{
+	// Criterio = true se vogliamo ordinare per numero di download
+	// Criterio = false se vogliamo ordinare per media valutazioni
+	Utilizzatore_t pivot = utilizzatore[high];
+
+	int i = (low - 1);
+	if (criterio)
+	{
+		for (size_t j = low; j < high; j++)
+		{
+			if (utilizzatore[j].numDownloadTot >= pivot.numDownloadTot)
+			{
+				i++;
+				ScambiaUtilizzatore(&utilizzatore[i], &utilizzatore[j]);
+			}
+		}
+	}
+	else
+	{
+		for (size_t j = low; j < high; j++)
+		{
+			if (utilizzatore[j].numValutazioni >= pivot.numValutazioni)
+			{
+				i++;
+				ScambiaUtilizzatore(&utilizzatore[i], &utilizzatore[j]);
+			}
+		}
+	}
+
+	ScambiaUtilizzatore(&utilizzatore[i + 1], &utilizzatore[high]);
+
+	return (i + 1);
+}
+
+void QuickSortUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, bool criterio)
+{
+	if (low < high)
+	{
+		int pi = PartizionamentoUtilizzatore(utilizzatore, low, high, criterio);
+
+		QuickSortUtilizzatore(utilizzatore, low, pi - 1, criterio);
+		QuickSortUtilizzatore(utilizzatore, pi + 1, high, criterio);
+	}
+}

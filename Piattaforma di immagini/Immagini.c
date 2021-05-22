@@ -856,7 +856,7 @@ unsigned int ValutaImmagine(FILE* file, char nomeUtente[])
 			{
 				if (valutazione >= 1 && valutazione <= 5)
 				{
-					float sommaValutazioni = immagine.valutazioneMedia * immagine.numValutazioni;
+					float sommaValutazioni = immagine.valutazioneMedia * immagine.numValutazioni; 
 					immagine.numValutazioni++;
 					sommaValutazioni += valutazione;
 					immagine.valutazioneMedia = sommaValutazioni / immagine.numValutazioni;
@@ -914,4 +914,73 @@ void SalvaValutazione(FILE* fileImmagine, char nomeUtente[], unsigned int valuta
 	fseek(fileValutazioni, 0, SEEK_END);
 	fwrite(&valutazioneStruct, sizeof(Valutazione_t), 1, fileValutazioni);
 	fclose(fileValutazioni);
+}
+
+size_t CaricaArrayImmagini(FILE* file, Immagine_t immagine[])
+{
+	file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+	size_t i = 0;
+	while (!feof(file) && i < MAX_BUFFER)
+	{
+		fread(&immagine[i], sizeof(Immagine_t), 1, file);
+		if (immagine[i].id != 0)
+			i++;
+	}
+
+	fclose(file);
+	return i;
+}
+
+void ScambiaImmagine(Immagine_t *immagineA, Immagine_t *immagineB)
+{
+	Immagine_t temp = *immagineA;
+	*immagineA = *immagineB;
+	*immagineB = temp;
+}
+
+int PartizionamentoImmagine(Immagine_t immagine[], int low, int high, bool criterio)
+{
+	// Criterio = true se vogliamo ordinare per numero di download
+	// Criterio = false se vogliamo ordinare per media valutazioni
+	Immagine_t pivot = immagine[high];
+
+	int i = (low - 1);
+	if (criterio)
+	{
+		for (size_t j = low; j < high; j++)
+		{
+			if (immagine[j].numDownload >= pivot.numDownload)
+			{
+				i++;
+				ScambiaImmagine(&immagine[i], &immagine[j]);
+			}
+		}
+	}
+	else
+	{
+		for (size_t j = low; j < high; j++)
+		{
+			if (immagine[j].valutazioneMedia >= pivot.valutazioneMedia)
+			{
+				i++;
+				ScambiaImmagine(&immagine[i], &immagine[j]);
+			}
+		}
+	}
+
+	ScambiaImmagine(&immagine[i + 1], &immagine[high]);
+
+	return (i + 1);
+}
+
+void QuickSortImmagine(Immagine_t immagine[], int low, int high, bool criterio)
+{
+	if (low < high)
+	{
+		int pi = PartizionamentoImmagine(immagine, low, high, criterio);
+
+		QuickSortImmagine(immagine, low, pi - 1, criterio);
+		QuickSortImmagine(immagine, pi + 1, high, criterio);
+	}
 }

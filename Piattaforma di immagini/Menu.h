@@ -30,29 +30,56 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[]);
 void GestioneCreatore(char nomeUtente[]);
 
 /// <summary>
-/// Questa procedura contiene tutte le funzioni del sottomenu Ricerca Immagine
+/// Questa procedura contiene tutte le funzioni del sottomenu Ricerca Immagine del CREATORE
 /// </summary>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
-void RicercaImmagine(char nomeUtente[]);
+void RicercaImmagineCreatore(char nomeUtente[]);
 
 /// <summary>
-/// Questa procedura contiene tutte le funzioni dell'opzione Ricerca Categoria
+/// Questa procedura contiene tutte le funzioni del sottomenu Ricerca Immagine dell'UTILIZZATORE
+/// </summary>
+/// <param name="nomeUtente">Nome utente dell'utente loggato</param>
+void RicercaImmagineUtilizzatore(char nomeUtente[]);
+
+/// <summary>
+/// Questa procedura contiene tutte le funzioni dell'opzione Ricerca Categoria del CREATORE
 /// </summary>
 /// <param name="file">File delle immagini</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
-void RicercaCategoriaMenu(FILE* file, char nomeUtente[]);
+void RicercaCategoriaMenuCreatore(FILE* file, char nomeUtente[]);
 
 /// <summary>
-/// Questa procedura contiene tutte le funzioni dell'opzione Ricerca Tags
+/// Questa procedura contiene tutte le funzioni dell'opzione Ricerca Tags del CREATORE
 /// </summary>
 /// <param name="file">File delle immagini</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
-void RicercaTagsMenu(FILE* file, char nomeUtente[]);
+void RicercaTagsMenuCreatore(FILE* file, char nomeUtente[]);
+
+/// <summary>
+/// Questa procedura contiene tutte le funzioni dell'opzione Ricerca Categoria dell'UTILIZZATORE
+/// </summary>
+/// <param name="file">File delle immagini</param>
+/// <param name="nomeUtente">Nome utente dell'utente loggato</param>
+void RicercaCategoriaMenuUtilizzatore(FILE* file, char nomeUtente[]);
+
+/// <summary>
+/// Questa procedura contiene tutte le funzioni dell'opzione Ricerca Tags dell'UTILIZZATORE
+/// </summary>
+/// <param name="file"></param>
+/// <param name="nomeUtente"></param>
+void RicercaTagsMenuUtilizzatore(FILE* file, char nomeUtente[]);
 
 /// <summary>
 /// Questa procedura contiene le funzioni dell'opzione Statistiche Creatore
 /// </summary>
 void StatisticheCreatore();
+
+/// <summary>
+/// Questa procedura contiene tutte le funzioni dell'opzione Classifiche
+/// </summary>
+void Classifiche();
+
+
 
 
 

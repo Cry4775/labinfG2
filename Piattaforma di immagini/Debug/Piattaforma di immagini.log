@@ -1,2 +1,5 @@
-﻿  Utility.c
+﻿  Main.c
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Main.c(7,21): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Menu.c
+  Generating Code...
   Piattaforma di immagini.vcxproj -> C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Debug\Piattaforma di immagini.exe

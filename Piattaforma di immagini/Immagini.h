@@ -176,4 +176,33 @@ unsigned int ValutaImmagine(FILE* file, char nomeUtente[]);
 /// <param name="valutazione">Valutazione data dall'utente</param>
 void SalvaValutazione(FILE* fileImmagine, char nomeUtente[], unsigned int valutazione);
 
+/// <summary>
+/// Carica in un array tutte le immagini
+/// </summary>
+/// <param name="file">File delle immagini</param>
+/// <param name="immagine">Array che riceve le immagini</param>
+/// <returns>Restituisce il numero di immagini caricate</returns>
+size_t CaricaArrayImmagini(FILE* file, Immagine_t immagine[]);
+
+void ScambiaImmagine(Immagine_t *immagineA, Immagine_t *immagineB);
+
+/// <summary>
+/// Divide l'array in due parti, a sinistra gli elementi <= pivot, a destra quelli > pivot
+/// </summary>
+/// <param name="immagine">Array pieno delle immagini</param>
+/// <param name="low">Primo elemento</param>
+/// <param name="high">Ultimo elemento</param>
+/// <param name="criterio">True se vogliamo ordinare per numero di download, false per media valutazioni</param>
+/// <returns>Restituisce la posizione della partizione</returns>
+int PartizionamentoImmagine(Immagine_t immagine[], int low, int high, bool criterio);
+
+/// <summary>
+/// Quick sort per le immagini
+/// </summary>
+/// <param name="immagine">Array pieno di immagini</param>
+/// <param name="low">Primo elemento</param>
+/// <param name="high">Ultimo elemento</param>
+/// <param name="criterio">True se vogliamo ordinare per numero di download, false per media valutazioni</param>
+void QuickSortImmagine(Immagine_t immagine[], int low, int high, bool criterio);
+
 #endif

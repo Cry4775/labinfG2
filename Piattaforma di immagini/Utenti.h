@@ -120,8 +120,81 @@ bool AggiornaNumDownloadCreatore(FILE* file, char nomeUtente[]);
 /// Questa funzione permette l'aggiornamento della mediaValutazioni del creatore
 /// </summary>
 /// <param name="file">File dei creatori</param>
-/// <param name="valutazione"></param>
+/// <param name="valutazione">La valutazione ricevuta</param>
 /// <returns>Ritorna 1 se è andato a buon fine, 0 altrimenti</returns>
 bool AggiornaMediaValutazioniCreatore(FILE* file, unsigned int valutazione);
+
+/// <summary>
+/// Questa funzione permette l'aggiornamento del campo numDownloadTot dell'utlizzatore
+/// </summary>
+/// <param name="file">File degli utilizzatori</param>
+/// <param name="nomeUtente">Nome utente dell'utente loggato</param>
+/// <returns>Ritorna 1 se è andato a buon fine, 0 altrimenti</returns>
+bool AggiornaNumDownloadUtilizzatore(FILE* file, char nomeUtente[]);
+
+/// <summary>
+/// Questa funzione permette l'aggiornamento del campo numValutazioni dell'utilizzatore
+/// </summary>
+/// <param name="file">File degli utilizzatori</param>
+/// <returns>Ritorna 1 se è andato a buon fine, 0 altrimenti</returns>
+bool AggiornaNumValutazioniUtilizzatore(FILE* file);
+
+/// <summary>
+/// Carica in un array tutti i creatori
+/// </summary>
+/// <param name="file">File dei creatori</param>
+/// <param name="creatore">L'array che riceve i creatori</param>
+/// <returns>Restituisce il numero di creatori caricati</returns>
+size_t CaricaArrayCreatori(FILE* file, Creatore_t creatore[]);
+
+void ScambiaCreatore(Creatore_t* creatoreA, Creatore_t* creatoreB);
+
+/// <summary>
+/// Divide l'array in due parti, a sinistra gli elementi <= pivot, a destra quelli > pivot
+/// </summary>
+/// <param name="creatore">Array pieno dei creatori</param>
+/// <param name="low">Primo elemento</param>
+/// <param name="high">Ultimo elemento</param>
+/// <param name="criterio">True se vogliamo ordinare per numero di download, False per media valutazioni</param>
+/// <returns>Restituisce la posizione della partizione</returns>
+int PartizionamentoCreatore(Creatore_t creatore[], int low, int high, bool criterio);
+
+/// <summary>
+/// Ordinamento quick sort del creatore
+/// </summary>
+/// <param name="creatore">Array pieno dei creatori</param>
+/// <param name="low">Primo elemento</param>
+/// <param name="high">Ultimo elemento</param>
+/// <param name="criterio">True se vogliamo ordinare per numero di download, False per media valutazioni</param>
+void QuickSortCreatore(Creatore_t creatore[], int low, int high, bool criterio);
+
+/// <summary>
+/// Carica in un array tutti gli utilizzatori
+/// </summary>
+/// <param name="file">File degli utilizzatori</param>
+/// <param name="creatore">L'array che riceve gli utilizzatori</param>
+/// <returns>Restituisce il numero di utilizzatori caricati</returns>
+size_t CaricaArrayUtilizzatori(FILE* file, Utilizzatore_t utilizzatore[]);
+
+void ScambiaUtilizzatore(Utilizzatore_t* utilizzatoreA, Utilizzatore_t* utilizzatoreB);
+
+/// <summary>
+/// Divide l'array in due parti, a sinistra gli elementi <= pivot, a destra quelli > pivot
+/// </summary>
+/// <param name="creatore">Array pieno degli utilizzatori</param>
+/// <param name="low">Primo elemento</param>
+/// <param name="high">Ultimo elemento</param>
+/// <param name="criterio">True se vogliamo ordinare per numero di download, False per numero di valutazioni</param>
+/// <returns>Restituisce la posizione della partizione</returns>
+int PartizionamentoUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, bool criterio);
+
+/// <summary>
+/// Ordinamento quick sort dell'utilizzatore
+/// </summary>
+/// <param name="creatore">Array pieno degli utilizzatori</param>
+/// <param name="low">Primo elemento</param>
+/// <param name="high">Ultimo elemento</param>
+/// <param name="criterio">True se vogliamo ordinare per numero di download, False per numero di valutazioni</param>
+void QuickSortUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, bool criterio);
 
 #endif
