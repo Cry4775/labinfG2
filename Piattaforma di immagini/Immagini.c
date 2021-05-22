@@ -40,7 +40,9 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 
 			errore = false;
 			system("cls");
+			green();
 			printf("Inserire il titolo dell'immagine: ");
+			reset();
 
 			char buffer[MAX_BUFFER] = { 0 };
 			scanf("%[^\n]", buffer);
@@ -62,7 +64,9 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 
 			StampaCategorieDisponibili();
 
+			green();
 			printf("\n\nInserire il numero della categoria scelta: ");
+			reset();
 
 			InserisciCategoriaCaricamento(&immagine);
 
@@ -173,7 +177,9 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 
 			// Inserimento titolo dell'immagine da modificare
 			char buffer[MAX_BUFFER] = { 0 };
+			green();
 			printf("\n\nInserisci il titolo dell'immagine da modificare: ");
+			reset();
 
 			scanf("%[^\n]", buffer);
 
@@ -199,7 +205,9 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 								do
 								{
 									printf("\n\n0. Indietro\n1. Titolo\n2. Categoria\n3. Tags");
+									green();
 									printf("\n\nScegli il campo da modificare: ");
+									reset();
 									int scelta;
 									scanf("%d", &scelta);
 
@@ -217,8 +225,11 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 
 											system("cls");
 											errore = false;
+											
 											printf("Il titolo attuale e': %s\n", immagine.titolo);
+											green();
 											printf("Inserisci il nuovo titolo: ");
+											reset();
 
 											scanf("%[^\n]", buffer);
 
@@ -229,7 +240,9 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 											if (!errore)
 											{
 												AssegnaStringa(immagine.titolo, buffer, true);
+												red();
 												printf("Operazione effettuata!\n\n");
+												reset();
 												system("pause");
 											}
 										} while (errore);
@@ -242,15 +255,17 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 											system("cls");
 
 											printf("La categoria attuale e': %s\n\n", immagine.categoria);
-
 											printf("Le categorie disponibili sono: \n\n");
 											StampaCategorieDisponibili();
 
-
+											green();
 											printf("\n\nInserisci la nuova categoria: ");
+											reset();
 											InserisciCategoriaModifica(&immagine);
 
+											red();
 											printf("Operazione effettuata!\n\n");
+											reset();
 											system("pause");
 										} while (errore);
 
@@ -269,12 +284,16 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 										// Selezione dei tags
 										InserisciTagsModifica(&immagine);
 
+										red();
 										printf("Operazione effettuata!\n\n");
+										reset();
 										system("pause");
 
 										break;
 									default:
+										red();
 										printf("Errore! Selezionare un'opzione valida!\n\n");
+										reset();
 
 										system("pause");
 
@@ -291,7 +310,9 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 					}
 					else
 					{
+						red();
 						puts("\nNon è stata trovata nessuna immagine corrispondente al titolo inserito!");
+						reset();
 						errore = true;
 						system("pause");
 					}
@@ -342,24 +363,41 @@ void InserisciTagsModifica(Immagine_t* immagine)
 	{
 		do
 		{
-			// Bisogna aggiungere il controllo per la selezione di tags uguali
 			errore = false;
+			green();
 			printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti - Inserire 0 per terminare): ", i);
+			reset();
 
 			unsigned int tagScelto;
 			scanf("%u", &tagScelto);
 
 			if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
 			{
-				AssegnaStringa(immagine->tags[j], tags[tagScelto - 1], false);
-				j++;
+				for (size_t l = 0; l < MAX_TAGS; l++)
+				{
+					if (strcmp(immagine->tags[l], tags[tagScelto - 1]) == 0)
+					{
+						red();
+						printf("\nErrore! Non puoi scegliere un tag che hai gia' scelto!\n\n");
+						reset();
+						system("pause");
+						errore = true;
+					}
+				}
+				if (!errore)
+				{
+					AssegnaStringa(immagine->tags[j], tags[tagScelto - 1], false);
+					j++;
+				}
 			}
 			else if (tagScelto == 0)
 			{
 				if (i == MAX_TAGS)
 				{
 					errore = true;
-					printf("\nErrore! Selezionare almeno un tag!\n");
+					red();
+					printf("\nErrore! Selezionare almeno un tag!\n\n");
+					reset();
 				}
 				else
 					i = 1;
@@ -368,7 +406,9 @@ void InserisciTagsModifica(Immagine_t* immagine)
 			else
 			{
 				errore = true;
-				printf("Errore! Inserire un'opzione valida!\n\n");
+				red();
+				printf("\nErrore! Inserire un'opzione valida!\n\n");
+				reset();
 				system("pause");
 			}
 		} while (errore);
@@ -391,7 +431,9 @@ void InserisciCategoriaModifica(Immagine_t* immagine)
 		else
 		{
 			errore = true;
-			printf("Errore! Inserire un'opzione valida!\n\n");
+			red();
+			printf("\nErrore! Inserire un'opzione valida!\n\n");
+			reset();
 			system("pause");
 		}
 	} while (errore);
@@ -407,7 +449,9 @@ void InserisciTagsCaricamento(Immagine_t** immagine)
 		do
 		{
 			errore = false;
+			green();
 			printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti - Inserire 0 per terminare): ", i);
+			reset();
 
 			unsigned int tagScelto;
 			scanf("%u", &tagScelto);
@@ -418,7 +462,9 @@ void InserisciTagsCaricamento(Immagine_t** immagine)
 				{
 					if (strcmp((*immagine)->tags[l], tags[tagScelto - 1]) == 0)
 					{
-						printf("Errore! Non puoi scegliere un tag che hai gia' scelto!\n\n");
+						red();
+						printf("\nErrore! Non puoi scegliere un tag che hai gia' scelto!\n\n");
+						reset();
 						system("pause");
 						errore = true;
 					}
@@ -434,7 +480,9 @@ void InserisciTagsCaricamento(Immagine_t** immagine)
 				if (i == MAX_TAGS)
 				{
 					errore = true;
-					printf("\nErrore! Selezionare almeno un tag!\n");
+					red();
+					printf("\nErrore! Selezionare almeno un tag!\n\n");
+					reset();
 				}
 				else
 					i = 1;
@@ -443,7 +491,9 @@ void InserisciTagsCaricamento(Immagine_t** immagine)
 			else
 			{
 				errore = true;
-				printf("Errore! Inserire un'opzione valida!\n\n");
+				red();
+				printf("\nErrore! Inserire un'opzione valida!\n\n");
+				reset();
 				system("pause");
 			}
 		} while (errore);
@@ -466,7 +516,9 @@ void InserisciCategoriaCaricamento(Immagine_t** immagine)
 		else
 		{
 			errore = true;
-			printf("Errore! Inserire un'opzione valida!\n\n");
+			red();
+			printf("\nErrore! Inserire un'opzione valida!\n\n");
+			reset();
 			system("pause");
 		}
 	} while (errore);
@@ -476,7 +528,9 @@ bool StampaImmaginiCaricate(FILE* file, char nomeUtente[])
 {
 	bool trovato = false;	 // trovato = c'è almeno un'immagine caricata dall'utente?								
 	// Stampa le immagini caricate dall'utente
-	printf("Immagini caricate");
+	red();
+	printf("I tuoi uploads");
+	reset();
 	while (!feof(file))
 	{
 		Immagine_t immagine = { 0 };
@@ -493,7 +547,9 @@ bool StampaImmaginiCaricate(FILE* file, char nomeUtente[])
 
 	if (!trovato)
 	{
-		puts("\nNon hai ancora caricato immagini!\n\n");
+		red();
+		puts("\nNon hai ancora caricato immagini!\n");
+		reset();
 		system("pause");
 	}
 
@@ -523,7 +579,9 @@ bool RimuoviImmagine(FILE* file, char nomeUtente[])
 
 			// Inserimento titolo dell'immagine da rimuovere
 			char buffer[MAX_BUFFER] = { 0 };
+			green();
 			printf("\n\nInserisci il titolo dell'immagine da rimuovere: ");
+			reset();
 
 			scanf("%[^\n]", buffer);
 
@@ -556,7 +614,9 @@ bool RimuoviImmagine(FILE* file, char nomeUtente[])
 					}
 					else
 					{
-						puts("\nNon è stata trovata nessuna immagine corrispondente al titolo inserito!");
+						red();
+						puts("\nNon è stata trovata nessuna immagine corrispondente al titolo inserito!\n");
+						reset();
 						errore = true;
 						system("pause");
 					}
@@ -591,7 +651,9 @@ bool VisualizzaImmagineCreatore(FILE* file, char nomeUtente[])
 
 			// Inserimento titolo dell'immagine da modificare
 			char buffer[MAX_BUFFER] = { 0 };
+			green();
 			printf("\n\nInserisci il titolo dell'immagine da visualizzare: ");
+			reset();
 
 			scanf("%[^\n]", buffer);
 
@@ -623,7 +685,9 @@ bool VisualizzaImmagineCreatore(FILE* file, char nomeUtente[])
 					}
 					else
 					{
-						printf("Non e' stata trovata nessuna immagine corrispondente al titolo inserito!\n\n");
+						red();
+						printf("\nNon e' stata trovata nessuna immagine corrispondente al titolo inserito!\n\n");
+						reset();
 						errore = true;
 						system("pause");
 					}
@@ -646,7 +710,9 @@ bool RicercaCategoria(FILE* file)
 
 		StampaCategorieDisponibili();
 
+		green();
 		printf("\n\nSeleziona la categoria che vuoi ricercare: ");
+		reset();
 		unsigned int categoriaScelta;
 		if (scanf("%u", &categoriaScelta) != 0)
 		{
@@ -674,7 +740,9 @@ bool RicercaCategoria(FILE* file)
 
 				if (!trovato)
 				{
-					puts("\nNon sono ancora state caricate immagini con la suddetta categoria!\n\n");
+					red();
+					puts("\nNon sono ancora state caricate immagini con la suddetta categoria!\n");
+					reset();
 					system("pause");
 				}
 
@@ -683,14 +751,18 @@ bool RicercaCategoria(FILE* file)
 			else
 			{
 				errore = true;
-				printf("Selezionare un'opzione valida!\n\n");
+				red();
+				printf("\nSelezionare un'opzione valida!\n\n");
+				reset();
 				system("pause");
 			}
 		}
 		else
 		{
 			errore = true;
-			printf("Sono ammessi solo numeri!\n\n");
+			red();
+			printf("\nSono ammessi solo numeri!\n\n");
+			reset();
 			system("pause");
 		}
 	} while (errore);
@@ -708,7 +780,9 @@ bool RicercaTags(FILE* file)
 
 		StampaTagsDisponibili();
 
+		green();
 		printf("\n\nSeleziona il tag che vuoi ricercare: ");
+		reset();
 		unsigned int tagScelto;
 		if (scanf("%u", &tagScelto) != 0)
 		{
@@ -741,7 +815,9 @@ bool RicercaTags(FILE* file)
 
 				if (!trovato)
 				{
-					puts("\nNon sono ancora state caricate immagini con il suddetto tag!\n\n");
+					red();
+					puts("\nNon sono ancora state caricate immagini con il suddetto tag!\n");
+					reset();
 					system("pause");
 				}
 
@@ -750,19 +826,22 @@ bool RicercaTags(FILE* file)
 			else
 			{
 				errore = true;
-				printf("Selezionare un'opzione valida!\n\n");
+				red();
+				printf("\nSelezionare un'opzione valida!\n\n");
+				reset();
 				system("pause");
 			}
 		}
 		else
 		{
 			errore = true;
-			printf("Sono ammessi solo numeri!\n\n");
+			red();
+			printf("\nSono ammessi solo numeri!\n\n");
+			reset();
 			system("pause");
 		}
 	} while (errore);
 }
-
 
 bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 {
@@ -780,7 +859,9 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 
 		// Inserimento titolo dell'immagine da visualizzare
 		char buffer[MAX_BUFFER] = { 0 };
+		green();
 		printf("\n\nInserisci il titolo dell'immagine da visualizzare: ");
+		reset();
 
 		scanf("%[^\n]", buffer);
 
@@ -809,7 +890,9 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 						
 						do
 						{
+							green();
 							printf("Vuoi scaricarla? Digita Y o N: ");
+							reset();
 							char scelta = { 0 };
 							SvuotaInput();
 							scanf("%c", &scelta);
@@ -819,7 +902,9 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 							if (scelta != 'Y' && scelta != 'N')
 							{
 								errore = true;
-								printf("Errore! Inserire Y o N\n");
+								red();
+								printf("\nErrore! Inserire Y o N\n\n");
+								reset();
 							}
 							else if (scelta == 'Y')
 								return true;
@@ -830,7 +915,9 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 				}
 				else
 				{
-					printf("Non e' stata trovata nessuna immagine corrispondente al titolo inserito!\n\n");
+					red();
+					printf("\nNon e' stata trovata nessuna immagine corrispondente al titolo inserito!\n\n");
+					reset();
 					errore = true;
 					system("pause");
 				}
@@ -883,7 +970,9 @@ unsigned int ValutaImmagine(FILE* file, char nomeUtente[])
 
 		if (!giaValutata)
 		{
+			green();
 			printf("\n\nQuanto vuoi valutare quest'immagine? Inserire un numero da 1 a 5 (intero): ");
+			reset();
 
 			if (scanf("%u", &valutazione) == 1)
 			{
@@ -902,20 +991,26 @@ unsigned int ValutaImmagine(FILE* file, char nomeUtente[])
 				else
 				{
 					errore = true;
-					printf("Errore! Inserire un numero tra 1 e 5!\n\n");
+					red();
+					printf("\nErrore! Inserire un numero tra 1 e 5!\n\n");
+					reset();
 					system("pause");
 				}
 			}
 			else
 			{
 				errore = true;
-				printf("Errore! Inserire un numero tra 1 e 5!\n\n");
+				red();
+				printf("\nErrore! Inserire un numero tra 1 e 5!\n\n");
+				reset();
 				system("pause");
 			}
 		}
 		else
 		{
-			printf("L'immagine e' gia' stata valutata! Non puoi valutarla due volte!\n\n");
+			red();
+			printf("\nL'immagine e' gia' stata valutata! Non puoi valutarla due volte!\n\n");
+			reset();
 			system("pause");
 		}
 	} while (errore);

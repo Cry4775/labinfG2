@@ -8,8 +8,10 @@ void GestioneCreatore(char nomeUtente[])
 		unsigned int sceltaMenu;
 		ripeti = false;
 		system("cls");
-
-		puts("1. Carica immagine\n2. Modifica immagine\n3. Rimuovi immagine\n4. Visualizza immagine\n5. Indietro");
+		red();
+		puts("Gestione creatore");
+		reset();
+		puts("1. Carica immagine\n2. Modifica immagine\n3. Rimuovi immagine\n4. Visualizza immagine\n5. Indietro\n");
 		scanf("%1u", &sceltaMenu);
 
 		Immagine_t immagine = { 0 };
@@ -33,12 +35,16 @@ void GestioneCreatore(char nomeUtente[])
 
 				if (!AggiornaNumImmaginiCreatore(file, nomeUtente))
 				{
-					printf("Errore nell'aggiornamento del profilo creatore!");
+					red();
+					printf("\nErrore nell'aggiornamento del profilo creatore!\n\n");
+					reset();
 					system("pause");
 				}
 				else
 				{
-					printf("Immagine caricata con successo!\n\n");
+					red();
+					printf("\nImmagine caricata con successo!\n\n");
+					reset();
 					system("pause");
 				}
 
@@ -53,12 +59,16 @@ void GestioneCreatore(char nomeUtente[])
 
 				if (ModificaImmagini(file, nomeUtente))
 				{
-					printf("\n\nImmagine modificata con successo!\n\n");
+					red();
+					printf("\nImmagine modificata con successo!\n\n");
+					reset();
 					system("pause");
 				}
 				else
 				{
-					printf("\n\nErrore nell'aggiornamento dell'immagine!\n\n");
+					red();
+					printf("\nErrore nell'aggiornamento dell'immagine!\n\n");
+					reset();
 					system("pause");
 				}
 
@@ -73,12 +83,16 @@ void GestioneCreatore(char nomeUtente[])
 
 				if (RimuoviImmagine(file, nomeUtente))
 				{
-					printf("\n\nImmagine rimossa con successo!\n\n");
+					red();
+					printf("\nImmagine rimossa con successo!\n\n");
+					reset();
 					system("pause");
 				}
 				else
 				{
-					printf("\n\nErrore nella rimozione dell'immagine!\n\n");
+					red();
+					printf("\nErrore nella rimozione dell'immagine!\n\n");
+					reset();
 					system("pause");
 				}
 
@@ -95,7 +109,9 @@ void GestioneCreatore(char nomeUtente[])
 					system("pause");
 				else
 				{
-					printf("\n\nErrore nella visualizzazione dell'immagine!\n\n");
+					red();
+					printf("\nErrore nella visualizzazione dell'immagine!\n\n");
+					reset();
 					system("pause");
 				}
 
@@ -108,7 +124,9 @@ void GestioneCreatore(char nomeUtente[])
 				ripeti = false;
 				break;
 			default:
-				printf("Errore! Selezionare un'opzione valida!\n\n");
+				red();
+				printf("\nErrore! Selezionare un'opzione valida!\n\n");
+				reset();
 				ripeti = true;
 				system("pause");
 				break;
@@ -124,7 +142,9 @@ void RicercaImmagineCreatore(char nomeUtente[])
 		unsigned int sceltaMenu;
 		ripeti = false;
 		system("cls");
-
+		red();
+		puts("Ricerca immagini");
+		reset();
 		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
 		scanf("%1u", &sceltaMenu);
 
@@ -138,7 +158,6 @@ void RicercaImmagineCreatore(char nomeUtente[])
 		{
 			file = ApriFile(PERCORSO_FILE_IMMAGINI);
 
-			// Da fare con l'ordinamento
 			FILE* fileCreatori = ApriFile(PERCORSO_FILE_CREATORI);
 
 			Immagine_t immagine[MAX_BUFFER] = { 0 };
@@ -146,7 +165,9 @@ void RicercaImmagineCreatore(char nomeUtente[])
 			size_t numImmagini = CaricaArrayImmagini(file, immagine);
 
 			BubbleSortImmagine(immagine, numImmagini, true);
+			blue();
 			printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
+			reset();
 
 			if (numImmagini > 10)
 				numImmagini = 10;
@@ -162,7 +183,9 @@ void RicercaImmagineCreatore(char nomeUtente[])
 			{
 				if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 				{
-					printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+					red();
+					printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+					reset();
 					system("pause");
 				}
 				else
@@ -175,12 +198,16 @@ void RicercaImmagineCreatore(char nomeUtente[])
 						if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione))
 						{
 							SalvaValutazione(file, nomeUtente, valutazione);
-							printf("Valutazione correttamente inviata! Grazie!\n\n");
+							red();
+							printf("\nValutazione correttamente inviata! Grazie!\n\n");
+							reset();
 							system("pause");
 						}
 						else
 						{
-							printf("Errore nell'aggiornamento dei dati!\n\n");
+							red();
+							printf("\nErrore nell'aggiornamento dei dati!\n\n");
+							reset();
 							system("pause");
 						}
 					}
@@ -221,7 +248,15 @@ void RicercaImmagineCreatore(char nomeUtente[])
 		case 4:
 			ripeti = false;
 			break;
+		default:
+			ripeti = true;
+			red();
+			printf("\nSelezionare un opzione valida!\n\n");
+			reset();
+			system("pause");
+			break;
 		}
+		
 	} while (ripeti);
 }
 
@@ -238,7 +273,9 @@ void RicercaCategoriaMenuCreatore(FILE* file, char nomeUtente[])
 		{
 			if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 			{
-				printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+				red();
+				printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+				reset();
 				system("pause");
 			}
 			else
@@ -251,12 +288,16 @@ void RicercaCategoriaMenuCreatore(FILE* file, char nomeUtente[])
 					if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione))
 					{
 						SalvaValutazione(file, nomeUtente, valutazione);
-						printf("Valutazione correttamente inviata! Grazie!\n\n");
+						red();
+						printf("\nValutazione correttamente inviata! Grazie!\n\n");
+						reset();
 						system("pause");
 					}
 					else
 					{
-						printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+						red();
+						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+						reset();
 						system("pause");
 					}
 				}
@@ -279,7 +320,9 @@ void RicercaTagsMenuCreatore(FILE* file, char nomeUtente[])
 		{
 			if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 			{
-				printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+				red();
+				printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+				reset();
 				system("pause");
 			}
 			else
@@ -292,12 +335,16 @@ void RicercaTagsMenuCreatore(FILE* file, char nomeUtente[])
 					if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione))
 					{
 						SalvaValutazione(file, nomeUtente, valutazione);
-						printf("Valutazione correttamente inviata! Grazie!\n\n");
+						red();
+						printf("\nValutazione correttamente inviata! Grazie!\n\n");
+						reset();
 						system("pause");
 					}
 					else
 					{
-						printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+						red();
+						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+						reset();
 						system("pause");
 					}
 				}

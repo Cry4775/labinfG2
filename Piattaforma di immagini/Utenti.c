@@ -85,7 +85,9 @@ bool ControllaPassword(FILE* file, char buffer[], char nomeUtente[])
 
 void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char nomeUtente[])
 {
+	red();
 	puts("Registrazione utente utilizzatore");
+	reset();
 	bool errore = false;
 
 	char scelta = { 0 };
@@ -121,12 +123,13 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 
 	else
 	{
-		SvuotaInput();
 		// Inserimento NOME UTENTE
 		do
 		{
 			errore = false;
+			green();
 			printf("\nInserire un nome utente (min. 4 caratteri): ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100s", buffer);
@@ -149,12 +152,16 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 			if (strlen(buffer) < MIN_CAR_NOME_UTENTE)
 			{
 				errore = true;
+				red();
 				puts("Errore! Inserire un nome utente di almeno 4 caratteri!\n");
+				reset();
 			}
 			else if (giaEsistente == true)
 			{
 				errore = true;
+				red();
 				puts("Errore! Nome utente gia' esistente!\n");
+				reset();
 			}
 			// Altrimenti procedi
 			else
@@ -168,7 +175,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire una password (min. 8 caratteri): ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100s", buffer);
@@ -177,7 +186,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 			if (strlen(buffer) < MIN_CAR_PASSWORD)
 			{
 				errore = true;
+				red();
 				puts("Errore! Inserire una password di almeno 8 caratteri!\n");
+				reset();
 			}
 
 			// Altrimenti procedi
@@ -189,7 +200,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire il nome: ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100[^\n]", buffer);
@@ -209,7 +222,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire il cognome: ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100[^\n]", buffer);
@@ -229,7 +244,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire il sesso (M/F): ");
+			reset();
 			SvuotaInput();
 			scanf("%c", &utilizzatore->sesso);
 			utilizzatore->sesso = toupper(utilizzatore->sesso);
@@ -246,7 +263,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire la professione: ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100[^\n]", buffer);
@@ -265,7 +284,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire la nazionalita': ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100[^\n]", buffer);
@@ -285,7 +306,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire la data di nascita (GG/MM/AAAA): ");
+			reset();
 			scanf("%u/%u/%u", &utilizzatore->dataNascita.giorno, &utilizzatore->dataNascita.mese, &utilizzatore->dataNascita.anno);
 
 			if (!DataCorretta(utilizzatore->dataNascita.giorno, utilizzatore->dataNascita.mese, utilizzatore->dataNascita.anno))
@@ -306,7 +329,9 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 
 void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 {
+	red();
 	puts("Registrazione utente creatore");
+	reset();
 	bool errore = false;
 
 	char scelta = { 0 };
@@ -342,13 +367,15 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 
 	else
 	{
-		SvuotaInput();
 		system("cls");
 		// Inserimento NOME UTENTE
 		do
 		{
 			errore = false;
-			printf("\nInserire un nome utente (min. 4 caratteri): ");
+			green();
+			printf("Inserire un nome utente (min. 4 caratteri): ");
+			reset();
+			//reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100s", buffer);
@@ -373,12 +400,16 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 			if (strlen(buffer) < MIN_CAR_NOME_UTENTE)
 			{
 				errore = true;
+				red();
 				puts("Errore! Inserire un nome utente di almeno 4 caratteri!\n");
+				reset();
 			}
 			else if (giaEsistente == true)
 			{
 				errore = true;
+				red();
 				puts("Errore! Nome utente gia' esistente!\n");
+				reset();
 			}
 			// Altrimenti procedi
 			else
@@ -392,7 +423,9 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire una password (min. 8 caratteri): ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100s", buffer);
@@ -401,7 +434,9 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 			if (strlen(buffer) < MIN_CAR_PASSWORD)
 			{
 				errore = true;
+				red();
 				puts("Errore! Inserire una password di almeno 8 caratteri!\n");
+				reset();
 			}
 
 			// Altrimenti procedi
@@ -413,7 +448,9 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire il nome: ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100[^\n]", buffer);
@@ -433,7 +470,9 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire il cognome: ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100[^\n]", buffer);
@@ -453,7 +492,9 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire il sesso (M/F): ");
+			reset();
 			SvuotaInput();
 			scanf("%c", &creatore->sesso);
 			creatore->sesso = toupper(creatore->sesso);
@@ -470,7 +511,9 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire la professione: ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100[^\n]", buffer);
@@ -489,7 +532,9 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire la nazionalita': ");
+			reset();
 			char buffer[MAX_BUFFER] = { 0 };
 			SvuotaInput();
 			scanf("%100[^\n]", buffer);
@@ -509,7 +554,9 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		do
 		{
 			errore = false;
+			green();
 			printf("Inserire la data di nascita (GG/MM/AAAA): ");
+			reset();
 			scanf("%u/%u/%u", &creatore->dataNascita.giorno, &creatore->dataNascita.mese, &creatore->dataNascita.anno);
 
 			if (!DataCorretta(creatore->dataNascita.giorno, creatore->dataNascita.mese, creatore->dataNascita.anno))

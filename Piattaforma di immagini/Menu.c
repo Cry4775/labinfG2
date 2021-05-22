@@ -6,7 +6,10 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 	bool inEsecuzione = true;
 	do
 	{
-		puts("Benvenuto sulla piattaforma di immagini! \n\n1. Registrazione utente\n2. Accesso utente\n3. Esci\n");
+		red();
+		printf("Benvenuto sulla piattaforma di immagini!");
+		reset();
+		printf("\n\n1. Registrazione utente\n2. Accesso utente\n3. Esci\n\n");
 
 		unsigned int sceltaMenu;
 		bool errore = false;
@@ -24,7 +27,10 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 					Creatore_t creatore = { 0 };
 					Utilizzatore_t utilizzatore = { 0 };
 
-					puts("Che tipologia di utente sei?\n1. Creatore\n2. Utilizzatore\n3. Indietro\n");
+					red();
+					puts("Che tipologia di utente sei?");
+					reset();
+					printf("\n1.Creatore\n2.Utilizzatore\n3.Indietro\n");
 					scanf("%1u", &sceltaMenu);
 
 					system("cls");
@@ -42,7 +48,9 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 
 							fclose(file);
 
-							printf("Creatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
+							red();
+							printf("\nCreatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
+							reset();
 							system("pause");
 							*isCreatore = true; // Do l'accesso al menu principale creatore
 							return true;
@@ -63,7 +71,9 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 
 							fclose(file);
 
-							printf("\n\nUtilizzatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
+							red();
+							printf("\nUtilizzatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
+							reset();
 							system("pause");
 							*isCreatore = false;
 							return true;
@@ -75,15 +85,14 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 							break;
 						default:
 							errore = true;
-							printf("Errore! Selezionare un'opzione valida!");
+							red();
+							printf("\nErrore! Selezionare un'opzione valida!\n\n");
+							reset();
 							break;
 						}
 				} while (errore);
 				break;
 			}
-
-
-
 
 			// Accesso utente
 			case 2:
@@ -94,7 +103,9 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 					*isCreatore = false;
 					bool indietro = false; // flag indietro
 					system("cls");
+					green();
 					printf("Inserire il nome utente: ");
+					reset();
 					char buffer[MAX_BUFFER] = { 0 };
 
 					scanf("%100s", buffer);
@@ -135,7 +146,9 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 						if (esisteNomeUtente)
 						{
 							strcpy(nomeUtente, buffer);
+							green();
 							printf("Inserire la password: ");
+							reset();
 							char buffer[MAX_BUFFER] = { 0 };
 							SvuotaInput();
 							scanf("%100s", buffer);
@@ -151,7 +164,9 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 							}
 							else
 							{
-								printf("Errore! Password non corretta! Riprovare.\n\n");
+								red();
+								printf("\nErrore! Password non corretta! Riprovare.\n\n");
+								reset();
 								system("pause");
 								errore = true;
 							}
@@ -159,7 +174,9 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 						}
 						else
 						{
-							printf("Errore! Nome utente non esistente. \nControllare il nome utente digitato oppure digita 0 per tornare al menu iniziale e registrarsi.\n\n");
+							red();
+							printf("\nErrore! Nome utente non esistente. \nControllare il nome utente digitato oppure digita 0 per tornare al menu iniziale e registrarsi.\n\n");
+							reset();
 							system("pause");
 							errore = true;
 						}
@@ -175,7 +192,9 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 				inEsecuzione = false;
 				break;
 			default:
-				puts("Errore! Selezionare un'opzione valida!\n");
+				red();
+				puts("\nErrore! Selezionare un'opzione valida!\n\n");
+				reset();
 				system("pause");
 				break;
 		}
@@ -198,7 +217,10 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 		{
 			system("cls");
 
-			printf("Benvenuto sulla piattaforma di immagini %s! \n\n1. Gestione creatore\n2. Ricerca immagine\n3. Statistiche creatore\n4. Classifiche\n5. Esci\n", nomeUtente);
+			red();
+			printf("Benvenuto sulla piattaforma di immagini %s! \n\n", nomeUtente);
+			reset();
+			printf("1. Gestione creatore\n2. Ricerca immagine\n3. Statistiche creatore\n4. Classifiche\n5. Esci\n");
 
 			unsigned int sceltaMenu;
 			bool ripeti = false;
@@ -237,6 +259,12 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 					system("cls");
 					break;
 				}
+				default:
+					red();
+					printf("\nSelezionare un opzione valida!\n\n");
+					reset();
+					system("pause");
+					break;
 			}
 		} while (inEsecuzione == true);
 	}
@@ -248,7 +276,10 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 		{
 			system("cls");
 
-			printf("Benvenuto sulla piattaforma di immagini %s! \n\n1. Ricerca immagine\n2. Statistiche creatore\n3. Classifiche\n4. Esci\n", nomeUtente);
+			red();
+			printf("Benvenuto sulla piattaforma di immagini %s! \n\n", nomeUtente);
+			reset();
+			printf("1. Ricerca immagine\n2. Statistiche creatore\n3. Classifiche\n4. Esci\n");
 
 			unsigned int sceltaMenu;
 			bool ripeti = false;
@@ -281,6 +312,12 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 				system("cls");
 				break;
 			}
+			default:
+				red();
+				printf("\nSelezionare un opzione valida!\n\n");
+				reset();
+				system("pause");
+				break;
 			}
 		} while (inEsecuzione == true);
 	}

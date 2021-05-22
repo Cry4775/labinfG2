@@ -84,7 +84,9 @@ bool ContieneSimboli(char buffer[], bool numeriAmmessi)
                 buffer[i] = '\0';
             else
             {
-                printf("Errore! I simboli e i numeri non sono ammessi!\n");
+                red();
+                printf("\nErrore! I simboli e i numeri non sono ammessi!\n\n");
+                reset();
                 system("pause");
                 return true;
             }
@@ -104,7 +106,9 @@ bool ContieneSimboli(char buffer[], bool numeriAmmessi)
                 buffer[i] = '\0';
             else
             {
-                printf("Errore! I simboli non sono ammessi!\n");
+                red();
+                printf("\nErrore! I simboli non sono ammessi!\n\n");
+                reset();
                 system("pause");
                 return true;
             }
@@ -148,4 +152,24 @@ const char* CreaIstogramma(unsigned int percentualeOccorrenza)
         buffer[i] = '|';
     }
     return buffer;
+}
+
+void red()
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+}
+
+void green()
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+}
+
+void blue()
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+}
+
+void reset()
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }

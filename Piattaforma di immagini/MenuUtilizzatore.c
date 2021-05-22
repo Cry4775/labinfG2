@@ -10,6 +10,9 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 		ripeti = false;
 		system("cls");
 
+		red();
+		puts("Ricerca Immagini");
+		reset();
 		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
 		scanf("%1u", &sceltaMenu);
 
@@ -23,7 +26,6 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 		{
 			file = ApriFile(PERCORSO_FILE_IMMAGINI);
 
-			// Da fare con l'ordinamento
 			FILE* fileCreatori = ApriFile(PERCORSO_FILE_CREATORI);
 			FILE* fileUtilizzatori = ApriFile(PERCORSO_FILE_UTILIZZATORI);
 
@@ -32,7 +34,10 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 			size_t numImmagini = CaricaArrayImmagini(file, immagine);
 
 			BubbleSortImmagine(immagine, numImmagini, true);
+
+			blue();
 			printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
+			reset();
 
 			if (numImmagini > 10)
 				numImmagini = 10;
@@ -48,12 +53,16 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 			{
 				if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 				{
-					printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+					red();
+					printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+					reset();
 					system("pause");
 				}
 				else if (!AggiornaNumDownloadUtilizzatore(fileUtilizzatori, nomeUtente))
 				{
-					printf("Errore nell'aggiornamento dei dati dell'utilizzatore!\n\n");
+					red();
+					printf("\nErrore nell'aggiornamento dei dati dell'utilizzatore!\n\n");
+					reset();
 					system("pause");
 				}
 				else
@@ -66,12 +75,16 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 						if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione) && AggiornaNumValutazioniUtilizzatore(fileUtilizzatori))
 						{
 							SalvaValutazione(file, nomeUtente, valutazione);
+							red();
 							printf("Valutazione correttamente inviata! Grazie!\n\n");
+							reset();
 							system("pause");
 						}
 						else
 						{
-							printf("Errore nell'aggiornamento dei dati!\n\n");
+							red();
+							printf("\nErrore nell'aggiornamento dei dati!\n\n");
+							reset();
 							system("pause");
 						}
 					}
@@ -113,7 +126,15 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 		case 4:
 			ripeti = false;
 			break;
+		default:
+			ripeti = true;
+			red();
+			printf("\nSelezionare un opzione valida!\n\n");
+			reset();
+			system("pause");
+			break;
 		}
+		
 	} while (ripeti);
 }
 
@@ -131,12 +152,16 @@ void RicercaCategoriaMenuUtilizzatore(FILE* file, char nomeUtente[])
 		{
 			if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 			{
-				printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+				red();
+				printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+				reset();
 				system("pause");
 			}
 			else if (!AggiornaNumDownloadUtilizzatore(fileUtilizzatori, nomeUtente))
 			{
-				printf("Errore nell'aggiornamento dei dati dell'utilizzatore!\n\n");
+				red();
+				printf("\nErrore nell'aggiornamento dei dati dell'utilizzatore!\n\n");
+				reset();
 				system("pause");
 			}
 			else
@@ -149,12 +174,16 @@ void RicercaCategoriaMenuUtilizzatore(FILE* file, char nomeUtente[])
 					if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione) && AggiornaNumValutazioniUtilizzatore(fileUtilizzatori))
 					{
 						SalvaValutazione(file, nomeUtente, valutazione);
+						red();
 						printf("Valutazione correttamente inviata! Grazie!\n\n");
+						reset();
 						system("pause");
 					}
 					else
 					{
-						printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+						red();
+						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+						reset();
 						system("pause");
 					}
 				}
@@ -179,12 +208,16 @@ void RicercaTagsMenuUtilizzatore(FILE* file, char nomeUtente[])
 		{
 			if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 			{
-				printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+				red();
+				printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+				reset();
 				system("pause");
 			}
 			else if (!AggiornaNumDownloadUtilizzatore(fileUtilizzatori, nomeUtente))
 			{
+				red();
 				printf("Errore nell'aggiornamento dei dati dell'utilizzatore!\n\n");
+				reset();
 				system("pause");
 			}
 			else
@@ -197,12 +230,16 @@ void RicercaTagsMenuUtilizzatore(FILE* file, char nomeUtente[])
 					if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione) && AggiornaNumValutazioniUtilizzatore(fileUtilizzatori))
 					{
 						SalvaValutazione(file, nomeUtente, valutazione);
+						red();
 						printf("Valutazione correttamente inviata! Grazie!\n\n");
+						reset();
 						system("pause");
 					}
 					else
 					{
-						printf("Errore nell'aggiornamento dei dati del creatore!\n\n");
+						red();
+						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+						reset();
 						system("pause");
 					}
 				}
@@ -224,7 +261,9 @@ void StatisticheCreatore()
 		system("cls");
 
 		char buffer[MAX_BUFFER] = { 0 };
+		green();
 		printf("Inserire il nome utente del creatore di cui si vogliono visualizzare le statistiche: ");
+		reset();
 		SvuotaInput();
 		scanf("%s", buffer);
 
@@ -250,8 +289,12 @@ void StatisticheCreatore()
 		{
 			// Stampa l'intestazione delle statistiche
 			system("cls");
+			red();
 			printf("Nome utente: %s\n\n", creatore.nomeUtente);
+			reset();
+			blue();
 			printf("%-30s%-30s%-30s\n", "Categorie", "Numero di download", "Attivita'");
+			reset();
 
 			FILE* fileImmagini = ApriFile(PERCORSO_FILE_IMMAGINI);
 			Immagine_t immagine = { 0 };
@@ -315,7 +358,9 @@ void StatisticheCreatore()
 		}
 		else
 		{
-			printf("Nome utente non esistente!\n\n");
+			red();
+			printf("\nNome utente non esistente!\n\n");
+			reset();
 			errore = true;
 			system("pause");
 		}
@@ -332,7 +377,9 @@ void Classifiche()
 		unsigned int sceltaMenu;
 		ripeti = false;
 		system("cls");
-
+		red();
+		puts("Classifiche");
+		reset();
 		puts("1. Classifica immagini\n2. Classifica creatori\n3. Classifica utilizzatori\n4. Indietro\n");
 		scanf("%1u", &sceltaMenu);
 
@@ -359,7 +406,9 @@ void Classifiche()
 						system("cls");
 						//Ordiniamo per numero di download
 						BubbleSortImmagine(immagine, numImmagini, true);
+						blue();
 						printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
+						reset();
 
 						for (size_t i = 0; i < numImmagini; i++)
 						{
@@ -373,7 +422,9 @@ void Classifiche()
 						system("cls");
 						//Ordiniamo per valutazione media
 						BubbleSortImmagine(immagine, numImmagini, false);
+						blue();
 						printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Valutazione media", "Categoria");
+						reset();
 
 						for (size_t i = 0; i < numImmagini; i++)
 						{
@@ -386,6 +437,13 @@ void Classifiche()
 					{
 						break;
 					}
+					default:
+						ripeti = true;
+						red();
+						printf("\nSelezionare un opzione valida!\n\n");
+						reset();
+						system("pause");
+						break;
 				}
 				ripeti = true;
 				break;
@@ -408,7 +466,9 @@ void Classifiche()
 						system("cls");
 						//Ordiniamo per numero di download
 						BubbleSortCreatore(creatore, numCreatori, true);
+						blue();
 						printf("%-30s%-30s%-30s%-30s\n", "Nome utente", "Numero di immagini", "Numero di download", "Media valutazioni");
+						reset();
 
 						for (size_t i = 0; i < numCreatori; i++)
 						{
@@ -422,7 +482,9 @@ void Classifiche()
 						system("cls");
 						//Ordiniamo per valutazione media
 						BubbleSortCreatore(creatore, numCreatori, false);
+						blue();
 						printf("%-30s%-30s%-30s%-30s\n", "Nome utente", "Numero di immagini", "Numero di download", "Media valutazioni");
+						reset();
 
 						for (size_t i = 0; i < numCreatori; i++)
 						{
@@ -435,6 +497,13 @@ void Classifiche()
 					{
 						break;
 					}
+					default:
+						ripeti = true;
+						red();
+						printf("\nSelezionare un opzione valida!\n\n");
+						reset();
+						system("pause");
+						break;
 				}
 
 				ripeti = true;
@@ -458,7 +527,9 @@ void Classifiche()
 						system("cls");
 						//Ordiniamo per numero di download
 						BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, true);
+						blue();
 						printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
+						reset();
 
 						for (size_t i = 0; i < numUtilizzatori; i++)
 						{
@@ -472,7 +543,9 @@ void Classifiche()
 						system("cls");
 						//Ordiniamo per numero di valutazioni
 						BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, true);
+						blue();
 						printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
+						reset();
 
 						for (size_t i = 0; i < numUtilizzatori; i++)
 						{
@@ -485,6 +558,13 @@ void Classifiche()
 					{
 						break;
 					}
+					default:
+						ripeti = true;
+						red();
+						printf("\nSelezionare un opzione valida!\n\n");
+						reset();
+						system("pause");
+						break;
 				}
 
 				ripeti = true;
@@ -497,7 +577,9 @@ void Classifiche()
 				break;
 			}
 			default:
-				printf("Errore! Selezionare un'opzione valida!\n\n");
+				red();
+				printf("\nErrore! Selezionare un'opzione valida!\n\n");
+				reset();
 				ripeti = true;
 				system("pause");
 				break;

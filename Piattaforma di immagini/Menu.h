@@ -6,6 +6,7 @@
 #include "Utenti.h"
 #include "Immagini.h"
 #include "MenuCreatore.h"
+#include "MenuUtilizzatore.h"
 
 FILE* file;
 
