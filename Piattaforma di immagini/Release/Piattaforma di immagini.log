@@ -1,9 +1,6 @@
-﻿  Menu.c
-C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(225,25): warning C4013: 'StatisticheCreatore' undefined; assuming extern returning int
-C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(231,17): warning C4013: 'Classifiche' undefined; assuming extern returning int
-C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Menu.c(263,32): warning C4013: 'RicercaImmagineUtilizzatore' undefined; assuming extern returning int
+﻿  MenuUtilizzatore.c
   Generating code
-  1 of 71 functions ( 1.4%) were compiled, the rest were copied from previous compilation.
+  2 of 74 functions ( 2.7%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

@@ -3,9 +3,12 @@
 
 void RicercaImmagineUtilizzatore(char nomeUtente[])
 {
-	bool ripeti;
+	bool ripeti = false;
+	bool errore = false;
 	do
 	{
+		if (errore)
+			SvuotaInput();
 		unsigned int sceltaMenu;
 		ripeti = false;
 		system("cls");
@@ -13,128 +16,139 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 		red();
 		puts("Ricerca Immagini");
 		reset();
+
 		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
-		scanf("%1u", &sceltaMenu);
-
-		Immagine_t immagine = { 0 };
-
-		// Sottomenu Ricerca Immagine
-		switch (sceltaMenu)
+		if (scanf("%u", &sceltaMenu) == 1)
 		{
-			// Ricerca Immagine - Popolari
-		case 1:
-		{
-			file = ApriFile(PERCORSO_FILE_IMMAGINI);
 
-			FILE* fileCreatori = ApriFile(PERCORSO_FILE_CREATORI);
-			FILE* fileUtilizzatori = ApriFile(PERCORSO_FILE_UTILIZZATORI);
+			Immagine_t immagine = { 0 };
 
-			Immagine_t immagine[MAX_BUFFER] = { 0 };
-
-			size_t numImmagini = CaricaArrayImmagini(file, immagine);
-
-			BubbleSortImmagine(immagine, numImmagini, true);
-
-			blue();
-			printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
-			reset();
-
-			if (numImmagini > 10)
-				numImmagini = 10;
-
-			for (size_t i = 0; i < numImmagini; i++)
+			// Sottomenu Ricerca Immagine
+			switch (sceltaMenu)
 			{
-				printf("%-30s%-30s%-30u%-30s\n", immagine[i].titolo, immagine[i].nomeUtente, immagine[i].numDownload, immagine[i].categoria);
-			}
-
-			char autoreImmagine[MAX_BUFFER] = { 0 };
-			bool scaricata = VisualizzaImmagine(file, autoreImmagine);
-			if (scaricata)
+				// Ricerca Immagine - Popolari
+			case 1:
 			{
-				if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
-				{
-					red();
-					printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-					reset();
-					system("pause");
-				}
-				else if (!AggiornaNumDownloadUtilizzatore(fileUtilizzatori, nomeUtente))
-				{
-					red();
-					printf("\nErrore nell'aggiornamento dei dati dell'utilizzatore!\n\n");
-					reset();
-					system("pause");
-				}
-				else
-				{
-					unsigned int valutazione = ValutaImmagine(file, nomeUtente);
+				system("cls");
+				file = ApriFile(PERCORSO_FILE_IMMAGINI);
 
-					// Se non è già stata data la valutazione
-					if (valutazione != 0)
+				FILE* fileCreatori = ApriFile(PERCORSO_FILE_CREATORI);
+				FILE* fileUtilizzatori = ApriFile(PERCORSO_FILE_UTILIZZATORI);
+
+				Immagine_t immagine[MAX_BUFFER] = { 0 };
+
+				size_t numImmagini = CaricaArrayImmagini(file, immagine);
+
+				BubbleSortImmagine(immagine, numImmagini, true);
+
+				blue();
+				printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
+				reset();
+
+				if (numImmagini > 10)
+					numImmagini = 10;
+
+				for (size_t i = 0; i < numImmagini; i++)
+				{
+					printf("%-30s%-30s%-30u%-30s\n", immagine[i].titolo, immagine[i].nomeUtente, immagine[i].numDownload, immagine[i].categoria);
+				}
+
+				char autoreImmagine[MAX_BUFFER] = { 0 };
+				bool scaricata = VisualizzaImmagine(file, autoreImmagine);
+				if (scaricata)
+				{
+					if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 					{
-						if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione) && AggiornaNumValutazioniUtilizzatore(fileUtilizzatori))
+						red();
+						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
+						reset();
+						system("pause");
+					}
+					else if (!AggiornaNumDownloadUtilizzatore(fileUtilizzatori, nomeUtente))
+					{
+						red();
+						printf("\nErrore nell'aggiornamento dei dati dell'utilizzatore!\n\n");
+						reset();
+						system("pause");
+					}
+					else
+					{
+						unsigned int valutazione = ValutaImmagine(file, nomeUtente);
+
+						// Se non è già stata data la valutazione
+						if (valutazione != 0)
 						{
-							SalvaValutazione(file, nomeUtente, valutazione);
-							red();
-							printf("Valutazione correttamente inviata! Grazie!\n\n");
-							reset();
-							system("pause");
-						}
-						else
-						{
-							red();
-							printf("\nErrore nell'aggiornamento dei dati!\n\n");
-							reset();
-							system("pause");
+							if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione) && AggiornaNumValutazioniUtilizzatore(fileUtilizzatori))
+							{
+								SalvaValutazione(file, nomeUtente, valutazione);
+								red();
+								printf("Valutazione correttamente inviata! Grazie!\n\n");
+								reset();
+								system("pause");
+							}
+							else
+							{
+								red();
+								printf("\nErrore nell'aggiornamento dei dati!\n\n");
+								reset();
+								system("pause");
+							}
 						}
 					}
 				}
+
+				fclose(fileCreatori);
+				fclose(fileUtilizzatori);
+
+				fclose(file);
+				ripeti = true;
+				break;
 			}
+			// Ricerca Immagine - Categorie
+			case 2:
+			{
+				file = ApriFile(PERCORSO_FILE_IMMAGINI);
 
-			fclose(fileCreatori);
-			fclose(fileUtilizzatori);
+				RicercaCategoriaMenuUtilizzatore(file, nomeUtente);
 
-			fclose(file);
-			ripeti = true;
-			break;
+				fclose(file);
+
+				ripeti = true;
+				break;
+			}
+			// Ricerca Immagine - Tags
+			case 3:
+			{
+				file = ApriFile(PERCORSO_FILE_IMMAGINI);
+
+				RicercaTagsMenuUtilizzatore(file, nomeUtente);
+
+				fclose(file);
+
+				ripeti = true;
+				break;
+			}
+			// Ricerca Immagine - Indietro
+			case 4:
+				ripeti = false;
+				break;
+			default:
+				ripeti = true;
+				red();
+				printf("\nSelezionare un opzione valida!\n\n");
+				reset();
+				system("pause");
+				break;
+			}
 		}
-		// Ricerca Immagine - Categorie
-		case 2:
+		else
 		{
-			file = ApriFile(PERCORSO_FILE_IMMAGINI);
-
-			RicercaCategoriaMenuUtilizzatore(file, nomeUtente);
-
-			fclose(file);
-
-			ripeti = true;
-			break;
-		}
-		// Ricerca Immagine - Tags
-		case 3:
-		{
-			file = ApriFile(PERCORSO_FILE_IMMAGINI);
-
-			RicercaTagsMenuUtilizzatore(file, nomeUtente);
-
-			fclose(file);
-
-			ripeti = true;
-			break;
-		}
-		// Ricerca Immagine - Indietro
-		case 4:
-			ripeti = false;
-			break;
-		default:
-			ripeti = true;
+			errore = true;
 			red();
-			printf("\nSelezionare un opzione valida!\n\n");
+			printf("\nErrore! Sono ammessi solo numeri!\n\n");
 			reset();
 			system("pause");
-			break;
 		}
-		
 	} while (ripeti);
 }
 
@@ -265,7 +279,7 @@ void StatisticheCreatore()
 		printf("Inserire il nome utente del creatore di cui si vogliono visualizzare le statistiche: ");
 		reset();
 		SvuotaInput();
-		scanf("%s", buffer);
+		scanf("%100s", buffer);
 
 		bool trovato = false;
 		Creatore_t creatore = { 0 };
@@ -371,36 +385,44 @@ void StatisticheCreatore()
 
 void Classifiche()
 {
-	bool ripeti;
+	bool ripeti = false;
+	bool errore = false;
 	do
 	{
+		if (errore)
+			SvuotaInput();
+		errore = false;
 		unsigned int sceltaMenu;
-		ripeti = false;
+		ripeti = true;
 		system("cls");
+
 		red();
 		puts("Classifiche");
 		reset();
+
 		puts("1. Classifica immagini\n2. Classifica creatori\n3. Classifica utilizzatori\n4. Indietro\n");
-		scanf("%1u", &sceltaMenu);
-
-
-
-		// Sottomenu Classifiche
-		switch (sceltaMenu)
+		if (scanf("%u", &sceltaMenu) == 1)
 		{
+			// Sottomenu Classifiche
+			switch (sceltaMenu)
+			{
 			// Classifica immagini
 			case 1:
 			{
+				if (errore)
+					SvuotaInput();
+				errore = false;
 				system("cls");
 				Immagine_t immagine[MAX_BUFFER] = { 0 };
 
 				size_t numImmagini = CaricaArrayImmagini(file, immagine);
 
 				printf("1. Per numero di download\n2. Per valutazione media\n3. Indietro\n\n");
-				scanf("%1u", &sceltaMenu);
-
-				switch (sceltaMenu)
+				if (scanf("%u", &sceltaMenu) == 1)
 				{
+
+					switch (sceltaMenu)
+					{
 					case 1:
 					{
 						system("cls");
@@ -444,6 +466,15 @@ void Classifiche()
 						reset();
 						system("pause");
 						break;
+					}
+				}
+				else
+				{
+					errore = true;
+					red();
+					printf("\nErrore! Sono ammessi solo numeri!\n\n");
+					reset();
+					system("pause");
 				}
 				ripeti = true;
 				break;
@@ -451,16 +482,20 @@ void Classifiche()
 			// Classifica creatori
 			case 2:
 			{
+				if (errore)
+					SvuotaInput();
+				errore = false;
 				system("cls");
 				Creatore_t creatore[MAX_BUFFER] = { 0 };
 
 				size_t numCreatori = CaricaArrayCreatori(file, creatore);
 
 				printf("1. Per numero di download\n2. Per valutazione media\n3. Indietro\n\n");
-				scanf("%1u", &sceltaMenu);
-
-				switch (sceltaMenu)
+				if (scanf("%u", &sceltaMenu) == 1)
 				{
+
+					switch (sceltaMenu)
+					{
 					case 1:
 					{
 						system("cls");
@@ -504,24 +539,35 @@ void Classifiche()
 						reset();
 						system("pause");
 						break;
+					}
 				}
-
+				else
+				{
+					errore = true;
+					red();
+					printf("\nErrore! Sono ammessi solo numeri!\n\n");
+					reset();
+					system("pause");
+				}
 				ripeti = true;
 				break;
 			}
 			// Classifica utilizzatori
 			case 3:
 			{
+				if (errore)
+					SvuotaInput();
+				errore = false;
 				system("cls");
 				Utilizzatore_t utilizzatore[MAX_BUFFER] = { 0 };
 
 				size_t numUtilizzatori = CaricaArrayUtilizzatori(file, utilizzatore);
 
 				printf("1. Per numero di download\n2. Per numero di valutazioni\n3. Indietro\n\n");
-				scanf("%1u", &sceltaMenu);
-
-				switch (sceltaMenu)
+				if (scanf("%u", &sceltaMenu) == 1)
 				{
+					switch (sceltaMenu)
+					{
 					case 1:
 					{
 						system("cls");
@@ -542,7 +588,7 @@ void Classifiche()
 					{
 						system("cls");
 						//Ordiniamo per numero di valutazioni
-						BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, true);
+						BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, false);
 						blue();
 						printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
 						reset();
@@ -565,8 +611,16 @@ void Classifiche()
 						reset();
 						system("pause");
 						break;
+					}
 				}
-
+				else
+				{
+					errore = true;
+					red();
+					printf("\nErrore! Sono ammessi solo numeri!\n\n");
+					reset();
+					system("pause");
+				}
 				ripeti = true;
 				break;
 			}
@@ -583,6 +637,15 @@ void Classifiche()
 				ripeti = true;
 				system("pause");
 				break;
+			}
+		}
+		else
+		{
+			errore = true;
+			red();
+			printf("\nErrore! Sono ammessi solo numeri!\n\n");
+			reset();
+			system("pause");
 		}
 	} while (ripeti);
 }
