@@ -432,7 +432,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 
 				size_t numImmagini = CaricaArrayImmagini(file, immagine);
 
-				QuickSortImmagine(immagine, 0, numImmagini - 1, true);
+				BubbleSortImmagine(immagine, numImmagini, true);
 				printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
 
 				if (numImmagini > 10)
@@ -542,7 +542,7 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 
 			size_t numImmagini = CaricaArrayImmagini(file, immagine);
 
-			QuickSortImmagine(immagine, 0, numImmagini - 1, true);
+			BubbleSortImmagine(immagine, numImmagini, true);
 			printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
 
 			if (numImmagini > 10)
@@ -951,7 +951,7 @@ void Classifiche()
 				{
 					system("cls");
 					//Ordiniamo per numero di download
-					QuickSortImmagine(immagine, 0, numImmagini - 1, true);
+					BubbleSortImmagine(immagine, numImmagini, true);
 					printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
 
 					for (size_t i = 0; i < numImmagini; i++)
@@ -965,7 +965,7 @@ void Classifiche()
 				{
 					system("cls");
 					//Ordiniamo per valutazione media
-					QuickSortImmagine(immagine, 0, numImmagini - 1, false);
+					BubbleSortImmagine(immagine, numImmagini, false);
 					printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Valutazione media", "Categoria");
 
 					for (size_t i = 0; i < numImmagini; i++)
@@ -1002,7 +1002,7 @@ void Classifiche()
 			{
 				system("cls");
 				//Ordiniamo per numero di download
-				QuickSortCreatore(creatore, 0, numCreatori - 1, true);
+				BubbleSortCreatore(creatore, numCreatori, true);
 				printf("%-30s%-30s%-30s%-30s\n", "Nome utente", "Numero di immagini", "Numero di download", "Media valutazioni");
 
 				for (size_t i = 0; i < numCreatori; i++)
@@ -1016,7 +1016,7 @@ void Classifiche()
 			{
 				system("cls");
 				//Ordiniamo per valutazione media
-				QuickSortCreatore(creatore, 0, numCreatori - 1, false);
+				BubbleSortCreatore(creatore, numCreatori, false);
 				printf("%-30s%-30s%-30s%-30s\n", "Nome utente", "Numero di immagini", "Numero di download", "Media valutazioni");
 
 				for (size_t i = 0; i < numCreatori; i++)
@@ -1052,7 +1052,7 @@ void Classifiche()
 			{
 				system("cls");
 				//Ordiniamo per numero di download
-				QuickSortUtilizzatore(utilizzatore, 0, numUtilizzatori - 1, true);
+				BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, true);
 				printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
 
 				for (size_t i = 0; i < numUtilizzatori; i++)
@@ -1066,7 +1066,7 @@ void Classifiche()
 			{
 				system("cls");
 				//Ordiniamo per numero di valutazioni
-				QuickSortUtilizzatore(utilizzatore, 0, numUtilizzatori - 1, false);
+				BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, true);
 				printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
 
 				for (size_t i = 0; i < numUtilizzatori; i++)

@@ -150,23 +150,12 @@ size_t CaricaArrayCreatori(FILE* file, Creatore_t creatore[]);
 void ScambiaCreatore(Creatore_t* creatoreA, Creatore_t* creatoreB);
 
 /// <summary>
-/// Divide l'array in due parti, a sinistra gli elementi <= pivot, a destra quelli > pivot
+/// Ordinamento bubble sort del creatore
 /// </summary>
 /// <param name="creatore">Array pieno dei creatori</param>
-/// <param name="low">Primo elemento</param>
-/// <param name="high">Ultimo elemento</param>
+/// <param name="n">Numero elementi</param>
 /// <param name="criterio">True se vogliamo ordinare per numero di download, False per media valutazioni</param>
-/// <returns>Restituisce la posizione della partizione</returns>
-int PartizionamentoCreatore(Creatore_t creatore[], int low, int high, bool criterio);
-
-/// <summary>
-/// Ordinamento quick sort del creatore
-/// </summary>
-/// <param name="creatore">Array pieno dei creatori</param>
-/// <param name="low">Primo elemento</param>
-/// <param name="high">Ultimo elemento</param>
-/// <param name="criterio">True se vogliamo ordinare per numero di download, False per media valutazioni</param>
-void QuickSortCreatore(Creatore_t creatore[], int low, int high, bool criterio);
+void BubbleSortCreatore(Creatore_t creatore[], size_t n, bool criterio);
 
 /// <summary>
 /// Carica in un array tutti gli utilizzatori
@@ -179,22 +168,11 @@ size_t CaricaArrayUtilizzatori(FILE* file, Utilizzatore_t utilizzatore[]);
 void ScambiaUtilizzatore(Utilizzatore_t* utilizzatoreA, Utilizzatore_t* utilizzatoreB);
 
 /// <summary>
-/// Divide l'array in due parti, a sinistra gli elementi <= pivot, a destra quelli > pivot
+/// Ordinamento bubble sort dell'utilizzatore
 /// </summary>
 /// <param name="creatore">Array pieno degli utilizzatori</param>
-/// <param name="low">Primo elemento</param>
-/// <param name="high">Ultimo elemento</param>
+/// <param name="n">Numero elementi</param>
 /// <param name="criterio">True se vogliamo ordinare per numero di download, False per numero di valutazioni</param>
-/// <returns>Restituisce la posizione della partizione</returns>
-int PartizionamentoUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, bool criterio);
-
-/// <summary>
-/// Ordinamento quick sort dell'utilizzatore
-/// </summary>
-/// <param name="creatore">Array pieno degli utilizzatori</param>
-/// <param name="low">Primo elemento</param>
-/// <param name="high">Ultimo elemento</param>
-/// <param name="criterio">True se vogliamo ordinare per numero di download, False per numero di valutazioni</param>
-void QuickSortUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, bool criterio);
+void BubbleSortUtilizzatore(Utilizzatore_t utilizzatore[], size_t n, bool criterio);
 
 #endif

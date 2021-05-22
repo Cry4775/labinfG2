@@ -939,48 +939,28 @@ void ScambiaImmagine(Immagine_t *immagineA, Immagine_t *immagineB)
 	*immagineB = temp;
 }
 
-int PartizionamentoImmagine(Immagine_t immagine[], int low, int high, bool criterio)
+void BubbleSortImmagine(Immagine_t immagine[], size_t n, bool criterio)
 {
-	// Criterio = true se vogliamo ordinare per numero di download
-	// Criterio = false se vogliamo ordinare per media valutazioni
-	Immagine_t pivot = immagine[high];
-
-	int i = (low - 1);
 	if (criterio)
 	{
-		for (size_t j = low; j < high; j++)
+		for (size_t i = 0; i < n - 1; i++)
 		{
-			if (immagine[j].numDownload >= pivot.numDownload)
+			for (size_t j = n; j > i; j--)
 			{
-				i++;
-				ScambiaImmagine(&immagine[i], &immagine[j]);
+				if (immagine[j].numDownload > immagine[j - 1].numDownload)
+					ScambiaImmagine(&immagine[j], &immagine[j - 1]);
 			}
 		}
 	}
 	else
 	{
-		for (size_t j = low; j < high; j++)
+		for (size_t i = 0; i < n - 1; i++)
 		{
-			if (immagine[j].valutazioneMedia >= pivot.valutazioneMedia)
+			for (size_t j = n; j > i; j--)
 			{
-				i++;
-				ScambiaImmagine(&immagine[i], &immagine[j]);
+				if (immagine[j].valutazioneMedia > immagine[j - 1].valutazioneMedia)
+					ScambiaImmagine(&immagine[j], &immagine[j - 1]);
 			}
 		}
-	}
-
-	ScambiaImmagine(&immagine[i + 1], &immagine[high]);
-
-	return (i + 1);
-}
-
-void QuickSortImmagine(Immagine_t immagine[], int low, int high, bool criterio)
-{
-	if (low < high)
-	{
-		int pi = PartizionamentoImmagine(immagine, low, high, criterio);
-
-		QuickSortImmagine(immagine, low, pi - 1, criterio);
-		QuickSortImmagine(immagine, pi + 1, high, criterio);
 	}
 }

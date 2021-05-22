@@ -602,49 +602,29 @@ void ScambiaCreatore(Creatore_t* creatoreA, Creatore_t* creatoreB)
 	*creatoreB = temp;
 }
 
-int PartizionamentoCreatore(Creatore_t creatore[], int low, int high, bool criterio)
+void BubbleSortCreatore(Creatore_t creatore[], size_t n, bool criterio)
 {
-	// Criterio = true se vogliamo ordinare per numero di download
-	// Criterio = false se vogliamo ordinare per media valutazioni
-	Creatore_t pivot = creatore[high];
-
-	int i = (low - 1);
 	if (criterio)
 	{
-		for (size_t j = low; j < high; j++)
+		for (size_t i = 0; i < n - 1; i++)
 		{
-			if (creatore[j].numDownloadTot >= pivot.numDownloadTot)
+			for (size_t j = n; j > i; j--)
 			{
-				i++;
-				ScambiaCreatore(&creatore[i], &creatore[j]);
+				if (creatore[j].numDownloadTot > creatore[j - 1].numDownloadTot)
+					ScambiaCreatore(&creatore[j], &creatore[j - 1]);
 			}
 		}
 	}
 	else
 	{
-		for (size_t j = low; j < high; j++)
+		for (size_t i = 0; i < n - 1; i++)
 		{
-			if (creatore[j].mediaValutazioni >= pivot.mediaValutazioni)
+			for (size_t j = n; j > i; j--)
 			{
-				i++;
-				ScambiaCreatore(&creatore[i], &creatore[j]);
+				if (creatore[j].mediaValutazioni > creatore[j - 1].mediaValutazioni)
+					ScambiaCreatore(&creatore[j], &creatore[j - 1]);
 			}
 		}
-	}
-
-	ScambiaCreatore(&creatore[i + 1], &creatore[high]);
-
-	return (i + 1);
-}
-
-void QuickSortCreatore(Creatore_t creatore[], int low, int high, bool criterio)
-{
-	if (low < high)
-	{
-		int pi = PartizionamentoCreatore(creatore, low, high, criterio);
-
-		QuickSortCreatore(creatore, low, pi - 1, criterio);
-		QuickSortCreatore(creatore, pi + 1, high, criterio);
 	}
 }
 
@@ -672,48 +652,28 @@ void ScambiaUtilizzatore(Utilizzatore_t* utilizzatoreA, Utilizzatore_t* utilizza
 	*utilizzatoreB = temp;
 }
 
-int PartizionamentoUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, bool criterio)
+void BubbleSortUtilizzatore(Utilizzatore_t utilizzatore[], size_t n, bool criterio)
 {
-	// Criterio = true se vogliamo ordinare per numero di download
-	// Criterio = false se vogliamo ordinare per media valutazioni
-	Utilizzatore_t pivot = utilizzatore[high];
-
-	int i = (low - 1);
 	if (criterio)
 	{
-		for (size_t j = low; j < high; j++)
+		for (size_t i = 0; i < n - 1; i++)
 		{
-			if (utilizzatore[j].numDownloadTot >= pivot.numDownloadTot)
+			for (size_t j = n; j > i; j--)
 			{
-				i++;
-				ScambiaUtilizzatore(&utilizzatore[i], &utilizzatore[j]);
+				if (utilizzatore[j].numDownloadTot > utilizzatore[j - 1].numDownloadTot)
+					ScambiaUtilizzatore(&utilizzatore[j], &utilizzatore[j - 1]);
 			}
 		}
 	}
 	else
 	{
-		for (size_t j = low; j < high; j++)
+		for (size_t i = 0; i < n - 1; i++)
 		{
-			if (utilizzatore[j].numValutazioni >= pivot.numValutazioni)
+			for (size_t j = n; j > i; j--)
 			{
-				i++;
-				ScambiaUtilizzatore(&utilizzatore[i], &utilizzatore[j]);
+				if (utilizzatore[j].numValutazioni > utilizzatore[j - 1].numValutazioni)
+					ScambiaUtilizzatore(&utilizzatore[j], &utilizzatore[j - 1]);
 			}
 		}
-	}
-
-	ScambiaUtilizzatore(&utilizzatore[i + 1], &utilizzatore[high]);
-
-	return (i + 1);
-}
-
-void QuickSortUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, bool criterio)
-{
-	if (low < high)
-	{
-		int pi = PartizionamentoUtilizzatore(utilizzatore, low, high, criterio);
-
-		QuickSortUtilizzatore(utilizzatore, low, pi - 1, criterio);
-		QuickSortUtilizzatore(utilizzatore, pi + 1, high, criterio);
 	}
 }
