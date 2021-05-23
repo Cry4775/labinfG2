@@ -8,8 +8,6 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 	do
 	{
 		system("cls");
-		if (errore)
-			SvuotaInput();
 		errore = false;
 		red();
 		printf("Benvenuto sulla piattaforma di immagini!");
@@ -17,8 +15,6 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 		printf("\n\n1. Registrazione utente\n2. Accesso utente\n3. Esci\n\n");
 
 		unsigned int sceltaMenu;
-		//char sceltaMenu[MAX_BUFFER] = { 0 };
-		
 		
 		if (scanf("%u", &sceltaMenu) == 1)
 		{
@@ -30,8 +26,6 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 				do
 				{
 					system("cls");
-					if (errore)
-						SvuotaInput();
 					errore = false;
 					Creatore_t creatore = { 0 };
 					Utilizzatore_t utilizzatore = { 0 };
@@ -105,6 +99,7 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 					}
 					else
 					{
+						SvuotaInput();
 						errore = true;
 						red();
 						printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -121,8 +116,6 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 			{
 				do
 				{
-					if (errore)
-						SvuotaInput();
 					errore = false;
 					*isCreatore = false;
 					bool indietro = false; // flag indietro
@@ -133,6 +126,7 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 					char buffer[MAX_BUFFER] = { 0 };
 
 					scanf("%100s", buffer);
+					SvuotaInput();
 
 					// Controlla se l'utente ha inserito '0', nel caso flagga indietro
 					if (buffer[0] == '0')
@@ -174,8 +168,8 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 							printf("Inserire la password: ");
 							reset();
 							char buffer[MAX_BUFFER] = { 0 };
-							SvuotaInput();
 							scanf("%100s", buffer);
+							SvuotaInput();
 
 
 							bool passwordCorretta = ControllaPassword(file, buffer, nomeUtente);
@@ -228,6 +222,7 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 		}
 		else
 		{
+			SvuotaInput();
 			errore = true;
 			red();
 			printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -250,8 +245,6 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 		// Menu Creatore
 		do
 		{
-			if (errore)
-				SvuotaInput();
 			errore = false;
 			system("cls");
 
@@ -307,6 +300,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 			}
 			else
 			{
+				SvuotaInput();
 				errore = true;
 				red();
 				printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -321,8 +315,6 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 		// Menu Utilizzatore
 		do
 		{
-			if (errore)
-				SvuotaInput();
 			errore = false;
 			system("cls");
 
@@ -372,6 +364,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 			}
 			else
 			{
+				SvuotaInput();
 				errore = true;
 				red();
 				printf("\nErrore! Sono ammessi solo numeri!\n\n");

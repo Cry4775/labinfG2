@@ -85,494 +85,554 @@ bool ControllaPassword(FILE* file, char buffer[], char nomeUtente[])
 
 void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char nomeUtente[])
 {
-	red();
-	puts("Registrazione utente utilizzatore");
-	reset();
 	bool errore = false;
+	do {
+		system("cls");
+		errore = false;
+		red();
+		puts("Registrazione utente utilizzatore");
+		reset();
+	
 
-	char scelta = { 0 };
+		char scelta = { 0 };
 
-	printf("Vuoi che i dati vengano inseriti automaticamente? (Y/N): ");
-	SvuotaInput();
-	scanf("%c", &scelta);
+		printf("Vuoi che i dati vengano inseriti automaticamente? (Y/N): ");
 
-	scelta = toupper(scelta);
-	if (scelta == 'Y')
-	{
-		for (size_t i = 0; i < 8; i++)
+		scanf("%c", &scelta);
+		SvuotaInput();
+
+		scelta = toupper(scelta);
+		if (scelta == 'Y')
 		{
-			utilizzatore->nomeUtente[i] = RNG('a', 'z');
-			utilizzatore->password[i] = RNG('a', 'z');
-		}
-		strcpy(nomeUtente, utilizzatore->nomeUtente); // Passo al main il nomeUtente (per il menu principale) per conoscere chi ha fatto l'accesso
-
-		strcpy(utilizzatore->nome, "Test");
-		strcpy(utilizzatore->cognome, "User");
-		utilizzatore->sesso = 'M';
-		strcpy(utilizzatore->professione, "TestProfessione");
-		strcpy(utilizzatore->nazionalita, "Italia");
-		utilizzatore->dataNascita.giorno = 1;
-		utilizzatore->dataNascita.mese = 1;
-		utilizzatore->dataNascita.anno = 1990;
-		time_t t = time(NULL);
-		struct tm tm = *localtime(&t);
-		utilizzatore->dataIscrizione.giorno = tm.tm_mday;
-		utilizzatore->dataIscrizione.mese = tm.tm_mon + 1;
-		utilizzatore->dataIscrizione.anno = tm.tm_year + 1900;
-	}
-
-	else
-	{
-		// Inserimento NOME UTENTE
-		do
-		{
-			errore = false;
-			green();
-			printf("\nInserire un nome utente (min. 4 caratteri): ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100s", buffer);
-
-			file = ApriFile(PERCORSO_FILE_CREATORI);
-
-			bool giaEsistente = ControllaNomeUtenteCreatore(file, buffer);
-
-			fclose(file);
-
-			if (giaEsistente == false)
+			for (size_t i = 0; i < 8; i++)
 			{
-				file = ApriFile(PERCORSO_FILE_UTILIZZATORI);
+				utilizzatore->nomeUtente[i] = RNG('a', 'z');
+				utilizzatore->password[i] = RNG('a', 'z');
+			}
+			strcpy(nomeUtente, utilizzatore->nomeUtente); // Passo al main il nomeUtente (per il menu principale) per conoscere chi ha fatto l'accesso
 
-				giaEsistente = ControllaNomeUtenteUtilizzatore(file, buffer);
+			strcpy(utilizzatore->nome, "Test");
+			strcpy(utilizzatore->cognome, "User");
+			utilizzatore->sesso = 'M';
+			strcpy(utilizzatore->professione, "TestProfessione");
+			strcpy(utilizzatore->nazionalita, "Italia");
+			utilizzatore->dataNascita.giorno = 1;
+			utilizzatore->dataNascita.mese = 1;
+			utilizzatore->dataNascita.anno = 1990;
+			time_t t = time(NULL);
+			struct tm tm = *localtime(&t);
+			utilizzatore->dataIscrizione.giorno = tm.tm_mday;
+			utilizzatore->dataIscrizione.mese = tm.tm_mon + 1;
+			utilizzatore->dataIscrizione.anno = tm.tm_year + 1900;
+		}
+
+		else if (scelta == 'N')
+		{
+			// Inserimento NOME UTENTE
+			do
+			{
+				errore = false;
+				green();
+				printf("\nInserire un nome utente (min. 4 caratteri): ");
+				reset();
+				char buffer[MAX_BUFFER] = { 0 };
+
+				scanf("%100s", buffer);
+				SvuotaInput();
+
+				file = ApriFile(PERCORSO_FILE_CREATORI);
+
+				bool giaEsistente = ControllaNomeUtenteCreatore(file, buffer);
 
 				fclose(file);
-			}
 
-			if (strlen(buffer) < MIN_CAR_NOME_UTENTE)
+				if (giaEsistente == false)
+				{
+					file = ApriFile(PERCORSO_FILE_UTILIZZATORI);
+
+					giaEsistente = ControllaNomeUtenteUtilizzatore(file, buffer);
+
+					fclose(file);
+				}
+
+				if (strlen(buffer) < MIN_CAR_NOME_UTENTE)
+				{
+					errore = true;
+					red();
+					puts("Errore! Inserire un nome utente di almeno 4 caratteri!\n");
+					reset();
+					system("pause");
+				}
+				else if (giaEsistente == true)
+				{
+					errore = true;
+					red();
+					puts("Errore! Nome utente gia' esistente!\n");
+					reset();
+					system("pause");
+				}
+				// Altrimenti procedi
+				else
+				{
+					AssegnaStringa(utilizzatore->nomeUtente, buffer, false);
+					strcpy(nomeUtente, buffer);
+				}
+			} while (errore);
+
+			// Inserimento PASSWORD
+			do
 			{
-				errore = true;
-				red();
-				puts("Errore! Inserire un nome utente di almeno 4 caratteri!\n");
+				errore = false;
+				green();
+				printf("Inserire una password (min. 8 caratteri): ");
 				reset();
-			}
-			else if (giaEsistente == true)
+				char buffer[MAX_BUFFER] = { 0 };
+
+				scanf("%100s", buffer);
+				SvuotaInput();
+
+				// Controlla che il minimo sia rispettato
+				if (strlen(buffer) < MIN_CAR_PASSWORD)
+				{
+					errore = true;
+					red();
+					puts("Errore! Inserire una password di almeno 8 caratteri!\n");
+					reset();
+					system("pause");
+				}
+
+				// Altrimenti procedi
+				else
+					AssegnaStringa(utilizzatore->password, buffer, false);
+			} while (errore);
+
+			// Inserimento NOME
+			do
 			{
-				errore = true;
-				red();
-				puts("Errore! Nome utente gia' esistente!\n");
+				errore = false;
+				green();
+				printf("Inserire il nome: ");
 				reset();
-			}
-			// Altrimenti procedi
-			else
-			{
-				AssegnaStringa(utilizzatore->nomeUtente, buffer, false);
-				strcpy(nomeUtente, buffer);
-			}
-		} while (errore);
+				char buffer[MAX_BUFFER] = { 0 };
 
-		// Inserimento PASSWORD
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire una password (min. 8 caratteri): ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100s", buffer);
+				scanf("%100[^\n]", buffer);
+				SvuotaInput();
 
-			// Controlla che il minimo sia rispettato
-			if (strlen(buffer) < MIN_CAR_PASSWORD)
+				// Conversione della stringa in minuscolo
+				ConversioneMinuscolo(buffer);
+
+				// Controlla che non contenga simboli
+				errore = ContieneSimboli(buffer, false);
+
+				// Altrimenti procedi
+				if (!errore)
+					AssegnaStringa(utilizzatore->nome, buffer, true);
+			} while (errore);
+
+			// Inserimento COGNOME
+			do
 			{
-				errore = true;
-				red();
-				puts("Errore! Inserire una password di almeno 8 caratteri!\n");
+				errore = false;
+				green();
+				printf("Inserire il cognome: ");
 				reset();
-			}
+				char buffer[MAX_BUFFER] = { 0 };
 
-			// Altrimenti procedi
-			else
-				AssegnaStringa(utilizzatore->password, buffer, false);
-		} while (errore);
+				scanf("%100[^\n]", buffer);
+				SvuotaInput();
 
-		// Inserimento NOME
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire il nome: ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100[^\n]", buffer);
+				// Conversione della stringa in minuscolo
+				ConversioneMinuscolo(buffer);
 
-			// Conversione della stringa in minuscolo
-			ConversioneMinuscolo(buffer);
+				// Controlla che non contenga simboli
+				errore = ContieneSimboli(buffer, false);
 
-			// Controlla che non contenga simboli
-			errore = ContieneSimboli(buffer, false);
+				// Altrimenti procedi
+				if (!errore)
+					AssegnaStringa(utilizzatore->cognome, buffer, true);
+			} while (errore);
 
-			// Altrimenti procedi
-			if (!errore)
-				AssegnaStringa(utilizzatore->nome, buffer, true);
-		} while (errore);
-
-		// Inserimento COGNOME
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire il cognome: ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100[^\n]", buffer);
-
-			// Conversione della stringa in minuscolo
-			ConversioneMinuscolo(buffer);
-
-			// Controlla che non contenga simboli
-			errore = ContieneSimboli(buffer, false);
-
-			// Altrimenti procedi
-			if (!errore)
-				AssegnaStringa(utilizzatore->cognome, buffer, true);
-		} while (errore);
-
-		// Inserimento SESSO
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire il sesso (M/F): ");
-			reset();
-			SvuotaInput();
-			scanf("%c", &utilizzatore->sesso);
-			utilizzatore->sesso = toupper(utilizzatore->sesso);
-
-			// Controllo errori
-			if (utilizzatore->sesso != 'M' && utilizzatore->sesso != 'F')
+			// Inserimento SESSO
+			do
 			{
-				errore = true;
-				printf("Errore! Inserire M o F!\n");
-			}
-		} while (errore);
+				errore = false;
+				green();
+				printf("Inserire il sesso (M/F): ");
+				reset();
 
-		// Inserimento PROFESSIONE
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire la professione: ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100[^\n]", buffer);
+				scanf("%c", &utilizzatore->sesso);
+				SvuotaInput();
+				utilizzatore->sesso = toupper(utilizzatore->sesso);
 
-			// Conversione della stringa in minuscolo
-			ConversioneMinuscolo(buffer);
+				// Controllo errori
+				if (utilizzatore->sesso != 'M' && utilizzatore->sesso != 'F')
+				{
+					errore = true;
+					red();
+					printf("Errore! Inserire M o F!\n");
+					reset();
+					system("pause");
+				}
+			} while (errore);
 
-			// Controlla che non contenga simboli
-			errore = ContieneSimboli(buffer, false);
-
-			if (!errore)
-				AssegnaStringa(utilizzatore->professione, buffer, true);
-		} while (errore);
-
-		// Inserimento NAZIONALITA
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire la nazionalita': ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100[^\n]", buffer);
-
-			// Conversione della stringa in minuscolo
-			ConversioneMinuscolo(buffer);
-
-			// Controlla che non contenga simboli
-			errore = ContieneSimboli(buffer, false);
-
-			// Altrimenti procedi
-			if (!errore)
-				AssegnaStringa(utilizzatore->nazionalita, buffer, true);
-		} while (errore);
-
-		// Inserimento DATA DI NASCITA
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire la data di nascita (GG/MM/AAAA): ");
-			reset();
-			scanf("%u/%u/%u", &utilizzatore->dataNascita.giorno, &utilizzatore->dataNascita.mese, &utilizzatore->dataNascita.anno);
-
-			if (!DataCorretta(utilizzatore->dataNascita.giorno, utilizzatore->dataNascita.mese, utilizzatore->dataNascita.anno))
+			// Inserimento PROFESSIONE
+			do
 			{
-				errore = true;
-				printf("Errore! La data e' incorretta!\n");
-			}
-		} while (errore);
+				errore = false;
+				green();
+				printf("Inserire la professione: ");
+				reset();
+				char buffer[MAX_BUFFER] = { 0 };
 
-		// Assegnazione data di iscrizione
-		time_t t = time(NULL);
-		struct tm tm = *localtime(&t);
-		utilizzatore->dataIscrizione.giorno = tm.tm_mday;
-		utilizzatore->dataIscrizione.mese = tm.tm_mon + 1;
-		utilizzatore->dataIscrizione.anno = tm.tm_year + 1900;
-	}
+				scanf("%100[^\n]", buffer);
+				SvuotaInput();
+
+				// Conversione della stringa in minuscolo
+				ConversioneMinuscolo(buffer);
+
+				// Controlla che non contenga simboli
+				errore = ContieneSimboli(buffer, false);
+
+				if (!errore)
+					AssegnaStringa(utilizzatore->professione, buffer, true);
+			} while (errore);
+
+			// Inserimento NAZIONALITA
+			do
+			{
+				errore = false;
+				green();
+				printf("Inserire la nazionalita': ");
+				reset();
+				char buffer[MAX_BUFFER] = { 0 };
+
+				scanf("%100[^\n]", buffer);
+				SvuotaInput();
+
+				// Conversione della stringa in minuscolo
+				ConversioneMinuscolo(buffer);
+
+				// Controlla che non contenga simboli
+				errore = ContieneSimboli(buffer, false);
+
+				// Altrimenti procedi
+				if (!errore)
+					AssegnaStringa(utilizzatore->nazionalita, buffer, true);
+			} while (errore);
+
+			// Inserimento DATA DI NASCITA
+			do
+			{
+				errore = false;
+				green();
+				printf("Inserire la data di nascita (GG/MM/AAAA): ");
+				reset();
+				scanf("%u/%u/%u", &utilizzatore->dataNascita.giorno, &utilizzatore->dataNascita.mese, &utilizzatore->dataNascita.anno);
+				SvuotaInput();
+
+				if (!DataCorretta(utilizzatore->dataNascita.giorno, utilizzatore->dataNascita.mese, utilizzatore->dataNascita.anno))
+				{
+					errore = true;
+					red();
+					printf("Errore! La data e' incorretta!\n");
+					reset();
+					system("pause");
+				}
+			} while (errore);
+
+			// Assegnazione data di iscrizione
+			time_t t = time(NULL);
+			struct tm tm = *localtime(&t);
+			utilizzatore->dataIscrizione.giorno = tm.tm_mday;
+			utilizzatore->dataIscrizione.mese = tm.tm_mon + 1;
+			utilizzatore->dataIscrizione.anno = tm.tm_year + 1900;
+		}
+
+		else
+		{
+			errore = true;
+			red();
+			printf("\nErrore! Selezionare un opzione valida!\n\n");
+			reset();
+			system("pause");
+		}
+	} while (errore);
 }
 
 void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 {
-	red();
-	puts("Registrazione utente creatore");
-	reset();
 	bool errore = false;
 
-	char scelta = { 0 };
-
-	printf("Vuoi che i dati vengano inseriti automaticamente? (Y/N): ");
-	SvuotaInput();
-	scanf("%c", &scelta);
-
-	scelta = toupper(scelta);
-	if (scelta == 'Y')
-	{
-		for (size_t i = 0; i < 8; i++)
-		{
-			creatore->nomeUtente[i] = RNG('a', 'z');
-			creatore->password[i] = RNG('a', 'z');
-		}
-		strcpy(nomeUtente, creatore->nomeUtente); // Passo al main il nomeUtente (per il menu principale) per conoscere chi ha fatto l'accesso
-
-		strcpy(creatore->nome, "Test");
-		strcpy(creatore->cognome, "User");
-		creatore->sesso = 'M';
-		strcpy(creatore->professione, "TestProfessione");
-		strcpy(creatore->nazionalita, "Italia");
-		creatore->dataNascita.giorno = 1;
-		creatore->dataNascita.mese = 1;
-		creatore->dataNascita.anno = 1990;
-		time_t t = time(NULL);
-		struct tm tm = *localtime(&t);
-		creatore->dataIscrizione.giorno = tm.tm_mday;
-		creatore->dataIscrizione.mese = tm.tm_mon + 1;
-		creatore->dataIscrizione.anno = tm.tm_year + 1900;
-	}
-
-	else
+	do
 	{
 		system("cls");
-		// Inserimento NOME UTENTE
-		do
+		errore = false;
+		red();
+		puts("Registrazione utente creatore");
+		reset();
+
+
+		char scelta = { 0 };
+
+		printf("Vuoi che i dati vengano inseriti automaticamente? (Y/N): ");
+		scanf("%c", &scelta);
+		SvuotaInput();
+
+		scelta = toupper(scelta);
+		if (scelta == 'Y')
 		{
-			errore = false;
-			green();
-			printf("Inserire un nome utente (min. 4 caratteri): ");
-			reset();
-			//reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100s", buffer);
-
-
-			file = ApriFile(PERCORSO_FILE_CREATORI);
-
-			bool giaEsistente = ControllaNomeUtenteCreatore(file, buffer);
-
-			fclose(file);
-
-			// Controlliamo anche il file utilizzatori.dat se non l'ha già trovato
-			if (giaEsistente == false)
+			for (size_t i = 0; i < 8; i++)
 			{
-				file = ApriFile(PERCORSO_FILE_UTILIZZATORI);
+				creatore->nomeUtente[i] = RNG('a', 'z');
+				creatore->password[i] = RNG('a', 'z');
+			}
+			strcpy(nomeUtente, creatore->nomeUtente); // Passo al main il nomeUtente (per il menu principale) per conoscere chi ha fatto l'accesso
 
-				giaEsistente = ControllaNomeUtenteUtilizzatore(file, buffer);
+			strcpy(creatore->nome, "Test");
+			strcpy(creatore->cognome, "User");
+			creatore->sesso = 'M';
+			strcpy(creatore->professione, "TestProfessione");
+			strcpy(creatore->nazionalita, "Italia");
+			creatore->dataNascita.giorno = 1;
+			creatore->dataNascita.mese = 1;
+			creatore->dataNascita.anno = 1990;
+			time_t t = time(NULL);
+			struct tm tm = *localtime(&t);
+			creatore->dataIscrizione.giorno = tm.tm_mday;
+			creatore->dataIscrizione.mese = tm.tm_mon + 1;
+			creatore->dataIscrizione.anno = tm.tm_year + 1900;
+		}
+
+		else if (scelta == 'N')
+		{
+			system("cls");
+			// Inserimento NOME UTENTE
+			do
+			{
+				errore = false;
+				green();
+				printf("Inserire un nome utente (min. 4 caratteri): ");
+				reset();
+				char buffer[MAX_BUFFER] = { 0 };
+				scanf("%100s", buffer);
+				SvuotaInput();
+
+
+				file = ApriFile(PERCORSO_FILE_CREATORI);
+
+				bool giaEsistente = ControllaNomeUtenteCreatore(file, buffer);
 
 				fclose(file);
-			}
 
-			if (strlen(buffer) < MIN_CAR_NOME_UTENTE)
+				// Controlliamo anche il file utilizzatori.dat se non l'ha già trovato
+				if (giaEsistente == false)
+				{
+					file = ApriFile(PERCORSO_FILE_UTILIZZATORI);
+
+					giaEsistente = ControllaNomeUtenteUtilizzatore(file, buffer);
+
+					fclose(file);
+				}
+
+				if (strlen(buffer) < MIN_CAR_NOME_UTENTE)
+				{
+					errore = true;
+					red();
+					puts("\nErrore! Inserire un nome utente di almeno 4 caratteri!\n");
+					reset();
+					system("pause");
+				}
+				else if (giaEsistente == true)
+				{
+					errore = true;
+					red();
+					puts("\nErrore! Nome utente gia' esistente!\n");
+					reset();
+					system("pause");
+				}
+				// Altrimenti procedi
+				else
+				{
+					AssegnaStringa(creatore->nomeUtente, buffer, false);
+					strcpy(nomeUtente, buffer); // Passo al main il nomeUtente (per il menu principale) per conoscere chi ha fatto l'accesso
+				}
+			} while (errore);
+
+			// Inserimento PASSWORD
+			do
 			{
-				errore = true;
-				red();
-				puts("Errore! Inserire un nome utente di almeno 4 caratteri!\n");
+				errore = false;
+				green();
+				printf("Inserire una password (min. 8 caratteri): ");
 				reset();
-			}
-			else if (giaEsistente == true)
+				char buffer[MAX_BUFFER] = { 0 };
+
+				scanf("%100s", buffer);
+				SvuotaInput();
+
+				// Controlla che il minimo sia rispettato
+				if (strlen(buffer) < MIN_CAR_PASSWORD)
+				{
+					errore = true;
+					red();
+					puts("\nErrore! Inserire una password di almeno 8 caratteri!\n");
+					reset();
+					system("pause");
+				}
+
+				// Altrimenti procedi
+				else
+					AssegnaStringa(creatore->password, buffer, false);
+			} while (errore);
+
+			// Inserimento NOME
+			do
 			{
-				errore = true;
-				red();
-				puts("Errore! Nome utente gia' esistente!\n");
+				errore = false;
+				green();
+				printf("Inserire il nome: ");
 				reset();
-			}
-			// Altrimenti procedi
-			else
-			{
-				AssegnaStringa(creatore->nomeUtente, buffer, false);
-				strcpy(nomeUtente, buffer); // Passo al main il nomeUtente (per il menu principale) per conoscere chi ha fatto l'accesso
-			}
-		} while (errore);
+				char buffer[MAX_BUFFER] = { 0 };
 
-		// Inserimento PASSWORD
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire una password (min. 8 caratteri): ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100s", buffer);
+				scanf("%100[^\n]", buffer);
+				SvuotaInput();
 
-			// Controlla che il minimo sia rispettato
-			if (strlen(buffer) < MIN_CAR_PASSWORD)
+				// Conversione della stringa in minuscolo
+				ConversioneMinuscolo(buffer);
+
+				// Controlla che non contenga simboli
+				errore = ContieneSimboli(buffer, false);
+
+				// Altrimenti procedi
+				if (!errore)
+					AssegnaStringa(creatore->nome, buffer, true);
+			} while (errore);
+
+			// Inserimento COGNOME
+			do
 			{
-				errore = true;
-				red();
-				puts("Errore! Inserire una password di almeno 8 caratteri!\n");
+				errore = false;
+				green();
+				printf("Inserire il cognome: ");
 				reset();
-			}
+				char buffer[MAX_BUFFER] = { 0 };
+				scanf("%100[^\n]", buffer);
+				SvuotaInput();
 
-			// Altrimenti procedi
-			else
-				AssegnaStringa(creatore->password, buffer, false);
-		} while (errore);
+				// Conversione della stringa in minuscolo
+				ConversioneMinuscolo(buffer);
 
-		// Inserimento NOME
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire il nome: ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100[^\n]", buffer);
+				// Controlla che non contenga simboli
+				errore = ContieneSimboli(buffer, false);
 
-			// Conversione della stringa in minuscolo
-			ConversioneMinuscolo(buffer);
+				// Altrimenti procedi
+				if (!errore)
+					AssegnaStringa(creatore->cognome, buffer, true);
+			} while (errore);
 
-			// Controlla che non contenga simboli
-			errore = ContieneSimboli(buffer, false);
-
-			// Altrimenti procedi
-			if (!errore)
-				AssegnaStringa(creatore->nome, buffer, true);
-		} while (errore);
-
-		// Inserimento COGNOME
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire il cognome: ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100[^\n]", buffer);
-
-			// Conversione della stringa in minuscolo
-			ConversioneMinuscolo(buffer);
-
-			// Controlla che non contenga simboli
-			errore = ContieneSimboli(buffer, false);
-
-			// Altrimenti procedi
-			if (!errore)
-				AssegnaStringa(creatore->cognome, buffer, true);
-		} while (errore);
-
-		// Inserimento SESSO
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire il sesso (M/F): ");
-			reset();
-			SvuotaInput();
-			scanf("%c", &creatore->sesso);
-			creatore->sesso = toupper(creatore->sesso);
-
-			// Controllo errori
-			if (creatore->sesso != 'M' && creatore->sesso != 'F')
+			// Inserimento SESSO
+			do
 			{
-				errore = true;
-				printf("Errore! Inserire M o F!\n");
-			}
-		} while (errore);
+				errore = false;
+				green();
+				printf("Inserire il sesso (M/F): ");
+				reset();
+				scanf("%c", &creatore->sesso);
+				SvuotaInput();
+				creatore->sesso = toupper(creatore->sesso);
 
-		// Inserimento PROFESSIONE
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire la professione: ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100[^\n]", buffer);
+				// Controllo errori
+				if (creatore->sesso != 'M' && creatore->sesso != 'F')
+				{
+					errore = true;
+					red();
+					printf("\nErrore! Inserire M o F!\n\n");
+					reset();
+					system("pause");
+				}
+			} while (errore);
 
-			// Conversione della stringa in minuscolo
-			ConversioneMinuscolo(buffer);
-
-			// Controlla che non contenga simboli
-			errore = ContieneSimboli(buffer, false);
-
-			if (!errore)
-				AssegnaStringa(creatore->professione, buffer, true);
-		} while (errore);
-
-		// Inserimento NAZIONALITA
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire la nazionalita': ");
-			reset();
-			char buffer[MAX_BUFFER] = { 0 };
-			SvuotaInput();
-			scanf("%100[^\n]", buffer);
-
-			// Conversione della stringa in minuscolo
-			ConversioneMinuscolo(buffer);
-
-			// Controlla che non contenga simboli
-			errore = ContieneSimboli(buffer, false);
-
-			// Altrimenti procedi
-			if (!errore)
-				AssegnaStringa(creatore->nazionalita, buffer, true);
-		} while (errore);
-
-		// Inserimento DATA DI NASCITA
-		do
-		{
-			errore = false;
-			green();
-			printf("Inserire la data di nascita (GG/MM/AAAA): ");
-			reset();
-			scanf("%u/%u/%u", &creatore->dataNascita.giorno, &creatore->dataNascita.mese, &creatore->dataNascita.anno);
-
-			if (!DataCorretta(creatore->dataNascita.giorno, creatore->dataNascita.mese, creatore->dataNascita.anno))
+			// Inserimento PROFESSIONE
+			do
 			{
-				errore = true;
-				printf("Errore! La data e' incorretta!\n");
-			}
-		} while (errore);
+				errore = false;
+				green();
+				printf("Inserire la professione: ");
+				reset();
+				char buffer[MAX_BUFFER] = { 0 };
 
-		// Assegnazione data di iscrizione
-		time_t t = time(NULL);
-		struct tm tm = *localtime(&t);
-		creatore->dataIscrizione.giorno = tm.tm_mday;
-		creatore->dataIscrizione.mese = tm.tm_mon + 1;
-		creatore->dataIscrizione.anno = tm.tm_year + 1900;
-	}
+				scanf("%100[^\n]", buffer);
+				SvuotaInput();
+
+				// Conversione della stringa in minuscolo
+				ConversioneMinuscolo(buffer);
+
+				// Controlla che non contenga simboli
+				errore = ContieneSimboli(buffer, false);
+
+				if (!errore)
+					AssegnaStringa(creatore->professione, buffer, true);
+			} while (errore);
+
+			// Inserimento NAZIONALITA
+			do
+			{
+				errore = false;
+				green();
+				printf("Inserire la nazionalita': ");
+				reset();
+				char buffer[MAX_BUFFER] = { 0 };
+				scanf("%100[^\n]", buffer);
+				SvuotaInput();
+
+				// Conversione della stringa in minuscolo
+				ConversioneMinuscolo(buffer);
+
+				// Controlla che non contenga simboli
+				errore = ContieneSimboli(buffer, false);
+
+				// Altrimenti procedi
+				if (!errore)
+					AssegnaStringa(creatore->nazionalita, buffer, true);
+			} while (errore);
+
+			// Inserimento DATA DI NASCITA
+			do
+			{
+				errore = false;
+				green();
+				printf("Inserire la data di nascita (GG/MM/AAAA): ");
+				reset();
+				scanf("%u/%u/%u", &creatore->dataNascita.giorno, &creatore->dataNascita.mese, &creatore->dataNascita.anno);
+				SvuotaInput();
+
+				if (!DataCorretta(creatore->dataNascita.giorno, creatore->dataNascita.mese, creatore->dataNascita.anno))
+				{
+					errore = true;
+					red();
+					printf("\nErrore! La data e' incorretta!\n\n");
+					reset();
+					system("pause");
+				}
+			} while (errore);
+
+			// Assegnazione data di iscrizione
+			time_t t = time(NULL);
+			struct tm tm = *localtime(&t);
+			creatore->dataIscrizione.giorno = tm.tm_mday;
+			creatore->dataIscrizione.mese = tm.tm_mon + 1;
+			creatore->dataIscrizione.anno = tm.tm_year + 1900;
+		}
+		else
+		{
+			errore = true;
+			red();
+			printf("\nErrore! Selezionare un opzione valida!\n\n");
+			reset();
+			system("pause");
+		}
+
+	} while (errore);
 }
 
 void SalvaDatiCreatore(FILE* file, Creatore_t* creatore)

@@ -6,8 +6,6 @@ void GestioneCreatore(char nomeUtente[])
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
 
 		unsigned int sceltaMenu;
 		ripeti = true;
@@ -141,6 +139,7 @@ void GestioneCreatore(char nomeUtente[])
 		}
 		else
 		{
+			SvuotaInput();
 			errore = true;
 			red();
 			printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -156,8 +155,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
+		errore = false;
 		unsigned int sceltaMenu;
 		ripeti = true;
 		system("cls");
@@ -282,6 +280,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 		}
 		else
 		{
+			SvuotaInput();
 			errore = true;
 			red();
 			printf("\nErrore! Sono ammessi solo numeri!\n\n");

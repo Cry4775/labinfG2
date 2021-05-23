@@ -13,6 +13,7 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 	char scelta = { 0 };
 
 	printf("Vuoi che i dati vengano inseriti automaticamente? (Y/N): ");
+
 	if (scanf("%c", &scelta) == 1)
 	{
 		SvuotaInput();
@@ -34,8 +35,6 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 			// Inserimento TITOLO
 			do
 			{
-				if (errore)
-					SvuotaInput();
 
 				errore = false;
 				system("cls");
@@ -45,6 +44,7 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 
 				char buffer[MAX_BUFFER] = { 0 };
 				scanf("%[^\n]100", buffer);
+				SvuotaInput();
 
 				// Controlla che non contenga simboli
 				errore = ContieneSimboli(buffer, true);
@@ -113,6 +113,7 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 	}
 	else
 	{
+		SvuotaInput();
 		errore = true;
 		red();
 		printf("\nErrore! Sono ammessi solo caratteri!\n\n");
@@ -166,8 +167,6 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
 
 		errore = false; 
 
@@ -188,6 +187,7 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 			reset();
 
 			scanf("%[^\n]100", buffer);
+			SvuotaInput();
 
 			buffer[0] = toupper(buffer[0]);
 
@@ -210,8 +210,6 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 								bool ripeti = true;
 								do
 								{
-									if (errore)
-										SvuotaInput();
 									errore = false;
 
 									printf("\n\n0. Indietro\n1. Titolo\n2. Categoria\n3. Tags");
@@ -228,12 +226,8 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 											ripeti = false;
 											break;
 										case 1:
-											SvuotaInput();
 											do
 											{
-												if (errore)
-													SvuotaInput();
-
 												system("cls");
 												errore = false;
 
@@ -243,6 +237,7 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 												reset();
 
 												scanf("%[^\n]100", buffer);
+												SvuotaInput();
 
 												// Controlla che non contenga simboli
 												errore = ContieneSimboli(buffer, true);
@@ -313,6 +308,7 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 									}
 									else
 									{
+										SvuotaInput();
 										errore = true;
 										red();
 										printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -383,8 +379,6 @@ void InserisciTagsModifica(Immagine_t* immagine)
 	{
 		do
 		{
-			if (errore)
-				SvuotaInput();
 			errore = false;
 			green();
 			printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti - Inserire 0 per terminare): ", i);
@@ -437,6 +431,7 @@ void InserisciTagsModifica(Immagine_t* immagine)
 			}
 			else
 			{
+				SvuotaInput();
 				errore = true;
 				red();
 				printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -452,8 +447,6 @@ void InserisciCategoriaModifica(Immagine_t* immagine)
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
 		errore = false;
 		unsigned int categoriaScelta;
 		if (scanf("%u", &categoriaScelta) == 1)
@@ -474,6 +467,7 @@ void InserisciCategoriaModifica(Immagine_t* immagine)
 		}
 		else
 		{
+			SvuotaInput();
 			errore = true;
 			red();
 			printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -492,8 +486,6 @@ void InserisciTagsCaricamento(Immagine_t** immagine)
 	{
 		do
 		{
-			if (errore)
-				SvuotaInput();
 			errore = false;
 			green();
 			printf("\n\nInserire il numero del tag scelto (%d scelte rimanenti - Inserire 0 per terminare): ", i);
@@ -546,6 +538,7 @@ void InserisciTagsCaricamento(Immagine_t** immagine)
 			}
 			else
 			{
+				SvuotaInput();
 				errore = true;
 				red();
 				printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -561,8 +554,6 @@ void InserisciCategoriaCaricamento(Immagine_t** immagine)
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
 		errore = false;
 		unsigned int categoriaScelta;
 		if (scanf("%u", &categoriaScelta) == 1)
@@ -583,6 +574,7 @@ void InserisciCategoriaCaricamento(Immagine_t** immagine)
 		}
 		else
 		{
+			SvuotaInput();
 			errore = true;
 			red();
 			printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -630,9 +622,6 @@ bool RimuoviImmagine(FILE* file, char nomeUtente[])
 
 	do
 	{
-		if (errore)
-			SvuotaInput();
-
 		errore = false;
 
 		system("cls");
@@ -651,6 +640,7 @@ bool RimuoviImmagine(FILE* file, char nomeUtente[])
 			reset();
 
 			scanf("%[^\n]100", buffer);
+			SvuotaInput();
 
 			buffer[0] = toupper(buffer[0]);
 
@@ -700,9 +690,6 @@ bool VisualizzaImmagineCreatore(FILE* file, char nomeUtente[])
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
-
 		errore = false;
 
 		system("cls");
@@ -722,6 +709,7 @@ bool VisualizzaImmagineCreatore(FILE* file, char nomeUtente[])
 			reset();
 
 			scanf("%[^\n]100", buffer);
+			SvuotaInput();
 
 			buffer[0] = toupper(buffer[0]);
 
@@ -769,8 +757,6 @@ bool RicercaCategoria(FILE* file)
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
 		errore = false;
 
 		system("cls");
@@ -828,6 +814,7 @@ bool RicercaCategoria(FILE* file)
 		}
 		else
 		{
+			SvuotaInput();
 			errore = true;
 			red();
 			printf("\nSono ammessi solo numeri!\n\n");
@@ -842,8 +829,6 @@ bool RicercaTags(FILE* file)
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
 		errore = false;
 
 		system("cls");
@@ -905,6 +890,7 @@ bool RicercaTags(FILE* file)
 		}
 		else
 		{
+			SvuotaInput();
 			errore = true;
 			red();
 			printf("\nSono ammessi solo numeri!\n\n");
@@ -919,11 +905,7 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
-
 		errore = false;
-
 		
 		rewind(file);
 
@@ -934,6 +916,7 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 		reset();
 
 		scanf("%[^\n]100", buffer);
+		SvuotaInput();
 
 		buffer[0] = toupper(buffer[0]);
 
@@ -957,12 +940,8 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 						printf("Titolo: %s\nAutore: %s\nCategoria: %s\nTags: ", immagine.titolo, immagine.nomeUtente, immagine.categoria);
 						StampaTagsImmagine(immagine);
 						printf("Nome del file: %s\nNumero di valutazioni: %u\nValutazione media: %.1f\nNumero di download: %u\nDimensione: %.1f MB\nRisoluzione: %u x %u\nData di caricamento: %u/%u/%u\n\n", immagine.nomeFile, immagine.numValutazioni, immagine.valutazioneMedia, immagine.numDownload, immagine.dimensione, immagine.risoluzione.x, immagine.risoluzione.y, immagine.dataCaricamento.giorno, immagine.dataCaricamento.mese, immagine.dataCaricamento.anno);
-						SvuotaInput();
 						do
 						{
-							if (errore)
-								SvuotaInput();
-
 							green();
 							printf("Vuoi scaricarla? Digita Y o N: ");
 							reset();
@@ -971,7 +950,7 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 							
 							if (scanf("%c", &scelta) == 1)
 							{
-
+								SvuotaInput();
 								scelta = toupper(scelta);
 
 								if (scelta != 'Y' && scelta != 'N')
@@ -988,6 +967,7 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 							}
 							else
 							{
+								SvuotaInput();
 								errore = true;
 								red();
 								printf("\nErrore! Sono ammessi solo caratteri!\n\n");
@@ -1018,9 +998,6 @@ unsigned int ValutaImmagine(FILE* file, char nomeUtente[])
 
 	do
 	{
-		if (errore)
-			SvuotaInput();
-
 		errore = false;
 
 		Immagine_t immagine = { 0 };
@@ -1083,6 +1060,7 @@ unsigned int ValutaImmagine(FILE* file, char nomeUtente[])
 			}
 			else
 			{
+				SvuotaInput();
 				errore = true;
 				red();
 				printf("\nErrore! Inserire un numero tra 1 e 5!\n\n");

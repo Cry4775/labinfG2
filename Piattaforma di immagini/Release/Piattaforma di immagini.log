@@ -2,10 +2,11 @@
 C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(91,59): warning C4090: 'function': different 'const' qualifiers
 C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(92,63): warning C4090: 'function': different 'const' qualifiers
 C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(109,61): warning C4244: '=': conversion from 'double' to 'unsigned int', possible loss of data
-C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(412,60): warning C4090: 'function': different 'const' qualifiers
-C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(464,71): warning C4090: 'function': different 'const' qualifiers
-C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(521,63): warning C4090: 'function': different 'const' qualifiers
-C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(573,74): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(406,60): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(457,71): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(513,63): warning C4090: 'function': different 'const' qualifiers
+C:\Users\Pierdamiano\Documents\GitHub\labinfG2\Piattaforma di immagini\Immagini.c(564,74): warning C4090: 'function': different 'const' qualifiers
+  Menu.c
   Generating code
   9 of 74 functions (12.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation

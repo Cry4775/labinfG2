@@ -7,8 +7,6 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
 		unsigned int sceltaMenu;
 		ripeti = false;
 		system("cls");
@@ -147,6 +145,7 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 		}
 		else
 		{
+			SvuotaInput();
 			errore = true;
 			red();
 			printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -283,6 +282,7 @@ void StatisticheCreatore()
 		printf("Inserire il nome utente del creatore di cui si vogliono visualizzare le statistiche: ");
 		reset();
 		scanf("%100s", buffer);
+		SvuotaInput();
 
 		bool trovato = false;
 		Creatore_t creatore = { 0 };
@@ -392,8 +392,6 @@ void Classifiche()
 	bool errore = false;
 	do
 	{
-		if (errore)
-			SvuotaInput();
 		errore = false;
 		unsigned int sceltaMenu;
 		ripeti = true;
@@ -413,8 +411,6 @@ void Classifiche()
 			// Classifica immagini
 			case 1:
 			{
-				if (errore)
-					SvuotaInput();
 				errore = false;
 				system("cls");
 				Immagine_t immagine[MAX_BUFFER] = { 0 };
@@ -474,6 +470,7 @@ void Classifiche()
 				}
 				else
 				{
+					SvuotaInput();
 					errore = true;
 					red();
 					printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -486,8 +483,6 @@ void Classifiche()
 			// Classifica creatori
 			case 2:
 			{
-				if (errore)
-					SvuotaInput();
 				errore = false;
 				system("cls");
 				Creatore_t creatore[MAX_BUFFER] = { 0 };
@@ -547,6 +542,7 @@ void Classifiche()
 				}
 				else
 				{
+					SvuotaInput();
 					errore = true;
 					red();
 					printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -559,8 +555,6 @@ void Classifiche()
 			// Classifica utilizzatori
 			case 3:
 			{
-				if (errore)
-					SvuotaInput();
 				errore = false;
 				system("cls");
 				Utilizzatore_t utilizzatore[MAX_BUFFER] = { 0 };
@@ -620,6 +614,7 @@ void Classifiche()
 				}
 				else
 				{
+					SvuotaInput();
 					errore = true;
 					red();
 					printf("\nErrore! Sono ammessi solo numeri!\n\n");
@@ -646,6 +641,7 @@ void Classifiche()
 		}
 		else
 		{
+			SvuotaInput();
 			errore = true;
 			red();
 			printf("\nErrore! Sono ammessi solo numeri!\n\n");
