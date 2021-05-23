@@ -8,7 +8,6 @@ const char* tags[NUM_TAGS] = { "Colazione", "Pranzo", "Cena", "Capo", "Collega",
 
 void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 {
-	SvuotaInput();
 	bool errore = false;
 
 	char scelta = { 0 };
@@ -16,7 +15,7 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 	printf("Vuoi che i dati vengano inseriti automaticamente? (Y/N): ");
 	if (scanf("%c", &scelta) == 1)
 	{
-
+		SvuotaInput();
 		scelta = toupper(scelta);
 		if (scelta == 'Y')
 		{
@@ -32,7 +31,6 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 
 		else
 		{
-			SvuotaInput();
 			// Inserimento TITOLO
 			do
 			{
@@ -165,7 +163,6 @@ void SalvaDatiImmagine(FILE* file, Immagine_t* immagine)
 
 bool ModificaImmagini(FILE* file, char nomeUtente[])
 {
-	SvuotaInput();
 	bool errore = false;
 	do
 	{
@@ -224,7 +221,7 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 									unsigned int scelta;
 									if (scanf("%u", &scelta) == 1)
 									{
-
+										SvuotaInput();
 										switch (scelta)
 										{
 										case 0:
@@ -396,7 +393,7 @@ void InserisciTagsModifica(Immagine_t* immagine)
 			unsigned int tagScelto;
 			if (scanf("%u", &tagScelto) == 1)
 			{
-
+				SvuotaInput();
 				if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
 				{
 					for (size_t l = 0; l < MAX_TAGS; l++)
@@ -461,7 +458,7 @@ void InserisciCategoriaModifica(Immagine_t* immagine)
 		unsigned int categoriaScelta;
 		if (scanf("%u", &categoriaScelta) == 1)
 		{
-
+			SvuotaInput();
 			if (categoriaScelta >= 1 && categoriaScelta <= NUM_CATEGORIE)
 			{
 				AssegnaStringa(immagine->categoria, categoria[categoriaScelta - 1], false);
@@ -505,7 +502,7 @@ void InserisciTagsCaricamento(Immagine_t** immagine)
 			unsigned int tagScelto;
 			if (scanf("%u", &tagScelto) == 1)
 			{
-
+				SvuotaInput();
 				if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
 				{
 					for (size_t l = 0; l < MAX_TAGS; l++)
@@ -570,7 +567,7 @@ void InserisciCategoriaCaricamento(Immagine_t** immagine)
 		unsigned int categoriaScelta;
 		if (scanf("%u", &categoriaScelta) == 1)
 		{
-
+			SvuotaInput();
 			if (categoriaScelta >= 1 && categoriaScelta <= NUM_CATEGORIE)
 			{
 				AssegnaStringa((*immagine)->categoria, categoria[categoriaScelta - 1], false);
@@ -629,7 +626,6 @@ bool StampaImmaginiCaricate(FILE* file, char nomeUtente[])
 
 bool RimuoviImmagine(FILE* file, char nomeUtente[])
 {
-	SvuotaInput();
 	bool errore = false;
 
 	do
@@ -701,7 +697,6 @@ bool RimuoviImmagine(FILE* file, char nomeUtente[])
 
 bool VisualizzaImmagineCreatore(FILE* file, char nomeUtente[])
 {
-	SvuotaInput();
 	bool errore = false;
 	do
 	{
@@ -789,6 +784,7 @@ bool RicercaCategoria(FILE* file)
 		unsigned int categoriaScelta;
 		if (scanf("%u", &categoriaScelta) == 1)
 		{
+			SvuotaInput();
 			if (categoriaScelta >= 1 && categoriaScelta <= NUM_CATEGORIE)
 			{
 				printf("\n");
@@ -861,7 +857,7 @@ bool RicercaTags(FILE* file)
 		unsigned int tagScelto;
 		if (scanf("%u", &tagScelto) != 0)
 		{
-
+			SvuotaInput();
 			if (tagScelto >= 1 && tagScelto <= NUM_TAGS)
 			{
 				printf("\n");
@@ -920,7 +916,6 @@ bool RicercaTags(FILE* file)
 
 bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 {
-	SvuotaInput();
 	bool errore = false;
 	do
 	{
@@ -1018,7 +1013,6 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 
 unsigned int ValutaImmagine(FILE* file, char nomeUtente[])
 {
-	SvuotaInput();
 	bool errore = false;
 	unsigned int valutazione;
 
@@ -1065,6 +1059,7 @@ unsigned int ValutaImmagine(FILE* file, char nomeUtente[])
 
 			if (scanf("%u", &valutazione) == 1)
 			{
+				SvuotaInput();
 				if (valutazione >= 1 && valutazione <= 5)
 				{
 					float sommaValutazioni = immagine.valutazioneMedia * immagine.numValutazioni; 

@@ -20,7 +20,7 @@ void GestioneCreatore(char nomeUtente[])
 		puts("1. Carica immagine\n2. Modifica immagine\n3. Rimuovi immagine\n4. Visualizza immagine\n5. Indietro\n");
 		if (scanf("%u", &sceltaMenu) == 1)
 		{
-
+			SvuotaInput();
 			Immagine_t immagine = { 0 };
 
 			// Sottomenu gestione creatore
@@ -169,7 +169,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
 		if (scanf("%u", &sceltaMenu) == 1)
 		{
-
+			SvuotaInput();
 			Immagine_t immagine = { 0 };
 
 			// Sottomenu Ricerca Immagine

@@ -16,11 +16,13 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 		reset();
 		printf("\n\n1. Registrazione utente\n2. Accesso utente\n3. Esci\n\n");
 
-		unsigned int sceltaMenu = 0;
+		unsigned int sceltaMenu;
+		//char sceltaMenu[MAX_BUFFER] = { 0 };
 		
 		
 		if (scanf("%u", &sceltaMenu) == 1)
 		{
+			SvuotaInput();
 			switch (sceltaMenu)
 			{
 			case 1: // Registrazione utente
@@ -42,6 +44,7 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 
 					if (scanf("%u", &sceltaMenu) == 1)
 					{
+						SvuotaInput();
 						switch (sceltaMenu)
 						{
 							// Registrazione utente Creatore
@@ -260,7 +263,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 			unsigned int sceltaMenu;
 			if (scanf("%u", &sceltaMenu) == 1)
 			{
-
+				SvuotaInput();
 				switch (sceltaMenu)
 				{
 					// Gestione creatore
@@ -331,7 +334,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 			unsigned int sceltaMenu;
 			if (scanf("%u", &sceltaMenu) == 1)
 			{
-
+				SvuotaInput();
 				switch (sceltaMenu)
 				{
 					// Ricerca immagine

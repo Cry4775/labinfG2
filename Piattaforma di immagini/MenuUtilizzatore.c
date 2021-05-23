@@ -20,7 +20,7 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
 		if (scanf("%u", &sceltaMenu) == 1)
 		{
-
+			SvuotaInput();
 			Immagine_t immagine = { 0 };
 
 			// Sottomenu Ricerca Immagine
@@ -73,6 +73,10 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 					}
 					else
 					{
+
+						red();
+						printf("\nDownload effettuato!\n\n");
+						reset();
 						unsigned int valutazione = ValutaImmagine(file, nomeUtente);
 
 						// Se non è già stata data la valutazione
@@ -278,7 +282,6 @@ void StatisticheCreatore()
 		green();
 		printf("Inserire il nome utente del creatore di cui si vogliono visualizzare le statistiche: ");
 		reset();
-		SvuotaInput();
 		scanf("%100s", buffer);
 
 		bool trovato = false;
@@ -403,6 +406,7 @@ void Classifiche()
 		puts("1. Classifica immagini\n2. Classifica creatori\n3. Classifica utilizzatori\n4. Indietro\n");
 		if (scanf("%u", &sceltaMenu) == 1)
 		{
+			SvuotaInput();
 			// Sottomenu Classifiche
 			switch (sceltaMenu)
 			{
@@ -420,7 +424,7 @@ void Classifiche()
 				printf("1. Per numero di download\n2. Per valutazione media\n3. Indietro\n\n");
 				if (scanf("%u", &sceltaMenu) == 1)
 				{
-
+					SvuotaInput();
 					switch (sceltaMenu)
 					{
 					case 1:
@@ -493,7 +497,7 @@ void Classifiche()
 				printf("1. Per numero di download\n2. Per valutazione media\n3. Indietro\n\n");
 				if (scanf("%u", &sceltaMenu) == 1)
 				{
-
+					SvuotaInput();
 					switch (sceltaMenu)
 					{
 					case 1:
@@ -566,6 +570,7 @@ void Classifiche()
 				printf("1. Per numero di download\n2. Per numero di valutazioni\n3. Indietro\n\n");
 				if (scanf("%u", &sceltaMenu) == 1)
 				{
+					SvuotaInput();
 					switch (sceltaMenu)
 					{
 					case 1:
