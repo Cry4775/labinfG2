@@ -205,8 +205,10 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 							if (strcmp(buffer, immagine.titolo) == 0)
 							{
 								bool ripeti = true;
+								bool indietro = false;
 								do
 								{
+									indietro = false;
 									errore = false;
 
 									printf("\n\n0. Indietro\n1. Titolo\n2. Categoria\n3. Tags");
@@ -220,6 +222,7 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 										switch (scelta)
 										{
 										case 0:
+											indietro = true;
 											ripeti = false;
 											break;
 										case 1:
@@ -306,10 +309,15 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 									}
 								} while (ripeti);
 
-								// Salva le modifiche sul file
-								fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
-								fwrite(&immagine, sizeof(Immagine_t), 1, file);
-								return true;
+								if (!indietro)
+								{
+									// Salva le modifiche sul file
+									fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
+									fwrite(&immagine, sizeof(Immagine_t), 1, file);
+									return true;
+								}
+								else
+									return false;
 							}
 						}
 					}

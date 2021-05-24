@@ -57,8 +57,12 @@ void green();
 // Cambia il colore dell'output in blu
 void blue();
 
+void cyan();
+
 // Resetta il colore dell'output
 void reset();
+
+void StampaTitolo(const char* testo);
 
 void StampaErrore(const char* testo);
 

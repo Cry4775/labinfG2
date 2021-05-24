@@ -66,10 +66,6 @@ void GestioneCreatore(char nomeUtente[])
 					reset();
 					system("pause");
 				}
-				else
-				{
-					StampaErrore("Errore nell'aggiornamento dell'immagine!");
-				}
 
 				fclose(file);
 				ripeti = true;

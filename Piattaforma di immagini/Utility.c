@@ -163,9 +163,21 @@ void blue()
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
 }
 
+void cyan()
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);
+}
+
 void reset()
 {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+}
+
+void StampaTitolo(const char* testo)
+{
+    cyan();
+    printf("%s\n\n", testo);
+    reset();
 }
 
 void StampaErrore(const char* testo)

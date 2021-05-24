@@ -124,6 +124,8 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 			utilizzatore->dataIscrizione.giorno = tm.tm_mday;
 			utilizzatore->dataIscrizione.mese = tm.tm_mon + 1;
 			utilizzatore->dataIscrizione.anno = tm.tm_year + 1900;
+
+			printf("\nNome utente: %s\nPassword: %s\n\n", utilizzatore->nomeUtente, utilizzatore->password);
 		}
 
 		else if (scelta == 'N')
@@ -383,6 +385,8 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 			creatore->dataIscrizione.giorno = tm.tm_mday;
 			creatore->dataIscrizione.mese = tm.tm_mon + 1;
 			creatore->dataIscrizione.anno = tm.tm_year + 1900;
+
+			printf("\nNome utente: %s\nPassword: %s\n\n", creatore->nomeUtente, creatore->password);
 		}
 
 		else if (scelta == 'N')
