@@ -157,6 +157,11 @@ void InserisciCategoriaModifica(Immagine_t* immagine);
 /// <returns>Restituisce 1 se è andata a buon fine, 0 altrimenti</returns>
 bool RicercaCategoria(FILE* file);
 
+/// <summary>
+/// Questa funzione permette di ricercare le immagini a seconda del loro tag
+/// </summary>
+/// <param name="file">File delle immagini</param>
+/// <returns>Restituisce 1 se è andata a buon fine, 0 altrimenti</returns>
 bool RicercaTags(FILE* file);
 
 /// <summary>
@@ -184,10 +189,15 @@ void SalvaValutazione(FILE* fileImmagine, char nomeUtente[], unsigned int valuta
 /// <returns>Restituisce il numero di immagini caricate</returns>
 size_t CaricaArrayImmagini(FILE* file, Immagine_t immagine[]);
 
+/// <summary>
+/// Questa procedura scambia l'immagine A con l'immagine B
+/// </summary>
+/// <param name="immagineA"></param>
+/// <param name="immagineB"></param>
 void ScambiaImmagine(Immagine_t *immagineA, Immagine_t *immagineB);
 
 /// <summary>
-/// Bubble sort per le immagini
+/// Procedura di bubble sort per le immagini
 /// </summary>
 /// <param name="immagine">Array pieno di immagini</param>
 /// <param name="n">Numero di elementi</param>
