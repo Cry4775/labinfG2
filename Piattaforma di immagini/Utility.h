@@ -60,4 +60,6 @@ void blue();
 // Resetta il colore dell'output
 void reset();
 
+void StampaErrore(const char* testo);
+
 #endif

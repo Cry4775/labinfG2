@@ -40,10 +40,7 @@ void GestioneCreatore(char nomeUtente[])
 
 				if (!AggiornaNumImmaginiCreatore(file, nomeUtente))
 				{
-					red();
-					printf("\nErrore nell'aggiornamento del profilo creatore!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore nell'aggiornamento del numero immagini creatore!");
 				}
 				else
 				{
@@ -71,10 +68,7 @@ void GestioneCreatore(char nomeUtente[])
 				}
 				else
 				{
-					red();
-					printf("\nErrore nell'aggiornamento dell'immagine!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore nell'aggiornamento dell'immagine!");
 				}
 
 				fclose(file);
@@ -95,10 +89,7 @@ void GestioneCreatore(char nomeUtente[])
 				}
 				else
 				{
-					red();
-					printf("\nErrore nella rimozione dell'immagine!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore nella rimozione dell'immagine!");
 				}
 
 				fclose(file);
@@ -114,10 +105,7 @@ void GestioneCreatore(char nomeUtente[])
 					system("pause");
 				else
 				{
-					red();
-					printf("\nErrore nella visualizzazione dell'immagine!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore nella visualizzazione dell'immagine!");
 				}
 
 				fclose(file);
@@ -129,11 +117,8 @@ void GestioneCreatore(char nomeUtente[])
 				ripeti = false;
 				break;
 			default:
-				red();
-				printf("\nErrore! Selezionare un'opzione valida!\n\n");
-				reset();
+				StampaErrore("Errore! Selezionare un'opzione valida!");
 				ripeti = true;
-				system("pause");
 				break;
 			}
 		}
@@ -141,10 +126,7 @@ void GestioneCreatore(char nomeUtente[])
 		{
 			SvuotaInput();
 			errore = true;
-			red();
-			printf("\nErrore! Sono ammessi solo numeri!\n\n");
-			reset();
-			system("pause");
+			StampaErrore("Errore! Sono ammessi solo numeri!");
 		}
 	} while (ripeti);
 }
@@ -204,10 +186,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 				{
 					if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 					{
-						red();
-						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Errore nell'aggiornamento del numero di download del creatore!");
 					}
 					else
 					{
@@ -226,10 +205,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 							}
 							else
 							{
-								red();
-								printf("\nErrore nell'aggiornamento dei dati!\n\n");
-								reset();
-								system("pause");
+								StampaErrore("Errore nell'aggiornamento della media valutazioni del creatore!");
 							}
 						}
 					}
@@ -271,10 +247,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 				break;
 			default:
 				ripeti = true;
-				red();
-				printf("\nSelezionare un opzione valida!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Errore! Selezionare un'opzione valida!");
 				break;
 			}
 		}
@@ -282,10 +255,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 		{
 			SvuotaInput();
 			errore = true;
-			red();
-			printf("\nErrore! Sono ammessi solo numeri!\n\n");
-			reset();
-			system("pause");
+			StampaErrore("Errore! Sono ammessi solo numeri!");
 		}
 	} while (ripeti);
 }
@@ -303,10 +273,7 @@ void RicercaCategoriaMenuCreatore(FILE* file, char nomeUtente[])
 		{
 			if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 			{
-				red();
-				printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Errore nell'aggiornamento del numero di download del creatore!");
 			}
 			else
 			{
@@ -325,10 +292,7 @@ void RicercaCategoriaMenuCreatore(FILE* file, char nomeUtente[])
 					}
 					else
 					{
-						red();
-						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Errore nell'aggiornamento della media valutazioni del creatore!");
 					}
 				}
 			}
@@ -350,10 +314,7 @@ void RicercaTagsMenuCreatore(FILE* file, char nomeUtente[])
 		{
 			if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 			{
-				red();
-				printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Errore nell'aggiornamento del numero di download del creatore!");
 			}
 			else
 			{
@@ -372,10 +333,7 @@ void RicercaTagsMenuCreatore(FILE* file, char nomeUtente[])
 					}
 					else
 					{
-						red();
-						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Errore nell'aggiornamento della media valutazioni del creatore!");
 					}
 				}
 			}

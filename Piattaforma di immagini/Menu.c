@@ -91,9 +91,7 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 							break;
 						default:
 							errore = true;
-							red();
-							printf("\nErrore! Selezionare un'opzione valida!\n\n");
-							reset();
+							StampaErrore("Errore! Selezionare un'opzione valida!");
 							break;
 						}
 					}
@@ -101,10 +99,7 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 					{
 						SvuotaInput();
 						errore = true;
-						red();
-						printf("\nErrore! Sono ammessi solo numeri!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Errore! Sono ammessi solo numeri!");
 					}
 
 				} while (errore);
@@ -182,20 +177,14 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 							}
 							else
 							{
-								red();
-								printf("\nErrore! Password non corretta! Riprovare.\n\n");
-								reset();
-								system("pause");
+								StampaErrore("Errore! Password non corretta! Riprovare.");
 								errore = true;
 							}
 
 						}
 						else
 						{
-							red();
-							printf("\nErrore! Nome utente non esistente. \nControllare il nome utente digitato oppure digita 0 per tornare al menu iniziale e registrarsi.\n\n");
-							reset();
-							system("pause");
+							StampaErrore("Errore! Nome utente non esistente. \nControllare il nome utente digitato oppure digita 0 per tornare al menu iniziale e registrarsi");
 							errore = true;
 						}
 						fclose(file);
@@ -210,10 +199,7 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 				inEsecuzione = false;
 				break;
 			default:
-				red();
-				puts("\nErrore! Selezionare un'opzione valida!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Errore! Selezionare un'opzione valida!");
 				errore = true;
 				break;
 			}
@@ -224,10 +210,7 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 		{
 			SvuotaInput();
 			errore = true;
-			red();
-			printf("\nErrore! Sono ammessi solo numeri!\n\n");
-			reset();
-			system("pause");
+			StampaErrore("Errore! Sono ammessi solo numeri!");
 		}
 
 	} while (inEsecuzione == true);
@@ -291,10 +274,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 					break;
 				}
 				default:
-					red();
-					printf("\nSelezionare un opzione valida!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Selezionare un'opzione valida!");
 					break;
 				}
 			}
@@ -302,10 +282,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 			{
 				SvuotaInput();
 				errore = true;
-				red();
-				printf("\nErrore! Sono ammessi solo numeri!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Errore! Sono ammessi solo numeri!");
 			}
 		} while (inEsecuzione == true);
 	}
@@ -355,10 +332,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 					break;
 				}
 				default:
-					red();
-					printf("\nSelezionare un opzione valida!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Selezionare un'opzione valida!");
 					break;
 				}
 			}
@@ -366,10 +340,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 			{
 				SvuotaInput();
 				errore = true;
-				red();
-				printf("\nErrore! Sono ammessi solo numeri!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Errore! Sono ammessi solo numeri!");
 			}
 		} while (inEsecuzione == true);
 	}

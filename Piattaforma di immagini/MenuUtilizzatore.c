@@ -57,17 +57,11 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 				{
 					if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 					{
-						red();
-						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Errore nell'aggiornamento del numero di download del creatore!");
 					}
 					else if (!AggiornaNumDownloadUtilizzatore(fileUtilizzatori, nomeUtente))
 					{
-						red();
-						printf("\nErrore nell'aggiornamento dei dati dell'utilizzatore!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Errore nell'aggiornamento del numero di download dell'utilizzatore!");
 					}
 					else
 					{
@@ -90,10 +84,7 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 							}
 							else
 							{
-								red();
-								printf("\nErrore nell'aggiornamento dei dati!\n\n");
-								reset();
-								system("pause");
+								StampaErrore("Errore nell'aggiornamento dei dati!");
 							}
 						}
 					}
@@ -136,10 +127,7 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 				break;
 			default:
 				ripeti = true;
-				red();
-				printf("\nSelezionare un opzione valida!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Selezionare un'opzione valida!");
 				break;
 			}
 		}
@@ -147,10 +135,7 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 		{
 			SvuotaInput();
 			errore = true;
-			red();
-			printf("\nErrore! Sono ammessi solo numeri!\n\n");
-			reset();
-			system("pause");
+			StampaErrore("Errore! Sono ammessi solo numeri!");
 		}
 	} while (ripeti);
 }
@@ -169,17 +154,11 @@ void RicercaCategoriaMenuUtilizzatore(FILE* file, char nomeUtente[])
 		{
 			if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 			{
-				red();
-				printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Errore nell'aggiornamento del numero di download del creatore!");
 			}
 			else if (!AggiornaNumDownloadUtilizzatore(fileUtilizzatori, nomeUtente))
 			{
-				red();
-				printf("\nErrore nell'aggiornamento dei dati dell'utilizzatore!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Errore nell'aggiornamento del numero di download dell'utilizzatore!");
 			}
 			else
 			{
@@ -198,10 +177,7 @@ void RicercaCategoriaMenuUtilizzatore(FILE* file, char nomeUtente[])
 					}
 					else
 					{
-						red();
-						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Errore nell'aggiornamento dei dati!");
 					}
 				}
 			}
@@ -225,17 +201,11 @@ void RicercaTagsMenuUtilizzatore(FILE* file, char nomeUtente[])
 		{
 			if (!AggiornaNumDownloadCreatore(fileCreatori, autoreImmagine))
 			{
-				red();
-				printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Errore nell'aggiornamento del numero di download del creatore!");
 			}
 			else if (!AggiornaNumDownloadUtilizzatore(fileUtilizzatori, nomeUtente))
 			{
-				red();
-				printf("Errore nell'aggiornamento dei dati dell'utilizzatore!\n\n");
-				reset();
-				system("pause");
+				StampaErrore("Errore nell'aggiornamento del numero di download dell'utilizzatore!");
 			}
 			else
 			{
@@ -254,10 +224,7 @@ void RicercaTagsMenuUtilizzatore(FILE* file, char nomeUtente[])
 					}
 					else
 					{
-						red();
-						printf("\nErrore nell'aggiornamento dei dati del creatore!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Errore nell'aggiornamento dei dati!");
 					}
 				}
 			}
@@ -375,11 +342,8 @@ void StatisticheCreatore()
 		}
 		else
 		{
-			red();
-			printf("\nNome utente non esistente!\n\n");
-			reset();
+			StampaErrore("Errore! Nome utente non esistente!");
 			errore = true;
-			system("pause");
 		}
 
 
@@ -461,10 +425,7 @@ void Classifiche()
 					}
 					default:
 						ripeti = true;
-						red();
-						printf("\nSelezionare un opzione valida!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Selezionare un'opzione valida!");
 						break;
 					}
 				}
@@ -472,10 +433,7 @@ void Classifiche()
 				{
 					SvuotaInput();
 					errore = true;
-					red();
-					printf("\nErrore! Sono ammessi solo numeri!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Sono ammessi solo numeri!");
 				}
 				ripeti = true;
 				break;
@@ -533,10 +491,7 @@ void Classifiche()
 					}
 					default:
 						ripeti = true;
-						red();
-						printf("\nSelezionare un opzione valida!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Selezionare un'opzione valida!");
 						break;
 					}
 				}
@@ -544,10 +499,7 @@ void Classifiche()
 				{
 					SvuotaInput();
 					errore = true;
-					red();
-					printf("\nErrore! Sono ammessi solo numeri!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Sono ammessi solo numeri!");
 				}
 				ripeti = true;
 				break;
@@ -605,10 +557,7 @@ void Classifiche()
 					}
 					default:
 						ripeti = true;
-						red();
-						printf("\nSelezionare un opzione valida!\n\n");
-						reset();
-						system("pause");
+						StampaErrore("Selezionare un'opzione valida!");
 						break;
 					}
 				}
@@ -616,10 +565,7 @@ void Classifiche()
 				{
 					SvuotaInput();
 					errore = true;
-					red();
-					printf("\nErrore! Sono ammessi solo numeri!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Sono ammessi solo numeri!");
 				}
 				ripeti = true;
 				break;
@@ -631,11 +577,8 @@ void Classifiche()
 				break;
 			}
 			default:
-				red();
-				printf("\nErrore! Selezionare un'opzione valida!\n\n");
-				reset();
+				StampaErrore("Selezionare un'opzione valida!");
 				ripeti = true;
-				system("pause");
 				break;
 			}
 		}
@@ -643,10 +586,7 @@ void Classifiche()
 		{
 			SvuotaInput();
 			errore = true;
-			red();
-			printf("\nErrore! Sono ammessi solo numeri!\n\n");
-			reset();
-			system("pause");
+			StampaErrore("Errore! Sono ammessi solo numeri!");
 		}
 	} while (ripeti);
 }

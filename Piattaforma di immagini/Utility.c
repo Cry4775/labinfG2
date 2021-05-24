@@ -84,10 +84,7 @@ bool ContieneSimboli(char buffer[], bool numeriAmmessi)
                 buffer[i] = '\0';
             else
             {
-                red();
-                printf("\nErrore! I simboli e i numeri non sono ammessi!\n\n");
-                reset();
-                system("pause");
+                StampaErrore("Errore! I simboli e i numeri non sono ammessi!");
                 return true;
             }
         }
@@ -106,10 +103,7 @@ bool ContieneSimboli(char buffer[], bool numeriAmmessi)
                 buffer[i] = '\0';
             else
             {
-                red();
-                printf("\nErrore! I simboli non sono ammessi!\n\n");
-                reset();
-                system("pause");
+                StampaErrore("Errore! I simboli non sono ammessi!");
                 return true;
             }
         }
@@ -172,4 +166,12 @@ void blue()
 void reset()
 {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+}
+
+void StampaErrore(const char* testo)
+{
+    red();
+    printf("\n%s\n\n", testo);
+    reset();
+    system("pause");
 }

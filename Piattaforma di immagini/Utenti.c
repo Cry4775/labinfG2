@@ -158,18 +158,12 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 				if (strlen(buffer) < MIN_CAR_NOME_UTENTE)
 				{
 					errore = true;
-					red();
-					puts("Errore! Inserire un nome utente di almeno 4 caratteri!\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Inserire un nome utente di almeno 4 caratteri!");
 				}
 				else if (giaEsistente == true)
 				{
 					errore = true;
-					red();
-					puts("Errore! Nome utente gia' esistente!\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Nome utente gia' esistente!");
 				}
 				// Altrimenti procedi
 				else
@@ -195,10 +189,7 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 				if (strlen(buffer) < MIN_CAR_PASSWORD)
 				{
 					errore = true;
-					red();
-					puts("Errore! Inserire una password di almeno 8 caratteri!\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Inserire una password di almeno 8 caratteri!");
 				}
 
 				// Altrimenti procedi
@@ -268,10 +259,7 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 				if (utilizzatore->sesso != 'M' && utilizzatore->sesso != 'F')
 				{
 					errore = true;
-					red();
-					printf("Errore! Inserire M o F!\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Inserire M o F");
 				}
 			} while (errore);
 
@@ -333,10 +321,7 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 				if (!DataCorretta(utilizzatore->dataNascita.giorno, utilizzatore->dataNascita.mese, utilizzatore->dataNascita.anno))
 				{
 					errore = true;
-					red();
-					printf("Errore! La data e' incorretta!\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! La data e' incorretta!");
 				}
 			} while (errore);
 
@@ -351,10 +336,7 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 		else
 		{
 			errore = true;
-			red();
-			printf("\nErrore! Selezionare un opzione valida!\n\n");
-			reset();
-			system("pause");
+			StampaErrore("Selezionare un'opzione valida!");
 		}
 	} while (errore);
 }
@@ -437,18 +419,12 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 				if (strlen(buffer) < MIN_CAR_NOME_UTENTE)
 				{
 					errore = true;
-					red();
-					puts("\nErrore! Inserire un nome utente di almeno 4 caratteri!\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Inserire un nome utente di almeno 4 caratteri!");
 				}
 				else if (giaEsistente == true)
 				{
 					errore = true;
-					red();
-					puts("\nErrore! Nome utente gia' esistente!\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Nome utente gia' esistente!");
 				}
 				// Altrimenti procedi
 				else
@@ -474,10 +450,7 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 				if (strlen(buffer) < MIN_CAR_PASSWORD)
 				{
 					errore = true;
-					red();
-					puts("\nErrore! Inserire una password di almeno 8 caratteri!\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Inserire una password di almeno 8 caratteri!");
 				}
 
 				// Altrimenti procedi
@@ -545,10 +518,7 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 				if (creatore->sesso != 'M' && creatore->sesso != 'F')
 				{
 					errore = true;
-					red();
-					printf("\nErrore! Inserire M o F!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! Inserire M o F!");
 				}
 			} while (errore);
 
@@ -609,10 +579,7 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 				if (!DataCorretta(creatore->dataNascita.giorno, creatore->dataNascita.mese, creatore->dataNascita.anno))
 				{
 					errore = true;
-					red();
-					printf("\nErrore! La data e' incorretta!\n\n");
-					reset();
-					system("pause");
+					StampaErrore("Errore! La data e' incorretta!");
 				}
 			} while (errore);
 
@@ -626,10 +593,7 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 		else
 		{
 			errore = true;
-			red();
-			printf("\nErrore! Selezionare un opzione valida!\n\n");
-			reset();
-			system("pause");
+			StampaErrore("Selezionare un'opzione valida!");
 		}
 
 	} while (errore);
