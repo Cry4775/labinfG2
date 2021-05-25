@@ -9,10 +9,22 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 	{
 		system("cls");
 		errore = false;
-		red();
-		printf("Benvenuto sulla piattaforma di immagini!");
+
+		StampaTitolo("  ____                                  _                    _ _                         _                     _       _   _         __                                  _ _   _                                 _       _ _ ");
+		StampaTitolo(" | __ )  ___ _ ____   _____ _ __  _   _| |_ ___    ___ _   _| | | __ _   _ __   ___  ___| |_ _ __ __ _   _ __ (_) __ _| |_| |_ __ _ / _| ___  _ __ _ __ ___   __ _    __| (_) (_)_ __ ___  _ __ ___   __ _  __ _(_)_ __ (_) |");
+		StampaTitolo(" |  _ \\ / _ \\ '_ \\ \\ / / _ \\ '_ \\| | | | __/ _ \\  / __| | | | | |/ _` | | '_ \\ / _ \\/ __| __| '__/ _` | | '_ \\| |/ _` | __| __/ _` | |_ / _ \\| '__| '_ ` _ \\ / _` |  / _` | | | | '_ ` _ \\| '_ ` _ \\ / _` |/ _` | | '_ \\| | |");
+		StampaTitolo(" | |_) |  __/ | | \\ V /  __/ | | | |_| | || (_) | \\__ \\ |_| | | | (_| | | | | | (_) \\__ \\ |_| | | (_| | | |_) | | (_| | |_| || (_| |  _| (_) | |  | | | | | | (_| | | (_| | | | | | | | | | | | | | | (_| | (_| | | | | | |_|");
+		StampaTitolo(" |____/ \\___|_| |_|\\_/ \\___|_| |_|\\__,_|\\__\\___/  |___/\\__,_|_|_|\\__,_| |_| |_|\\___/|___/\\__|_|  \\__,_| | .__/|_|\\__,_|\\__|\\__\\__,_|_|  \\___/|_|  |_| |_| |_|\\__,_|  \\__,_|_| |_|_| |_| |_|_| |_| |_|\\__,_|\\__, |_|_| |_|_(_)");
+		StampaTitolo("                                                                                                        |_|                                                                                                |___/             ");
+
+		green();
+		printf("\n\n###MENU INIZIALE###");
 		reset();
-		printf("\n\n1. Registrazione utente\n2. Accesso utente\n3. Esci\n\n");
+		printf("\nInserisci il numero della tua scelta:");
+		printf("\n\n1. Registrazione utente\n2. Accesso utente\n3. Esci\n");
+		green();
+		printf("\n->");
+		reset();
 
 		unsigned int sceltaMenu;
 		
@@ -30,11 +42,13 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 					Creatore_t creatore = { 0 };
 					Utilizzatore_t utilizzatore = { 0 };
 
-					red();
-					puts("Che tipologia di utente sei?");
+					green();
+					puts("###Scegli il profilo con cui registrarti###");
 					reset();
 					printf("\n1.Creatore\n2.Utilizzatore\n3.Indietro\n");
-
+					green();
+					printf("\n->");
+					reset();
 
 					if (scanf("%u", &sceltaMenu) == 1)
 					{
@@ -53,7 +67,7 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 
 							fclose(file);
 
-							red();
+							green();
 							printf("\nCreatore correttamente registrato! Verrai ora reindirizzato al menu principale.\n\n");
 							reset();
 							system("pause");
@@ -231,11 +245,14 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 			errore = false;
 			system("cls");
 
-			red();
-			printf("Benvenuto sulla piattaforma di immagini %s! \n\n", nomeUtente);
+			StampaTitolo("###################\n# MENU PRINCIPALE #\n###################\n");
+			green();
+			printf("Ciao %s!\nScegli a quale sezione accedere:\n\n", nomeUtente);
 			reset();
 			printf("1. Gestione creatore\n2. Ricerca immagine\n3. Statistiche creatore\n4. Classifiche\n5. Esci\n");
-
+			green();
+			printf("\n->");
+			reset();
 			unsigned int sceltaMenu;
 			if (scanf("%u", &sceltaMenu) == 1)
 			{
@@ -294,11 +311,14 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 		{
 			errore = false;
 			system("cls");
-
-			red();
-			printf("Benvenuto sulla piattaforma di immagini %s! \n\n", nomeUtente);
+			StampaTitolo("###################\n# MENU PRINCIPALE #\n###################\n");
+			green();
+			printf("Ciao %s!\nScegli a quale sezione accedere:\n\n", nomeUtente);
 			reset();
 			printf("1. Ricerca immagine\n2. Statistiche creatore\n3. Classifiche\n4. Esci\n");
+			green();
+			printf("\n->");
+			reset();
 
 			unsigned int sceltaMenu;
 			if (scanf("%u", &sceltaMenu) == 1)

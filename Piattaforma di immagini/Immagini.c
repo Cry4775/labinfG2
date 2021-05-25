@@ -12,7 +12,9 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 
 	char scelta = { 0 };
 
-	printf("Vuoi che i dati vengano inseriti automaticamente? (Y/N): ");
+	green();
+	printf("\nVuoi che i dati vengano inseriti automaticamente? (Y/N): ");
+	reset();
 
 	if (scanf("%c", &scelta) == 1)
 	{
@@ -28,6 +30,7 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
 
 			strcpy(immagine->categoria, categoria[RNG(0, NUM_CATEGORIE)]);
 			strcpy(immagine->tags[0], tags[RNG(0, NUM_TAGS)]);
+
 		}
 
 		else
@@ -211,10 +214,14 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 									indietro = false;
 									errore = false;
 
-									printf("\n\n0. Indietro\n1. Titolo\n2. Categoria\n3. Tags");
 									green();
 									printf("\n\nScegli il campo da modificare: ");
 									reset();
+									printf("\n\n0. Indietro\n1. Titolo\n2. Categoria\n3. Tags\n");
+									green();
+									printf("->");
+									reset();
+									
 									unsigned int scelta;
 									if (scanf("%u", &scelta) == 1)
 									{
@@ -246,7 +253,7 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 												if (!errore)
 												{
 													AssegnaStringa(immagine.titolo, buffer, true);
-													red();
+													green();
 													printf("Operazione effettuata!\n\n");
 													reset();
 													system("pause");
@@ -269,7 +276,7 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 												reset();
 												InserisciCategoriaModifica(&immagine);
 
-												red();
+												green();
 												printf("Operazione effettuata!\n\n");
 												reset();
 												system("pause");
@@ -290,7 +297,7 @@ bool ModificaImmagini(FILE* file, char nomeUtente[])
 											// Selezione dei tags
 											InserisciTagsModifica(&immagine);
 
-											red();
+											green();
 											printf("Operazione effettuata!\n\n");
 											reset();
 											system("pause");
@@ -551,9 +558,8 @@ bool StampaImmaginiCaricate(FILE* file, char nomeUtente[])
 {
 	bool trovato = false;	 // trovato = c'è almeno un'immagine caricata dall'utente?								
 	// Stampa le immagini caricate dall'utente
-	red();
-	printf("I tuoi uploads");
-	reset();
+	
+	StampaTitolo("****************\nI TUOI UPLOADS\n****************\n");
 	while (!feof(file))
 	{
 		Immagine_t immagine = { 0 };

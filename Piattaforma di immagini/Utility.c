@@ -176,7 +176,7 @@ void reset()
 void StampaTitolo(const char* testo)
 {
     cyan();
-    printf("%s\n\n", testo);
+    printf("%s\n", testo);
     reset();
 }
 

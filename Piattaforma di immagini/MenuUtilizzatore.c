@@ -11,11 +11,13 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 		ripeti = false;
 		system("cls");
 
-		red();
-		puts("Ricerca Immagini");
+		StampaTitolo("*****************\nRICERCA IMMAGINI\n*****************\n");
+		printf("\nSeleziona il metodo di ricerca che più preferisci!\n");
+		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
+		green();
+		printf("->");
 		reset();
 
-		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
 		if (scanf("%u", &sceltaMenu) == 1)
 		{
 			SvuotaInput();
@@ -68,7 +70,7 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 						else
 						{
 
-							red();
+							green();
 							printf("\nDownload effettuato!\n\n");
 							reset();
 							unsigned int valutazione = ValutaImmagine(file, nomeUtente);
@@ -79,7 +81,7 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 								if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione) && AggiornaNumValutazioniUtilizzatore(fileUtilizzatori))
 								{
 									SalvaValutazione(file, nomeUtente, valutazione);
-									red();
+									green();
 									printf("Valutazione correttamente inviata! Grazie!\n\n");
 									reset();
 									system("pause");
@@ -177,7 +179,7 @@ void RicercaCategoriaMenuUtilizzatore(FILE* file, char nomeUtente[])
 					if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione) && AggiornaNumValutazioniUtilizzatore(fileUtilizzatori))
 					{
 						SalvaValutazione(file, nomeUtente, valutazione);
-						red();
+						green();
 						printf("Valutazione correttamente inviata! Grazie!\n\n");
 						reset();
 						system("pause");
@@ -224,7 +226,7 @@ void RicercaTagsMenuUtilizzatore(FILE* file, char nomeUtente[])
 					if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione) && AggiornaNumValutazioniUtilizzatore(fileUtilizzatori))
 					{
 						SalvaValutazione(file, nomeUtente, valutazione);
-						red();
+						green();
 						printf("Valutazione correttamente inviata! Grazie!\n\n");
 						reset();
 						system("pause");
@@ -253,7 +255,7 @@ void StatisticheCreatore()
 
 		char buffer[MAX_BUFFER] = { 0 };
 		green();
-		printf("Inserire il nome utente del creatore (0 per tornare indietro): ");
+		printf("Inserire il nome utente del creatore di cui visualizzare le statistiche (0 per tornare indietro): ");
 		reset();
 		scanf("%100s", buffer);
 		SvuotaInput();
@@ -288,7 +290,7 @@ void StatisticheCreatore()
 			{
 				// Stampa l'intestazione delle statistiche
 				system("cls");
-				red();
+				green();
 				printf("Nome utente: %s\n\n", creatore.nomeUtente);
 				reset();
 				blue();
@@ -376,11 +378,15 @@ void Classifiche()
 		ripeti = true;
 		system("cls");
 
-		red();
-		puts("Classifiche");
+		StampaTitolo("*************\nCLASSIFICHE\n*************\n");
+		green();
+		printf("\nSeleziona la classifica da visualizzare:\n");
 		reset();
 
-		puts("1. Classifica immagini\n2. Classifica creatori\n3. Classifica utilizzatori\n4. Indietro\n");
+		puts("\n1. Classifica immagini\n2. Classifica creatori\n3. Classifica utilizzatori\n4. Indietro\n");
+		green();
+		printf("->");
+		reset();
 		if (scanf("%u", &sceltaMenu) == 1)
 		{
 			SvuotaInput();
@@ -396,6 +402,7 @@ void Classifiche()
 
 				size_t numImmagini = CaricaArrayImmagini(file, immagine);
 
+				printf("\nSeleziona l'ordine in cui visualizzare le immagini:\n");
 				printf("1. Per numero di download\n2. Per valutazione media\n3. Indietro\n\n");
 				if (scanf("%u", &sceltaMenu) == 1)
 				{
@@ -462,6 +469,7 @@ void Classifiche()
 
 				size_t numCreatori = CaricaArrayCreatori(file, creatore);
 
+				printf("\nSeleziona l'ordine in cui visualizzare i creatori:\n");
 				printf("1. Per numero di download\n2. Per valutazione media\n3. Indietro\n\n");
 				if (scanf("%u", &sceltaMenu) == 1)
 				{
@@ -528,6 +536,7 @@ void Classifiche()
 
 				size_t numUtilizzatori = CaricaArrayUtilizzatori(file, utilizzatore);
 
+				printf("\nSeleziona l'ordine in cui visualizzare gli utilizzatori:\n");
 				printf("1. Per numero di download\n2. Per numero di valutazioni\n3. Indietro\n\n");
 				if (scanf("%u", &sceltaMenu) == 1)
 				{

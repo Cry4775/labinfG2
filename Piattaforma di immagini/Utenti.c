@@ -89,14 +89,16 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 	do {
 		system("cls");
 		errore = false;
-		red();
-		puts("Registrazione utente utilizzatore");
+		green();
+		puts("**REGISTRAZIONE UTENTE UTILIZZATORE**");
 		reset();
 	
 
 		char scelta = { 0 };
 
+		green();
 		printf("Vuoi che i dati vengano inseriti automaticamente? (Y/N): ");
+		reset();
 
 		scanf("%c", &scelta);
 		SvuotaInput();
@@ -125,7 +127,13 @@ void InserisciDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore, char no
 			utilizzatore->dataIscrizione.mese = tm.tm_mon + 1;
 			utilizzatore->dataIscrizione.anno = tm.tm_year + 1900;
 
+			green();
+			printf("\nLe tue credenziali sono: ");
+			reset();
 			printf("\nNome utente: %s\nPassword: %s\n\n", utilizzatore->nomeUtente, utilizzatore->password);
+			green();
+			printf("\nRicordale! Potrai usarle in futuro per effettuare il login.");
+			reset();
 		}
 
 		else if (scelta == 'N')
@@ -351,14 +359,14 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 	{
 		system("cls");
 		errore = false;
-		red();
-		puts("Registrazione utente creatore");
-		reset();
-
+		puts("**REGISTRAZIONE UTENTE CREATORE**");
 
 		char scelta = { 0 };
 
+		green();
 		printf("Vuoi che i dati vengano inseriti automaticamente? (Y/N): ");
+		reset();
+
 		scanf("%c", &scelta);
 		SvuotaInput();
 
@@ -386,7 +394,13 @@ void InserisciDatiCreatore(FILE* file, Creatore_t* creatore, char nomeUtente[])
 			creatore->dataIscrizione.mese = tm.tm_mon + 1;
 			creatore->dataIscrizione.anno = tm.tm_year + 1900;
 
+			green();
+			printf("\nLe tue credenziali sono: ");
+			reset();
 			printf("\nNome utente: %s\nPassword: %s\n\n", creatore->nomeUtente, creatore->password);
+			green();
+			printf("\nRicordale! Potrai usarle in futuro per effettuare il login.");
+			reset();
 		}
 
 		else if (scelta == 'N')

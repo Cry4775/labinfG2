@@ -11,11 +11,12 @@ void GestioneCreatore(char nomeUtente[])
 		ripeti = true;
 		system("cls");
 
-		red();
-		puts("Gestione creatore");
-		reset();
+		StampaTitolo("*******************\n GESTIONE CREATORE \n*******************\n");
 
 		puts("1. Carica immagine\n2. Modifica immagine\n3. Rimuovi immagine\n4. Visualizza immagine\n5. Indietro\n");
+		green();
+		printf("->");
+		reset();
 		if (scanf("%u", &sceltaMenu) == 1)
 		{
 			SvuotaInput();
@@ -44,8 +45,8 @@ void GestioneCreatore(char nomeUtente[])
 				}
 				else
 				{
-					red();
-					printf("\nImmagine caricata con successo!\n\n");
+					green();
+					printf("\nImmagine caricata con successo!\nPotrai visualizzarla in 'Visualizza immagine' nel menu di GESTIONE CREATORE\n");
 					reset();
 					system("pause");
 				}
@@ -61,7 +62,7 @@ void GestioneCreatore(char nomeUtente[])
 
 				if (ModificaImmagini(file, nomeUtente))
 				{
-					red();
+					green();
 					printf("\nImmagine modificata con successo!\n\n");
 					reset();
 					system("pause");
@@ -138,11 +139,13 @@ void RicercaImmagineCreatore(char nomeUtente[])
 		ripeti = true;
 		system("cls");
 
-		red();
-		puts("Ricerca immagini");
+		StampaTitolo("*****************\nRICERCA IMMAGINI\n*****************\n");
+		printf("\nSeleziona il metodo di ricerca che piu' preferisci!");
+		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
+		green();
+		printf("->");
 		reset();
 
-		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
 		if (scanf("%u", &sceltaMenu) == 1)
 		{
 			SvuotaInput();
@@ -186,6 +189,9 @@ void RicercaImmagineCreatore(char nomeUtente[])
 					}
 					else
 					{
+						green();
+						printf("\nDownload effettuato!\n\n");
+						reset();
 						unsigned int valutazione = ValutaImmagine(file, nomeUtente);
 
 						// Se non è già stata data la valutazione
@@ -194,7 +200,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 							if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione))
 							{
 								SalvaValutazione(file, nomeUtente, valutazione);
-								red();
+								green();
 								printf("\nValutazione correttamente inviata! Grazie!\n\n");
 								reset();
 								system("pause");
@@ -281,7 +287,7 @@ void RicercaCategoriaMenuCreatore(FILE* file, char nomeUtente[])
 					if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione))
 					{
 						SalvaValutazione(file, nomeUtente, valutazione);
-						red();
+						green();
 						printf("\nValutazione correttamente inviata! Grazie!\n\n");
 						reset();
 						system("pause");
@@ -322,7 +328,7 @@ void RicercaTagsMenuCreatore(FILE* file, char nomeUtente[])
 					if (AggiornaMediaValutazioniCreatore(fileCreatori, valutazione))
 					{
 						SalvaValutazione(file, nomeUtente, valutazione);
-						red();
+						green();
 						printf("\nValutazione correttamente inviata! Grazie!\n\n");
 						reset();
 						system("pause");
