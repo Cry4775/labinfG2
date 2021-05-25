@@ -8,6 +8,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <math.h>
 #include <Windows.h>
 
 #define MAX_BUFFER 101
@@ -47,7 +48,7 @@ int RNG(int MIN, int MAX);
 FILE* ApriFile(const char* percorsoFile);
 
 // Crea l'istogramma dell'attività in statistiche creatore
-const char* CreaIstogramma(unsigned int percentualeOccorrenza);
+const char* CreaIstogramma(float percentualeOccorrenza);
 
 // Cambia il colore dell'output in rosso
 void red();

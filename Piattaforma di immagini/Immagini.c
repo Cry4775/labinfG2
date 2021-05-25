@@ -941,6 +941,8 @@ unsigned int ValutaImmagine(FILE* file, const char nomeUtente[])
 		fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
 		fread(&immagine, sizeof(Immagine_t), 1, file);
 
+		immagine.numDownload++;
+
 		FILE* fileValutazioni = ApriFile(PERCORSO_FILE_VALUTAZIONI);
 
 		bool giaValutata = false;
@@ -954,7 +956,11 @@ unsigned int ValutaImmagine(FILE* file, const char nomeUtente[])
 			if (esito != 0)
 			{
 				if (strcmp(valutazioneStruct.nomeUtenteValutatore, nomeUtente) == 0 && immagine.id == valutazioneStruct.idImmagineValutata)
+				{
+					fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
+					fwrite(&immagine, sizeof(Immagine_t), 1, file);
 					giaValutata = true;
+				}
 			}
 		}
 
@@ -979,7 +985,6 @@ unsigned int ValutaImmagine(FILE* file, const char nomeUtente[])
 					immagine.numValutazioni++;
 					sommaValutazioni += valutazione;
 					immagine.valutazioneMedia = sommaValutazioni / immagine.numValutazioni;
-					immagine.numDownload++;
 
 					fseek(file, -(int)sizeof(Immagine_t), SEEK_CUR);
 					fwrite(&immagine, sizeof(Immagine_t), 1, file);

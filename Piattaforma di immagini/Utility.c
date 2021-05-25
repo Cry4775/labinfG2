@@ -129,7 +129,7 @@ FILE* ApriFile(const char* percorsoFile)
     return file;
 }
 
-const char* CreaIstogramma(unsigned int percentualeOccorrenza)
+const char* CreaIstogramma(float percentualeOccorrenza)
 {
     // Dichiaro il buffer static altrimenti a fine esecuzione, perdo la variabile e viene restituita corrotta
     static char buffer[10] = { 0 };
@@ -139,6 +139,8 @@ const char* CreaIstogramma(unsigned int percentualeOccorrenza)
     {
         buffer[i] = '\0';
     }
+
+    percentualeOccorrenza = round(percentualeOccorrenza);
 
     // Gli assegno le barrette
     for (size_t i = 0; i < percentualeOccorrenza; i++)
