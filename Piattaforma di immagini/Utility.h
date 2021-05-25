@@ -24,6 +24,7 @@ typedef enum {
     true
 } bool;
 
+// Svuota il buffer di input
 void SvuotaInput();
 
 // Copia la stringa da buffer a destinazione e se primaMaiuscola viene passata come true, la prima lettera verrà impostata maiuscola
@@ -57,13 +58,16 @@ void green();
 // Cambia il colore dell'output in blu
 void blue();
 
+// Cambia il colore dell'output in azzurro
 void cyan();
 
 // Resetta il colore dell'output
 void reset();
 
+// Stampa una stringa in azzurro
 void StampaTitolo(const char* testo);
 
+// Stampa una stringa in rosso
 void StampaErrore(const char* testo);
 
 #endif

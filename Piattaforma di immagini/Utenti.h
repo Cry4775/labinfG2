@@ -147,6 +147,11 @@ bool AggiornaNumValutazioniUtilizzatore(FILE* file);
 /// <returns>Restituisce il numero di creatori caricati</returns>
 size_t CaricaArrayCreatori(FILE* file, Creatore_t creatore[]);
 
+/// <summary>
+/// Questa procedura scambia il Creatore A con il Creatore B
+/// </summary>
+/// <param name="creatoreA"></param>
+/// <param name="creatoreB"></param>
 void ScambiaCreatore(Creatore_t* creatoreA, Creatore_t* creatoreB);
 
 /// <summary>
@@ -165,6 +170,11 @@ void BubbleSortCreatore(Creatore_t creatore[], size_t n, bool criterio);
 /// <returns>Restituisce il numero di utilizzatori caricati</returns>
 size_t CaricaArrayUtilizzatori(FILE* file, Utilizzatore_t utilizzatore[]);
 
+/// <summary>
+/// Questa procedura scambia l'utilizzatore A con l'utilizzatore B
+/// </summary>
+/// <param name="utilizzatoreA"></param>
+/// <param name="utilizzatoreB"></param>
 void ScambiaUtilizzatore(Utilizzatore_t* utilizzatoreA, Utilizzatore_t* utilizzatoreB);
 
 /// <summary>

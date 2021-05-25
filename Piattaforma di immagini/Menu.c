@@ -204,11 +204,8 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 						fclose(file);
 					}
 				} while (errore);
-
 				break;
 			}
-
-
 			case 3:
 				inEsecuzione = false;
 				break;
@@ -217,7 +214,6 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 				errore = true;
 				break;
 			}
-
 			system("cls");
 		}
 		else

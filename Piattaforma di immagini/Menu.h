@@ -19,7 +19,7 @@ FILE* file;
 bool MenuIniziale(bool* isCreatore, char nomeUtente[]);
 
 /// <summary>
-/// Questa funzione contiene le funzionalità del menu principale
+/// Questa funzione contiene tutte le funzionalità del menu principale
 /// </summary>
 /// <param name="isCreatore">Per dare l'accesso al menu creatore</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
