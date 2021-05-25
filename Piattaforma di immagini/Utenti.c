@@ -44,7 +44,7 @@ bool ControllaNomeUtenteUtilizzatore(FILE* file, char buffer[])
 	return false;
 }
 
-bool ControllaPassword(FILE* file, char buffer[], char nomeUtente[])
+bool ControllaPassword(FILE* file, char buffer[], const char nomeUtente[])
 {
     // Controlla la struct dell'utente che sta effettuando l'accesso
     // Ritorna true se la password è corretta, false altrimenti
@@ -637,7 +637,7 @@ void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore)
 	fwrite(&*utilizzatore, sizeof(Utilizzatore_t), 1, file);
 }
 
-bool AggiornaNumImmaginiCreatore(FILE* file, char nomeUtente[])
+bool AggiornaNumImmaginiCreatore(FILE* file, const char nomeUtente[])
 {
 	while (!feof(file))
 	{
@@ -660,7 +660,7 @@ bool AggiornaNumImmaginiCreatore(FILE* file, char nomeUtente[])
 	return false;
 }
 
-bool AggiornaNumDownloadCreatore(FILE* file, char nomeUtente[])
+bool AggiornaNumDownloadCreatore(FILE* file, const char nomeUtente[])
 {
 	while (!feof(file))
 	{
@@ -701,7 +701,7 @@ bool AggiornaMediaValutazioniCreatore(FILE* file, unsigned int valutazione)
 		return false;
 }
 
-bool AggiornaNumDownloadUtilizzatore(FILE* file, char nomeUtente[])
+bool AggiornaNumDownloadUtilizzatore(FILE* file, const char nomeUtente[])
 {
 	while (!feof(file))
 	{
@@ -765,7 +765,7 @@ void ScambiaCreatore(Creatore_t* creatoreA, Creatore_t* creatoreB)
 	*creatoreB = temp;
 }
 
-void BubbleSortCreatore(Creatore_t creatore[], size_t n, bool criterio)
+void BubbleSortCreatore(Creatore_t creatore[], size_t n, const bool criterio)
 {
 	if (criterio)
 	{
@@ -816,7 +816,7 @@ void ScambiaUtilizzatore(Utilizzatore_t* utilizzatoreA, Utilizzatore_t* utilizza
 	*utilizzatoreB = temp;
 }
 
-void BubbleSortUtilizzatore(Utilizzatore_t utilizzatore[], size_t n, bool criterio)
+void BubbleSortUtilizzatore(Utilizzatore_t utilizzatore[], size_t n, const bool criterio)
 {
 	if (criterio)
 	{

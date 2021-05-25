@@ -68,7 +68,7 @@ bool ControllaNomeUtenteUtilizzatore(FILE* file, char buffer[]);
 /// <param name="buffer"></param>
 /// <param name="nomeUtente">Nome utente immesso immediatamente prima</param>
 /// <returns>Restituisce 1 se la password è corretta, 0 altrimenti</returns>
-bool ControllaPassword(FILE* file, char buffer[], char nomeUtente[]);
+bool ControllaPassword(FILE* file, char buffer[], const char nomeUtente[]);
 
 /// <summary>
 /// Questa procedura permette l'inserimento dei dati al momento della registrazione creatore
@@ -106,7 +106,7 @@ void SalvaDatiUtilizzatore(FILE* file, Utilizzatore_t* utilizzatore);
 /// <param name="file">File dei creatori</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
 /// <returns>Ritorna 1 se è andato a buon fine, 0 altrimenti</returns>
-bool AggiornaNumImmaginiCreatore(FILE* file, char nomeUtente[]);
+bool AggiornaNumImmaginiCreatore(FILE* file, const char nomeUtente[]);
 
 /// <summary>
 /// Questa funzione permette l'aggiornamento del campo numDownload del creatore
@@ -114,7 +114,7 @@ bool AggiornaNumImmaginiCreatore(FILE* file, char nomeUtente[]);
 /// <param name="file">File dei creatori</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
 /// <returns>Ritorna 1 se è andato a buon fine, 0 altrimenti</returns>
-bool AggiornaNumDownloadCreatore(FILE* file, char nomeUtente[]);
+bool AggiornaNumDownloadCreatore(FILE* file, const char nomeUtente[]);
 
 /// <summary>
 /// Questa funzione permette l'aggiornamento della mediaValutazioni del creatore
@@ -130,7 +130,7 @@ bool AggiornaMediaValutazioniCreatore(FILE* file, unsigned int valutazione);
 /// <param name="file">File degli utilizzatori</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
 /// <returns>Ritorna 1 se è andato a buon fine, 0 altrimenti</returns>
-bool AggiornaNumDownloadUtilizzatore(FILE* file, char nomeUtente[]);
+bool AggiornaNumDownloadUtilizzatore(FILE* file, const char nomeUtente[]);
 
 /// <summary>
 /// Questa funzione permette l'aggiornamento del campo numValutazioni dell'utilizzatore
@@ -160,7 +160,7 @@ void ScambiaCreatore(Creatore_t* creatoreA, Creatore_t* creatoreB);
 /// <param name="creatore">Array pieno dei creatori</param>
 /// <param name="n">Numero elementi</param>
 /// <param name="criterio">True se vogliamo ordinare per numero di download, False per media valutazioni</param>
-void BubbleSortCreatore(Creatore_t creatore[], size_t n, bool criterio);
+void BubbleSortCreatore(Creatore_t creatore[], size_t n, const bool criterio);
 
 /// <summary>
 /// Carica in un array tutti gli utilizzatori
@@ -183,6 +183,6 @@ void ScambiaUtilizzatore(Utilizzatore_t* utilizzatoreA, Utilizzatore_t* utilizza
 /// <param name="creatore">Array pieno degli utilizzatori</param>
 /// <param name="n">Numero elementi</param>
 /// <param name="criterio">True se vogliamo ordinare per numero di download, False per numero di valutazioni</param>
-void BubbleSortUtilizzatore(Utilizzatore_t utilizzatore[], size_t n, bool criterio);
+void BubbleSortUtilizzatore(Utilizzatore_t utilizzatore[], size_t n, const bool criterio);
 
 #endif

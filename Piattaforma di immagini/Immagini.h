@@ -62,7 +62,7 @@ void SalvaDatiImmagine(FILE* file, Immagine_t* immagine);
 /// </summary>
 /// <param name="immagine">Struct dell'immagine</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
-void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[]);
+void InserisciDatiImmagine(Immagine_t* immagine, const char nomeUtente[]);
 
 /// <summary>
 /// Questa funzione permette la modifica delle immagini
@@ -70,7 +70,7 @@ void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[]);
 /// <param name="file">File delle immagini</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
 /// <returns>Restituisce 1 se è andato a buon fine, 0 altrimenti</returns>
-bool ModificaImmagini(FILE* file, char nomeUtente[]);
+bool ModificaImmagini(FILE* file, const char nomeUtente[]);
 
 /// <summary>
 /// Questa funzione permette la visualizzazione in elenco di tutte le immagini caricate dall'utente loggato nel menu creatore.
@@ -78,7 +78,7 @@ bool ModificaImmagini(FILE* file, char nomeUtente[]);
 /// <param name="file">File delle immagini</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
 /// <returns>Restituisce 1 se è andato a buon fine, 0 altrimenti</returns>
-bool StampaImmaginiCaricate(FILE* file, char nomeUtente[]);
+bool StampaImmaginiCaricate(FILE* file, const char nomeUtente[]);
 
 /// <summary>
 /// Questa funzione permette la rimozione dell'immagine selezionata nel menu creatore.
@@ -87,7 +87,7 @@ bool StampaImmaginiCaricate(FILE* file, char nomeUtente[]);
 /// <param name="file">File delle immagini</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
 /// <returns>Restituisce 1 se è andato a buon fine, 0 altrimenti</returns>
-bool RimuoviImmagine(FILE* file, char nomeUtente[]);
+bool RimuoviImmagine(FILE* file, const char nomeUtente[]);
 
 /// <summary>
 /// Questa funzione permette la visualizzazione dettagliata dell'immagine selezionata nel menu creatore.
@@ -96,7 +96,7 @@ bool RimuoviImmagine(FILE* file, char nomeUtente[]);
 /// <param name="file">File delle immagini</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
 /// <returns>Restituisce 1 se è andato a buon fine, 0 altrimenti</returns>
-bool VisualizzaImmagineCreatore(FILE* file, char nomeUtente[]);
+bool VisualizzaImmagineCreatore(FILE* file, const char nomeUtente[]);
 
 /// <summary>
 /// Questa funzione permette la visualizzazione dettagliata dell'immagine selezionata e ne permette anche il download
@@ -170,7 +170,7 @@ bool RicercaTags(FILE* file);
 /// <param name="file">File delle immagini</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
 /// <returns>Restituisce la valutazione data (da 1 a 5). Restituisce 0 se la valutazione è stata già data</returns>
-unsigned int ValutaImmagine(FILE* file, char nomeUtente[]);
+unsigned int ValutaImmagine(FILE* file, const char nomeUtente[]);
 
 /// <summary>
 /// Questa procedura salva le informazioni essenziali della valutazione data, per permettere in seguito
@@ -179,7 +179,7 @@ unsigned int ValutaImmagine(FILE* file, char nomeUtente[]);
 /// <param name="fileImmagine">File delle immagini</param>
 /// <param name="nomeUtente">Nome utente dell'utente loggato</param>
 /// <param name="valutazione">Valutazione data dall'utente</param>
-void SalvaValutazione(FILE* fileImmagine, char nomeUtente[], unsigned int valutazione);
+void SalvaValutazione(FILE* fileImmagine, const char nomeUtente[], unsigned int valutazione);
 
 /// <summary>
 /// Carica in un array tutte le immagini
@@ -202,6 +202,6 @@ void ScambiaImmagine(Immagine_t *immagineA, Immagine_t *immagineB);
 /// <param name="immagine">Array pieno di immagini</param>
 /// <param name="n">Numero di elementi</param>
 /// <param name="criterio">True se vogliamo ordinare per numero di download, false per media valutazioni</param>
-void BubbleSortImmagine(Immagine_t immagine[], size_t n, bool criterio);
+void BubbleSortImmagine(Immagine_t immagine[], size_t n, const bool criterio);
 
 #endif

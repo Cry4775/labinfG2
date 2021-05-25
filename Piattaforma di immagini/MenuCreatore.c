@@ -140,7 +140,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 		system("cls");
 
 		StampaTitolo("*****************\nRICERCA IMMAGINI\n*****************\n");
-		printf("\nSeleziona il metodo di ricerca che piu' preferisci!");
+		printf("\nSeleziona il metodo di ricerca che piu' preferisci!\n");
 		puts("1. Popolari\n2. Categorie\n3. Tags\n4. Indietro\n");
 		green();
 		printf("->");

@@ -6,7 +6,7 @@ const char* categoria[NUM_CATEGORIE] = { "Cibo", "Lavoro", "Moda e Design", "Nat
 const char* tags[NUM_TAGS] = { "Colazione", "Pranzo", "Cena", "Capo", "Collega", "Scrivania", "Arte", "Matrimonio", "Sfilata", "Cane", "Gatto",
                                "Mare", "Montagne", "Alpi", "Lago", "Luna", "Marte", "Razzo", "Calcio", "Palestra", "Olimpiadi" };
 
-void InserisciDatiImmagine(Immagine_t* immagine, char nomeUtente[])
+void InserisciDatiImmagine(Immagine_t* immagine, const char nomeUtente[])
 {
 	bool errore = false;
 
@@ -162,7 +162,7 @@ void SalvaDatiImmagine(FILE* file, Immagine_t* immagine)
 	}
 }
 
-bool ModificaImmagini(FILE* file, char nomeUtente[])
+bool ModificaImmagini(FILE* file, const char nomeUtente[])
 {
 	bool errore = false;
 	do
@@ -554,7 +554,7 @@ void InserisciCategoriaCaricamento(Immagine_t** immagine)
 	} while (errore);
 }
 
-bool StampaImmaginiCaricate(FILE* file, char nomeUtente[])	
+bool StampaImmaginiCaricate(FILE* file, const char nomeUtente[])	
 {
 	bool trovato = false;	 // trovato = c'è almeno un'immagine caricata dall'utente?								
 	// Stampa le immagini caricate dall'utente
@@ -582,7 +582,7 @@ bool StampaImmaginiCaricate(FILE* file, char nomeUtente[])
 	return trovato;
 }
 
-bool RimuoviImmagine(FILE* file, char nomeUtente[])
+bool RimuoviImmagine(FILE* file, const char nomeUtente[])
 {
 	bool errore = false;
 
@@ -648,7 +648,7 @@ bool RimuoviImmagine(FILE* file, char nomeUtente[])
 	return false;
 }
 
-bool VisualizzaImmagineCreatore(FILE* file, char nomeUtente[])
+bool VisualizzaImmagineCreatore(FILE* file, const char nomeUtente[])
 {
 	bool errore = false;
 	do
@@ -773,6 +773,7 @@ bool RicercaCategoria(FILE* file)
 			StampaErrore("Sono ammessi solo numeri!");
 		}
 	} while (errore);
+	return false;
 }
 
 bool RicercaTags(FILE* file)
@@ -840,6 +841,7 @@ bool RicercaTags(FILE* file)
 			StampaErrore("Sono ammessi solo numeri!");
 		}
 	} while (errore);
+	return false;
 }
 
 bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
@@ -925,7 +927,7 @@ bool VisualizzaImmagine(FILE* file, char autoreImmagine[])
 	return false;
 }
 
-unsigned int ValutaImmagine(FILE* file, char nomeUtente[])
+unsigned int ValutaImmagine(FILE* file, const char nomeUtente[])
 {
 	bool errore = false;
 	unsigned int valutazione;
@@ -1005,7 +1007,7 @@ unsigned int ValutaImmagine(FILE* file, char nomeUtente[])
 	return valutazione;
 }
 
-void SalvaValutazione(FILE* fileImmagine, char nomeUtente[], unsigned int valutazione)
+void SalvaValutazione(FILE* fileImmagine, const char nomeUtente[], unsigned int valutazione)
 {
 	Immagine_t immagine = { 0 };
 
@@ -1054,7 +1056,7 @@ void ScambiaImmagine(Immagine_t *immagineA, Immagine_t *immagineB)
 	*immagineB = temp;
 }
 
-void BubbleSortImmagine(Immagine_t immagine[], size_t n, bool criterio)
+void BubbleSortImmagine(Immagine_t immagine[], size_t n, const bool criterio)
 {
 	if (criterio)
 	{
