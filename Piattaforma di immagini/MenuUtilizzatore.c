@@ -402,8 +402,13 @@ void Classifiche()
 
 				size_t numImmagini = CaricaArrayImmagini(file, immagine);
 
-				printf("\nSeleziona l'ordine in cui visualizzare le immagini:\n");
-				printf("1. Per numero di download\n2. Per valutazione media\n3. Indietro\n\n");
+				green();
+				printf("Seleziona l'ordine in cui visualizzare le immagini:\n");
+				reset();
+				printf("\n1. Per numero di download\n2. Per valutazione media\n3. Indietro\n\n");
+				green();
+				printf("->");
+				reset();
 				if (scanf("%u", &sceltaMenu) == 1)
 				{
 					SvuotaInput();
@@ -481,8 +486,13 @@ void Classifiche()
 
 				size_t numCreatori = CaricaArrayCreatori(file, creatore);
 
-				printf("\nSeleziona l'ordine in cui visualizzare i creatori:\n");
-				printf("1. Per numero di download\n2. Per valutazione media\n3. Indietro\n\n");
+				green();
+				printf("Seleziona l'ordine in cui visualizzare i creatori:\n");
+				reset();
+				printf("\n1. Per numero di download\n2. Per valutazione media\n3. Indietro\n\n");
+				green();
+				printf("->");
+				reset();
 				if (scanf("%u", &sceltaMenu) == 1)
 				{
 					SvuotaInput();
@@ -560,8 +570,13 @@ void Classifiche()
 
 				size_t numUtilizzatori = CaricaArrayUtilizzatori(file, utilizzatore);
 
-				printf("\nSeleziona l'ordine in cui visualizzare gli utilizzatori:\n");
-				printf("1. Per numero di download\n2. Per numero di valutazioni\n3. Indietro\n\n");
+				green();
+				printf("Seleziona l'ordine in cui visualizzare gli utilizzatori:\n");
+				reset();
+				printf("\n1. Per numero di download\n2. Per numero di valutazioni\n3. Indietro\n\n");
+				green();
+				printf("->");
+				reset();
 				if (scanf("%u", &sceltaMenu) == 1)
 				{
 					SvuotaInput();
