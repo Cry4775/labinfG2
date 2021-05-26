@@ -412,33 +412,45 @@ void Classifiche()
 					case 1:
 					{
 						system("cls");
-						//Ordiniamo per numero di download
-						BubbleSortImmagine(immagine, numImmagini, true);
-						blue();
-						printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
-						reset();
 
-						for (size_t i = 0; i < numImmagini; i++)
+						if (numImmagini != 0)
 						{
-							printf("%-30s%-30s%-30u%-30s\n", immagine[i].titolo, immagine[i].nomeUtente, immagine[i].numDownload, immagine[i].categoria);
+							//Ordiniamo per numero di download
+							BubbleSortImmagine(immagine, numImmagini, true);
+							blue();
+							printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
+							reset();
+
+							for (size_t i = 0; i < numImmagini; i++)
+							{
+								printf("%-30s%-30s%-30u%-30s\n", immagine[i].titolo, immagine[i].nomeUtente, immagine[i].numDownload, immagine[i].categoria);
+							}
+							system("pause");
 						}
-						system("pause");
+						else
+							StampaErrore("Errore! Non sono presenti immagini nel sistema!");
 						break;
 					}
 					case 2:
 					{
 						system("cls");
-						//Ordiniamo per valutazione media
-						BubbleSortImmagine(immagine, numImmagini, false);
-						blue();
-						printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Valutazione media", "Categoria");
-						reset();
 
-						for (size_t i = 0; i < numImmagini; i++)
+						if (numImmagini != 0)
 						{
-							printf("%-30s%-30s%-30.1f%-30s\n", immagine[i].titolo, immagine[i].nomeUtente, immagine[i].valutazioneMedia, immagine[i].categoria);
+							//Ordiniamo per valutazione media
+							BubbleSortImmagine(immagine, numImmagini, false);
+							blue();
+							printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Valutazione media", "Categoria");
+							reset();
+
+							for (size_t i = 0; i < numImmagini; i++)
+							{
+								printf("%-30s%-30s%-30.1f%-30s\n", immagine[i].titolo, immagine[i].nomeUtente, immagine[i].valutazioneMedia, immagine[i].categoria);
+							}
+							system("pause");
 						}
-						system("pause");
+						else
+							StampaErrore("Errore! Non sono presenti immagini nel sistema!");
 						break;
 					}
 					case 3:
@@ -479,33 +491,45 @@ void Classifiche()
 					case 1:
 					{
 						system("cls");
-						//Ordiniamo per numero di download
-						BubbleSortCreatore(creatore, numCreatori, true);
-						blue();
-						printf("%-30s%-30s%-30s%-30s\n", "Nome utente", "Numero di immagini", "Numero di download", "Media valutazioni");
-						reset();
 
-						for (size_t i = 0; i < numCreatori; i++)
+						if (numCreatori != 0)
 						{
-							printf("%-30s%-30u%-30u%-30.1f\n", creatore[i].nomeUtente, creatore[i].numImmagini, creatore[i].numDownloadTot, creatore[i].mediaValutazioni);
+							//Ordiniamo per numero di download
+							BubbleSortCreatore(creatore, numCreatori, true);
+							blue();
+							printf("%-30s%-30s%-30s%-30s\n", "Nome utente", "Numero di immagini", "Numero di download", "Media valutazioni");
+							reset();
+
+							for (size_t i = 0; i < numCreatori; i++)
+							{
+								printf("%-30s%-30u%-30u%-30.1f\n", creatore[i].nomeUtente, creatore[i].numImmagini, creatore[i].numDownloadTot, creatore[i].mediaValutazioni);
+							}
+							system("pause");
 						}
-						system("pause");
+						else
+							StampaErrore("Errore! Non sono presenti creatori nel sistema!");
 						break;
 					}
 					case 2:
 					{
 						system("cls");
-						//Ordiniamo per valutazione media
-						BubbleSortCreatore(creatore, numCreatori, false);
-						blue();
-						printf("%-30s%-30s%-30s%-30s\n", "Nome utente", "Numero di immagini", "Numero di download", "Media valutazioni");
-						reset();
 
-						for (size_t i = 0; i < numCreatori; i++)
+						if (numCreatori != 0)
 						{
-							printf("%-30s%-30u%-30u%-30.1f\n", creatore[i].nomeUtente, creatore[i].numImmagini, creatore[i].numDownloadTot, creatore[i].mediaValutazioni);
+							//Ordiniamo per valutazione media
+							BubbleSortCreatore(creatore, numCreatori, false);
+							blue();
+							printf("%-30s%-30s%-30s%-30s\n", "Nome utente", "Numero di immagini", "Numero di download", "Media valutazioni");
+							reset();
+
+							for (size_t i = 0; i < numCreatori; i++)
+							{
+								printf("%-30s%-30u%-30u%-30.1f\n", creatore[i].nomeUtente, creatore[i].numImmagini, creatore[i].numDownloadTot, creatore[i].mediaValutazioni);
+							}
+							system("pause");
 						}
-						system("pause");
+						else
+							StampaErrore("Errore! Non sono presenti creatori nel sistema!");
 						break;
 					}
 					case 3:
@@ -546,33 +570,45 @@ void Classifiche()
 					case 1:
 					{
 						system("cls");
-						//Ordiniamo per numero di download
-						BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, true);
-						blue();
-						printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
-						reset();
 
-						for (size_t i = 0; i < numUtilizzatori; i++)
+						if (numUtilizzatori != 0)
 						{
-							printf("%-30s%-30u%-30u\n", utilizzatore[i].nomeUtente, utilizzatore[i].numDownloadTot, utilizzatore[i].numValutazioni);
+							//Ordiniamo per numero di download
+							BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, true);
+							blue();
+							printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
+							reset();
+
+							for (size_t i = 0; i < numUtilizzatori; i++)
+							{
+								printf("%-30s%-30u%-30u\n", utilizzatore[i].nomeUtente, utilizzatore[i].numDownloadTot, utilizzatore[i].numValutazioni);
+							}
+							system("pause");
 						}
-						system("pause");
+						else
+							StampaErrore("Errore! Non sono presenti utilizzatori nel sistema!");
 						break;
 					}
 					case 2:
 					{
 						system("cls");
-						//Ordiniamo per numero di valutazioni
-						BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, false);
-						blue();
-						printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
-						reset();
 
-						for (size_t i = 0; i < numUtilizzatori; i++)
+						if (numUtilizzatori != 0)
 						{
-							printf("%-30s%-30u%-30u\n", utilizzatore[i].nomeUtente, utilizzatore[i].numDownloadTot, utilizzatore[i].numValutazioni);
+							//Ordiniamo per numero di valutazioni
+							BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, false);
+							blue();
+							printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
+							reset();
+
+							for (size_t i = 0; i < numUtilizzatori; i++)
+							{
+								printf("%-30s%-30u%-30u\n", utilizzatore[i].nomeUtente, utilizzatore[i].numDownloadTot, utilizzatore[i].numValutazioni);
+							}
+							system("pause");
 						}
-						system("pause");
+						else
+							StampaErrore("Errore! Non sono presenti utilizzatori nel sistema!");
 						break;
 					}
 					case 3:

@@ -171,6 +171,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 				printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
 				reset();
 
+				// Limito la visualizzazione alle 10 più popolari
 				if (numImmagini > 10)
 					numImmagini = 10;
 

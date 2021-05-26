@@ -55,7 +55,7 @@ bool MenuIniziale(bool* isCreatore, char nomeUtente[])
 						SvuotaInput();
 						switch (sceltaMenu)
 						{
-							// Registrazione utente Creatore
+						// Registrazione utente Creatore
 						case 1:
 						{
 							system("cls");
@@ -255,7 +255,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 				SvuotaInput();
 				switch (sceltaMenu)
 				{
-					// Gestione creatore
+				// Gestione creatore
 				case 1:
 				{
 					GestioneCreatore(nomeUtente);
@@ -322,7 +322,7 @@ void MenuPrincipale(bool* isCreatore, char nomeUtente[])
 				SvuotaInput();
 				switch (sceltaMenu)
 				{
-					// Ricerca immagine
+				// Ricerca immagine
 				case 1:
 				{
 					RicercaImmagineUtilizzatore(nomeUtente);

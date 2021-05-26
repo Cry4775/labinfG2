@@ -649,6 +649,8 @@ bool AggiornaNumImmaginiCreatore(FILE* file, const char nomeUtente[])
 			if (strcmp(nomeUtente, tempCreatore.nomeUtente) == 0)
 			{
 				tempCreatore.numImmagini++;
+
+				// Aggiorno i dati
 				fseek(file, -(int)sizeof(Creatore_t), SEEK_CUR);
 				fwrite(&tempCreatore, sizeof(Creatore_t), 1, file);
 				return true;
@@ -672,6 +674,8 @@ bool AggiornaNumDownloadCreatore(FILE* file, const char nomeUtente[])
 			if (strcmp(nomeUtente, tempCreatore.nomeUtente) == 0)
 			{
 				tempCreatore.numDownloadTot++;
+
+				// Aggiorno i dati
 				fseek(file, -(int)sizeof(Creatore_t), SEEK_CUR);
 				fwrite(&tempCreatore, sizeof(Creatore_t), 1, file);
 				return true;
