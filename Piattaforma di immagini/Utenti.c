@@ -771,27 +771,37 @@ void ScambiaCreatore(Creatore_t* creatoreA, Creatore_t* creatoreB)
 
 void BubbleSortCreatore(Creatore_t creatore[], size_t n, const bool criterio)
 {
+	bool scambiato = false;
+
 	if (criterio)
 	{
-		for (size_t i = 0; i < n - 1; i++)
+		do
 		{
-			for (size_t j = n; j > i; j--)
+			scambiato = false;
+			for (size_t i = 0; i < n - 1; i++)
 			{
-				if (creatore[j].numDownloadTot > creatore[j - 1].numDownloadTot)
-					ScambiaCreatore(&creatore[j], &creatore[j - 1]);
+				if (creatore[i].numDownloadTot < creatore[i + 1].numDownloadTot)
+				{
+					ScambiaCreatore(&creatore[i], &creatore[i + 1]);
+					scambiato = true;
+				}
 			}
-		}
+		} while (scambiato);
 	}
 	else
 	{
-		for (size_t i = 0; i < n - 1; i++)
+		do
 		{
-			for (size_t j = n; j > i; j--)
+			scambiato = false;
+			for (size_t i = 0; i < n - 1; i++)
 			{
-				if (creatore[j].mediaValutazioni > creatore[j - 1].mediaValutazioni)
-					ScambiaCreatore(&creatore[j], &creatore[j - 1]);
+				if (creatore[i].mediaValutazioni < creatore[i + 1].mediaValutazioni)
+				{
+					ScambiaCreatore(&creatore[i], &creatore[i + 1]);
+					scambiato = true;
+				}
 			}
-		}
+		} while (scambiato);
 	}
 }
 
@@ -822,26 +832,35 @@ void ScambiaUtilizzatore(Utilizzatore_t* utilizzatoreA, Utilizzatore_t* utilizza
 
 void BubbleSortUtilizzatore(Utilizzatore_t utilizzatore[], size_t n, const bool criterio)
 {
+	bool scambiato = false;
+
 	if (criterio)
 	{
-		for (size_t i = 0; i < n - 1; i++)
-		{
-			for (size_t j = n; j > i; j--)
+		do {
+			scambiato = false;
+			for (size_t i = 0; i < n-1; i++)
 			{
-				if (utilizzatore[j].numDownloadTot > utilizzatore[j - 1].numDownloadTot)
-					ScambiaUtilizzatore(&utilizzatore[j], &utilizzatore[j - 1]);
+				if (utilizzatore[i].numDownloadTot < utilizzatore[i + 1].numDownloadTot)
+				{
+					ScambiaUtilizzatore(&utilizzatore[i], &utilizzatore[i + 1]);
+					scambiato = true;
+				}
 			}
-		}
+		} while (scambiato);
 	}
 	else
 	{
-		for (size_t i = 0; i < n - 1; i++)
+		do
 		{
-			for (size_t j = n; j > i; j--)
+			scambiato = false;
+			for (size_t i = 0; i < n - 1; i++)
 			{
-				if (utilizzatore[j].numValutazioni > utilizzatore[j - 1].numValutazioni)
-					ScambiaUtilizzatore(&utilizzatore[j], &utilizzatore[j - 1]);
+				if (utilizzatore[i].numValutazioni < utilizzatore[i + 1].numValutazioni)
+				{
+					ScambiaUtilizzatore(&utilizzatore[i], &utilizzatore[i + 1]);
+					scambiato = true;
+				}
 			}
-		}
+		} while (scambiato);
 	}
 }

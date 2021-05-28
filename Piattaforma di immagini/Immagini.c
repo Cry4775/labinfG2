@@ -1063,26 +1063,36 @@ void ScambiaImmagine(Immagine_t *immagineA, Immagine_t *immagineB)
 
 void BubbleSortImmagine(Immagine_t immagine[], size_t n, const bool criterio)
 {
+	bool scambiato = false;
+
 	if (criterio)
 	{
-		for (size_t i = 0; i < n - 1; i++)
+		do
 		{
-			for (size_t j = n; j > i; j--)
+			scambiato = false;
+			for (size_t i = 0; i < n - 1; i++)
 			{
-				if (immagine[j].numDownload > immagine[j - 1].numDownload)
-					ScambiaImmagine(&immagine[j], &immagine[j - 1]);
+				if (immagine[i].numDownload < immagine[i + 1].numDownload)
+				{
+					ScambiaImmagine(&immagine[i], &immagine[i + 1]);
+					scambiato = true;
+				}
 			}
-		}
+		} while (scambiato);
 	}
 	else
 	{
-		for (size_t i = 0; i < n - 1; i++)
+		do
 		{
-			for (size_t j = n; j > i; j--)
+			scambiato = false;
+			for (size_t i = 0; i < n - 1; i++)
 			{
-				if (immagine[j].valutazioneMedia > immagine[j - 1].valutazioneMedia)
-					ScambiaImmagine(&immagine[j], &immagine[j - 1]);
+				if (immagine[i].valutazioneMedia < immagine[i + 1].valutazioneMedia)
+				{
+					ScambiaImmagine(&immagine[i], &immagine[i + 1]);
+					scambiato = true;
+				}
 			}
-		}
+		} while (scambiato);
 	}
 }
