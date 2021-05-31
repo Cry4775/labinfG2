@@ -166,7 +166,7 @@ void RicercaImmagineCreatore(char nomeUtente[])
 
 				size_t numImmagini = CaricaArrayImmagini(file, immagine);
 
-				BubbleSortImmagine(immagine, numImmagini, true);
+				SortImmagine(immagine, 0, numImmagini-1, true);
 				blue();
 				printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
 				reset();

@@ -769,41 +769,50 @@ void ScambiaCreatore(Creatore_t* creatoreA, Creatore_t* creatoreB)
 	*creatoreB = temp;
 }
 
-void BubbleSortCreatore(Creatore_t creatore[], size_t n, const bool criterio)
+int PartizionamentoCreatore(Creatore_t creatore[], int low, int high, const bool criterio)
 {
-	bool scambiato = false;
+	Creatore_t pivot = creatore[high];
+	int i = (low - 1); // Indice dell'elemento più piccolo e indica la posizione corretta del pivot in quel momento
 
 	if (criterio)
 	{
-		do
+
+		for (size_t j = low; j <= high; j++)
 		{
-			scambiato = false;
-			for (size_t i = 0; i < n - 1; i++)
+			if (creatore[j].numDownloadTot > pivot.numDownloadTot)
 			{
-				if (creatore[i].numDownloadTot < creatore[i + 1].numDownloadTot)
-				{
-					ScambiaCreatore(&creatore[i], &creatore[i + 1]);
-					scambiato = true;
-				}
+				i++; // Incrementa l'indice dell'elemento più piccolo
+				ScambiaCreatore(&creatore[i], &creatore[j]);
 			}
-		} while (scambiato);
+		}
 	}
 	else
 	{
-		do
+		for (size_t j = low; j <= high; j++)
 		{
-			scambiato = false;
-			for (size_t i = 0; i < n - 1; i++)
+			if (creatore[j].mediaValutazioni > pivot.mediaValutazioni)
 			{
-				if (creatore[i].mediaValutazioni < creatore[i + 1].mediaValutazioni)
-				{
-					ScambiaCreatore(&creatore[i], &creatore[i + 1]);
-					scambiato = true;
-				}
+				i++; // Incrementa l'indice dell'elemento più piccolo
+				ScambiaCreatore(&creatore[i], &creatore[j]);
 			}
-		} while (scambiato);
+		}
+	}
+	ScambiaCreatore(&creatore[i + 1], &creatore[high]);
+	return (i + 1);
+}
+
+void SortCreatore(Creatore_t creatore[], int low, int high, const bool criterio)
+{
+	if (low < high)
+	{
+		int pi = PartizionamentoCreatore(creatore, low, high, criterio);
+
+		SortCreatore(creatore, low, pi - 1, criterio);
+		SortCreatore(creatore, pi + 1, high, criterio);
 	}
 }
+
+
 
 
 size_t CaricaArrayUtilizzatori(FILE* file, Utilizzatore_t utilizzatore[])
@@ -830,37 +839,45 @@ void ScambiaUtilizzatore(Utilizzatore_t* utilizzatoreA, Utilizzatore_t* utilizza
 	*utilizzatoreB = temp;
 }
 
-void BubbleSortUtilizzatore(Utilizzatore_t utilizzatore[], size_t n, const bool criterio)
+int PartizionamentoUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, const bool criterio)
 {
-	bool scambiato = false;
+	Utilizzatore_t pivot = utilizzatore[high];
+	int i = (low - 1); // Indice dell'elemento più piccolo e indica la posizione corretta del pivot in quel momento
 
 	if (criterio)
 	{
-		do {
-			scambiato = false;
-			for (size_t i = 0; i < n-1; i++)
+
+		for (size_t j = low; j <= high; j++)
+		{
+			if (utilizzatore[j].numDownloadTot > pivot.numDownloadTot)
 			{
-				if (utilizzatore[i].numDownloadTot < utilizzatore[i + 1].numDownloadTot)
-				{
-					ScambiaUtilizzatore(&utilizzatore[i], &utilizzatore[i + 1]);
-					scambiato = true;
-				}
+				i++; // Incrementa l'indice dell'elemento più piccolo
+				ScambiaUtilizzatore(&utilizzatore[i], &utilizzatore[j]);
 			}
-		} while (scambiato);
+		}
 	}
 	else
 	{
-		do
+		for (size_t j = low; j <= high; j++)
 		{
-			scambiato = false;
-			for (size_t i = 0; i < n - 1; i++)
+			if (utilizzatore[j].numValutazioni > pivot.numValutazioni)
 			{
-				if (utilizzatore[i].numValutazioni < utilizzatore[i + 1].numValutazioni)
-				{
-					ScambiaUtilizzatore(&utilizzatore[i], &utilizzatore[i + 1]);
-					scambiato = true;
-				}
+				i++; // Incrementa l'indice dell'elemento più piccolo
+				ScambiaUtilizzatore(&utilizzatore[i], &utilizzatore[j]);
 			}
-		} while (scambiato);
+		}
+	}
+	ScambiaUtilizzatore(&utilizzatore[i + 1], &utilizzatore[high]);
+	return (i + 1);
+}
+
+void SortUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, const bool criterio)
+{
+	if (low < high)
+	{
+		int pi = PartizionamentoUtilizzatore(utilizzatore, low, high, criterio);
+
+		SortUtilizzatore(utilizzatore, low, pi - 1, criterio);
+		SortUtilizzatore(utilizzatore, pi + 1, high, criterio);
 	}
 }

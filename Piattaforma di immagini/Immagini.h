@@ -197,11 +197,23 @@ size_t CaricaArrayImmagini(FILE* file, Immagine_t immagine[]);
 void ScambiaImmagine(Immagine_t *immagineA, Immagine_t *immagineB);
 
 /// <summary>
-/// Procedura di bubble sort per le immagini
+/// Questa funzione prende l'ultimo elemento come pivot, posiziona l'elemento pivot nella sua posizione corretta
+/// nell'array ordinato, e posiziona tutti gli elementi più piccoli a sinistra, mentre tutti i più grandi a destra di esso
 /// </summary>
-/// <param name="immagine">Array pieno di immagini</param>
-/// <param name="n">Numero di elementi</param>
-/// <param name="criterio">True se vogliamo ordinare per numero di download, false per media valutazioni</param>
-void BubbleSortImmagine(Immagine_t immagine[], size_t n, const bool criterio);
+/// <param name="immagine">Array di immagini</param>
+/// <param name="low">Estremo SX</param>
+/// <param name="high">Estremo DX</param>
+/// <param name="criterio">True se vogliamo ordinare per numero di download, False per media valutazioni</param>
+/// <returns>Restituisce la posizione del pivot nell'array ordinato</returns>
+int PartizionamentoImmagine(Immagine_t immagine[], int low, int high, const bool criterio);
+
+/// <summary>
+/// Ordinamento quick sort delle immagini
+/// </summary>
+/// <param name="immagine">Array di immagini</param>
+/// <param name="low">Estremo SX</param>
+/// <param name="high">Estremo DX</param>
+/// <param name="criterio">True se vogliamo ordinare per numero di download, False per numero di valutazioni</param>
+void SortImmagine(Immagine_t immagine[], int low, int high, const bool criterio);
 
 #endif

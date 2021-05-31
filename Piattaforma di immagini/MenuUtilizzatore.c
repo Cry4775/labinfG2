@@ -39,7 +39,7 @@ void RicercaImmagineUtilizzatore(char nomeUtente[])
 
 				size_t numImmagini = CaricaArrayImmagini(file, immagine);
 
-				BubbleSortImmagine(immagine, numImmagini, true);
+				SortImmagine(immagine, 0, numImmagini-1, true);
 
 				blue();
 				printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
@@ -421,7 +421,7 @@ void Classifiche()
 						if (numImmagini != 0)
 						{
 							//Ordiniamo per numero di download
-							BubbleSortImmagine(immagine, numImmagini, true);
+							SortImmagine(immagine, 0, numImmagini - 1, true);
 							blue();
 							printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Numero di download", "Categoria");
 							reset();
@@ -443,7 +443,7 @@ void Classifiche()
 						if (numImmagini != 0)
 						{
 							//Ordiniamo per valutazione media
-							BubbleSortImmagine(immagine, numImmagini, false);
+							SortImmagine(immagine, 0, numImmagini-1, false);
 							blue();
 							printf("%-30s%-30s%-30s%-30s\n", "Titolo", "Autore", "Valutazione media", "Categoria");
 							reset();
@@ -505,7 +505,7 @@ void Classifiche()
 						if (numCreatori != 0)
 						{
 							//Ordiniamo per numero di download
-							BubbleSortCreatore(creatore, numCreatori, true);
+							SortCreatore(creatore, 0, numCreatori-1, true);
 							blue();
 							printf("%-30s%-30s%-30s%-30s\n", "Nome utente", "Numero di immagini", "Numero di download", "Media valutazioni");
 							reset();
@@ -527,7 +527,7 @@ void Classifiche()
 						if (numCreatori != 0)
 						{
 							//Ordiniamo per valutazione media
-							BubbleSortCreatore(creatore, numCreatori, false);
+							SortCreatore(creatore, 0, numCreatori-1, false);
 							blue();
 							printf("%-30s%-30s%-30s%-30s\n", "Nome utente", "Numero di immagini", "Numero di download", "Media valutazioni");
 							reset();
@@ -589,7 +589,7 @@ void Classifiche()
 						if (numUtilizzatori != 0)
 						{
 							//Ordiniamo per numero di download
-							BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, true);
+							SortUtilizzatore(utilizzatore, 0, numUtilizzatori-1, true);
 							blue();
 							printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
 							reset();
@@ -611,7 +611,7 @@ void Classifiche()
 						if (numUtilizzatori != 0)
 						{
 							//Ordiniamo per numero di valutazioni
-							BubbleSortUtilizzatore(utilizzatore, numUtilizzatori, false);
+							SortUtilizzatore(utilizzatore, 0, numUtilizzatori - 1, false);
 							blue();
 							printf("%-30s%-30s%-30s\n", "Nome utente", "Numero di download", "Numero di valutazioni");
 							reset();

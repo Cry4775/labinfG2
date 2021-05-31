@@ -155,12 +155,26 @@ size_t CaricaArrayCreatori(FILE* file, Creatore_t creatore[]);
 void ScambiaCreatore(Creatore_t* creatoreA, Creatore_t* creatoreB);
 
 /// <summary>
-/// Ordinamento bubble sort del creatore
+/// Questa funzione prende l'ultimo elemento come pivot, posiziona l'elemento pivot nella sua posizione corretta
+/// nell'array ordinato, e posiziona tutti gli elementi più piccoli a sinistra, mentre tutti i più grandi a destra di esso
 /// </summary>
-/// <param name="creatore">Array pieno dei creatori</param>
-/// <param name="n">Numero elementi</param>
+/// <param name="creatore">Array di creatori</param>
+/// <param name="low">Estremo SX</param>
+/// <param name="high">Estremo DX</param>
 /// <param name="criterio">True se vogliamo ordinare per numero di download, False per media valutazioni</param>
-void BubbleSortCreatore(Creatore_t creatore[], size_t n, const bool criterio);
+/// <returns>Restituisce la posizione del pivot nell'array ordinato</returns>
+int PartizionamentoCreatore(Creatore_t creatore[], int low, int high, const bool criterio);
+
+/// <summary>
+/// Ordinamento quick sort del creatore
+/// </summary>
+/// <param name="creatore">Array di creatori</param>
+/// <param name="low">Estremo SX</param>
+/// <param name="high">Estremo DX</param>
+/// <param name="criterio">True se vogliamo ordinare per numero di download, False per media valutazioni</param>
+void SortCreatore(Creatore_t creatore[], int low, int high, const bool criterio);
+
+
 
 /// <summary>
 /// Carica in un array tutti gli utilizzatori
@@ -178,11 +192,23 @@ size_t CaricaArrayUtilizzatori(FILE* file, Utilizzatore_t utilizzatore[]);
 void ScambiaUtilizzatore(Utilizzatore_t* utilizzatoreA, Utilizzatore_t* utilizzatoreB);
 
 /// <summary>
-/// Ordinamento bubble sort dell'utilizzatore
+/// Questa funzione prende l'ultimo elemento come pivot, posiziona l'elemento pivot nella sua posizione corretta
+/// nell'array ordinato, e posiziona tutti gli elementi più piccoli a sinistra, mentre tutti i più grandi a destra di esso
 /// </summary>
-/// <param name="creatore">Array pieno degli utilizzatori</param>
-/// <param name="n">Numero elementi</param>
+/// <param name="utilizzatore">Array di utilizzatori</param>
+/// <param name="low">Estremo SX</param>
+/// <param name="high">Estremo DX</param>
+/// <param name="criterio">True se vogliamo ordinare per numero di download, False per media valutazioni</param>
+/// <returns>Restituisce la posizione del pivot nell'array ordinato</returns>
+int PartizionamentoUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, const bool criterio);
+
+/// <summary>
+/// Ordinamento quick sort dell'utilizzatore
+/// </summary>
+/// <param name="utilizzatore">Array di utilizzatori</param>
+/// <param name="low">Estremo SX</param>
+/// <param name="high">Estremo DX</param>
 /// <param name="criterio">True se vogliamo ordinare per numero di download, False per numero di valutazioni</param>
-void BubbleSortUtilizzatore(Utilizzatore_t utilizzatore[], size_t n, const bool criterio);
+void SortUtilizzatore(Utilizzatore_t utilizzatore[], int low, int high, const bool criterio);
 
 #endif

@@ -1061,38 +1061,45 @@ void ScambiaImmagine(Immagine_t *immagineA, Immagine_t *immagineB)
 	*immagineB = temp;
 }
 
-void BubbleSortImmagine(Immagine_t immagine[], size_t n, const bool criterio)
+int PartizionamentoImmagine(Immagine_t immagine[], int low, int high, const bool criterio)
 {
-	bool scambiato = false;
+	Immagine_t pivot = immagine[high];
+	int i = (low - 1); // Indice dell'elemento più piccolo e indica la posizione corretta del pivot in quel momento
 
 	if (criterio)
 	{
-		do
+
+		for (size_t j = low; j <= high; j++)
 		{
-			scambiato = false;
-			for (size_t i = 0; i < n - 1; i++)
+			if (immagine[j].numDownload > pivot.numDownload)
 			{
-				if (immagine[i].numDownload < immagine[i + 1].numDownload)
-				{
-					ScambiaImmagine(&immagine[i], &immagine[i + 1]);
-					scambiato = true;
-				}
+				i++; // Incrementa l'indice dell'elemento più piccolo
+				ScambiaImmagine(&immagine[i], &immagine[j]);
 			}
-		} while (scambiato);
+		}
 	}
 	else
 	{
-		do
+		for (size_t j = low; j <= high; j++)
 		{
-			scambiato = false;
-			for (size_t i = 0; i < n - 1; i++)
+			if (immagine[j].valutazioneMedia > pivot.valutazioneMedia)
 			{
-				if (immagine[i].valutazioneMedia < immagine[i + 1].valutazioneMedia)
-				{
-					ScambiaImmagine(&immagine[i], &immagine[i + 1]);
-					scambiato = true;
-				}
+				i++; // Incrementa l'indice dell'elemento più piccolo
+				ScambiaImmagine(&immagine[i], &immagine[j]);
 			}
-		} while (scambiato);
+		}
+	}
+	ScambiaImmagine(&immagine[i + 1], &immagine[high]);
+	return (i + 1);
+}
+
+void SortImmagine(Immagine_t immagine[], int low, int high, const bool criterio)
+{
+	if (low < high)
+	{
+		int pi = PartizionamentoImmagine(immagine, low, high, criterio);
+
+		SortImmagine(immagine, low, pi - 1, criterio);
+		SortImmagine(immagine, pi + 1, high, criterio);
 	}
 }
